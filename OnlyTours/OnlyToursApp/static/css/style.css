@@ -1,0 +1,151 @@
+.register,
+.register * {
+  box-sizing: border-box;
+}
+.register {
+  background: rgba(255, 255, 255, 0.3);
+  height: 2133px;
+  position: relative;
+}
+.desktop {
+  background: var(
+    --background2,
+    conic-gradient(
+      from 180deg at 50% 50%,
+      rgba(237, 254, 255, 1) 41.826921701431274%,
+      rgba(63, 216, 227, 1) 61.538463830947876%
+    )
+  );
+  width: 2586px;
+  height: 1969px;
+  position: absolute;
+  left: 64px;
+  top: 100px;
+  overflow-y: auto;
+}
+.create-an-account {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 48px;
+  font-weight: 500;
+  position: absolute;
+  left: 106px;
+  top: 688px;
+  width: 549px;
+}
+.welcome {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Bold", sans-serif;
+  font-size: 64px;
+  font-weight: 700;
+  position: absolute;
+  left: 106px;
+  top: 754px;
+  width: 771px;
+}
+.rectangle-21 {
+  background: #efeded;
+  border-radius: 40px;
+  width: 647px;
+  height: 120px;
+  position: absolute;
+  left: 74px;
+  top: 978px;
+}
+.customer {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 48px;
+  font-weight: 500;
+  text-decoration: underline;
+  position: absolute;
+  left: 280px;
+  bottom: 902px;
+  width: 249px;
+  height: 58px;
+}
+.rectangle-22 {
+  background: #efeded;
+  border-radius: 40px;
+  width: 643px;
+  height: 121px;
+  position: absolute;
+  left: 777px;
+  bottom: 871px;
+}
+.tour-guide {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 48px;
+  font-weight: 500;
+  text-decoration: underline;
+  position: absolute;
+  left: 971px;
+  top: 1013px;
+  width: 293px;
+  height: 54px;
+}
+.onlytourz {
+  color: var(--logo, #3fd8e3);
+  text-align: left;
+  text-decoration: underline;
+  position: absolute;
+  left: 156px;
+  top: 17px;
+  width: 1614px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.onlytourz-span {
+  font-family: "SwankyAndMooMoo-Regular", sans-serif;
+  font-size: 96px;
+  line-height: 110%;
+  letter-spacing: -0.03em;
+  font-weight: 400;
+}
+.onlytourz-span2 {
+  font-family: "Inter-Black", sans-serif;
+  font-size: 56px;
+  line-height: 110%;
+  letter-spacing: -0.03em;
+  font-weight: 900;
+}
+._5277724560626194-1 {
+  border-radius: 60px;
+  width: 931px;
+  position: absolute;
+  left: 1526px;
+  bottom: 127px;
+  top: 187px;
+  object-fit: cover;
+  aspect-ratio: 931/1655;
+}
+.image {
+  border-radius: 157px;
+  border-style: solid;
+  border-color: #3fd8e3;
+  border-width: 5px;
+  width: 128px;
+  height: 128px;
+  position: absolute;
+  left: 10px;
+  top: 0px;
+  object-fit: cover;
+}
+.which-type-of-user-are-you {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Bold", sans-serif;
+  font-size: 64px;
+  font-weight: 700;
+  position: absolute;
+  left: 110px;
+  top: 834px;
+  width: 897px;
+  height: 111px;
+}
