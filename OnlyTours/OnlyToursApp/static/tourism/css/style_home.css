@@ -1,0 +1,883 @@
+.home,
+.home * {
+  box-sizing: border-box;
+}
+.home {
+  background: rgba(255, 255, 255, 0.3);
+  height: 3093px;
+  position: relative;
+}
+.desktop {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 3110px;
+  position: absolute;
+  left: 3px;
+  top: -4px;
+  overflow-y: auto;
+}
+.frame-1 {
+  background: #ffffff;
+  padding: 1400px 476px 158px 104px;
+  display: flex;
+  flex-direction: row;
+  gap: 1786px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  height: 1700px;
+  position: relative;
+  overflow: hidden;
+}
+.home-page {
+  background: #ffffff;
+  flex-shrink: 0;
+  width: 2586px;
+  height: 1718px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  overflow: hidden;
+  aspect-ratio: 2586/1718;
+}
+.mauritius-aesthetic-vectorized {
+  width: 2592px;
+  height: 1728px;
+  position: absolute;
+  left: -7px;
+  top: -0.08px;
+  transform: translate(7px, 0.08px);
+  overflow: visible;
+}
+.mauritius-aesthetic {
+  width: 2593.49px;
+  height: 1728.99px;
+  position: absolute;
+  left: -7px;
+  top: -0.08px;
+  transform-origin: 0 0;
+  transform: rotate(-0.244deg) scale(1, 1);
+  object-fit: cover;
+  aspect-ratio: 2593.49/1728.99;
+}
+.discover-paradise-experience-the-beauty-of-mauritius-from-stunning-beaches-to-breathtaking-hikes-let-onlytourz-be-your-guide-to-unforgettable-memories {
+  text-align: left;
+  position: absolute;
+  left: 110px;
+  top: 171px;
+  width: 1364px;
+  height: 896px;
+  -webkit-text-stroke: 1px #000000;
+}
+.discover-paradise-experience-the-beauty-of-mauritius-from-stunning-beaches-to-breathtaking-hikes-let-onlytourz-be-your-guide-to-unforgettable-memories-span {
+  color: #ac8a0c;
+  font-family: "Montserrat-Medium", sans-serif;
+  font-size: 48px;
+  line-height: 55px;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+.discover-paradise-experience-the-beauty-of-mauritius-from-stunning-beaches-to-breathtaking-hikes-let-onlytourz-be-your-guide-to-unforgettable-memories-span2 {
+  color: #ffdb5b;
+  font-family: "Montserrat-Bold", sans-serif;
+  font-size: 48px;
+  line-height: 50px;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+.discover-paradise-experience-the-beauty-of-mauritius-from-stunning-beaches-to-breathtaking-hikes-let-onlytourz-be-your-guide-to-unforgettable-memories-span3 {
+  color: #ffdb5b;
+  font-family: "Montserrat-Medium", sans-serif;
+  font-size: 48px;
+  line-height: 50px;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+.discover-paradise-experience-the-beauty-of-mauritius-from-stunning-beaches-to-breathtaking-hikes-let-onlytourz-be-your-guide-to-unforgettable-memories-span4 {
+  color: #000000;
+  font-family: "Arizonia-Regular", sans-serif;
+  font-size: 64px;
+  line-height: 50px;
+  font-weight: 400;
+}
+.discover-paradise-experience-the-beauty-of-mauritius-from-stunning-beaches-to-breathtaking-hikes-let-onlytourz-be-your-guide-to-unforgettable-memories-span5 {
+  color: #fff8f8;
+  font-family: "Alkalami-Regular", sans-serif;
+  font-size: 128px;
+  line-height: 50px;
+  font-weight: 400;
+}
+.discover-paradise-experience-the-beauty-of-mauritius-from-stunning-beaches-to-breathtaking-hikes-let-onlytourz-be-your-guide-to-unforgettable-memories-span6 {
+  color: #ffda95;
+  font-family: "BonheurRoyale-Regular", sans-serif;
+  font-size: 128px;
+  line-height: 50px;
+  font-weight: 400;
+}
+.discover-paradise-experience-the-beauty-of-mauritius-from-stunning-beaches-to-breathtaking-hikes-let-onlytourz-be-your-guide-to-unforgettable-memories-span7 {
+  color: #fda80b;
+  font-family: "BonheurRoyale-Regular", sans-serif;
+  font-size: 128px;
+  line-height: 40px;
+  font-weight: 400;
+}
+.discover-paradise-experience-the-beauty-of-mauritius-from-stunning-beaches-to-breathtaking-hikes-let-onlytourz-be-your-guide-to-unforgettable-memories-span8 {
+  color: #fffefb;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 48px;
+  line-height: 50px;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+}
+.button-explore {
+  background: #ffc907;
+  border-radius: 50px;
+  width: 627px;
+  height: 134px;
+  position: absolute;
+  left: 126px;
+  top: 1196px;
+}
+.book-now {
+  color: #000000;
+  text-align: center;
+  font-family: "Montserrat-Medium", sans-serif;
+  font-size: 48px;
+  line-height: 55px;
+  font-weight: 500;
+  text-decoration: underline;
+  position: absolute;
+  left: 216px;
+  top: 1231px;
+  width: 405px;
+  height: 56px;
+}
+.button-tg {
+  background: rgba(217, 217, 217, 0);
+  border-radius: 50px;
+  border-style: solid;
+  border-color: #fffbfb;
+  border-width: 4px;
+  width: 640px;
+  height: 145px;
+  position: absolute;
+  left: 788px;
+  top: 1185px;
+}
+.arrow-1 {
+  width: 31px;
+  height: 0px;
+  position: absolute;
+  left: 669px;
+  top: 1263px;
+  transform: translate(0px, -14.73px);
+  overflow: visible;
+}
+.explore-top-attractions-across-the-island {
+  color: #ffffff;
+  text-align: left;
+  position: absolute;
+  left: 240px;
+  top: 1456px;
+  width: 548px;
+  height: 163px;
+}
+.explore-top-attractions-across-the-island-span {
+  font-family: "Montserrat-Bold", sans-serif;
+  font-size: 48px;
+  line-height: 55px;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+.explore-top-attractions-across-the-island-span2 {
+  font-family: "Montserrat-Medium", sans-serif;
+  font-size: 40px;
+  line-height: 55px;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+.find-a-tour-guide {
+  color: #ffffff;
+  text-align: left;
+  font-family: "Montserrat-SemiBold", sans-serif;
+  font-size: 48px;
+  line-height: 55px;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  text-decoration: underline;
+  position: absolute;
+  left: 821px;
+  top: 1231px;
+  width: 534px;
+  height: 81px;
+}
+.arrow-2 {
+  width: 33px;
+  height: 0px;
+  position: absolute;
+  left: 1355px;
+  top: 1263px;
+  transform: translate(0px, -14.73px);
+  overflow: visible;
+}
+.personnel {
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  left: 888px;
+  top: 1444px;
+  object-fit: cover;
+}
+.find-local-guides-experienced-friendly-and-trained {
+  color: #ffffff;
+  text-align: left;
+  position: absolute;
+  left: 1035px;
+  top: 1464px;
+  width: 641px;
+  height: 145px;
+}
+.find-local-guides-experienced-friendly-and-trained-span {
+  font-family: "Montserrat-Bold", sans-serif;
+  font-size: 48px;
+  line-height: 55px;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+.find-local-guides-experienced-friendly-and-trained-span2 {
+  font-family: "Montserrat-Medium", sans-serif;
+  font-size: 40px;
+  line-height: 55px;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+.easy-booking-book-your-tours-with-ease {
+  color: #ffffff;
+  text-align: left;
+  position: absolute;
+  left: 1888px;
+  top: 1464px;
+  width: 606px;
+  height: 167px;
+}
+.easy-booking-book-your-tours-with-ease-span {
+  font-family: "Montserrat-Bold", sans-serif;
+  font-size: 48px;
+  line-height: 55px;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+.easy-booking-book-your-tours-with-ease-span2 {
+  font-family: "Montserrat-Medium", sans-serif;
+  font-size: 40px;
+  line-height: 55px;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+.booking {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  left: 1776px;
+  top: 1464px;
+  object-fit: cover;
+}
+.button-tg2 {
+  background: rgba(217, 217, 217, 0);
+  border-radius: 50px;
+  border-style: solid;
+  border-color: #fffbfb;
+  border-width: 4px;
+  width: 699px;
+  height: 145px;
+  position: absolute;
+  left: 1459px;
+  top: 1188px;
+}
+.explore-attractions {
+  color: #ffffff;
+  text-align: left;
+  font-family: "Montserrat-SemiBold", sans-serif;
+  font-size: 48px;
+  line-height: 55px;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  text-decoration: underline;
+  position: absolute;
+  left: 1504px;
+  top: 1231px;
+  width: 627px;
+  height: 85px;
+}
+.place-marker {
+  flex-shrink: 0;
+  width: 120px;
+  height: 120px;
+  position: relative;
+  object-fit: cover;
+}
+.address {
+  flex-shrink: 0;
+  width: 100px;
+  height: 100px;
+  position: relative;
+}
+.emergency-contact {
+  color: var(--headings, #0067b1);
+  text-align: left;
+  font-family: "Inter-Bold", sans-serif;
+  font-size: 64px;
+  line-height: 120%;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  position: absolute;
+  left: 97px;
+  top: 2559px;
+  width: 790px;
+  height: 142px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.featured-attractions {
+  color: var(--headings, #0067b1);
+  text-align: left;
+  font-family: "Inter-Bold", sans-serif;
+  font-size: 64px;
+  line-height: 120%;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  position: absolute;
+  left: 97px;
+  top: 1689px;
+  width: 790px;
+  height: 142px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.feature-cards-1 {
+  padding: 120px 64px 120px 64px;
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  height: 915px;
+  position: relative;
+}
+.card-1 {
+  background: #ffffff;
+  border-radius: 16px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.1);
+  border-width: 1px;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 693px;
+  height: 740px;
+  position: absolute;
+  left: 219px;
+  top: 71px;
+  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.03),
+    0px 4px 8px 0px rgba(0, 0, 0, 0.02);
+  overflow: hidden;
+}
+.image {
+  flex-shrink: 0;
+  width: 705px;
+  height: 482px;
+  position: absolute;
+  left: 0.5px;
+  top: 0px;
+  object-fit: cover;
+}
+.body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: flex-start;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 693px;
+  height: 258px;
+  position: absolute;
+  left: -0.5px;
+  top: 482px;
+}
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.cascade-500-pieds {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-SemiBold", sans-serif;
+  font-size: 36px;
+  line-height: 145%;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.discover-one-s-of-mauritius-s-best-kept-secrets-this-dramatic-500-foot-waterfall-drops-into-the-black-river-gorges-ending-at-a-natural-infinity-pool-with-sweeping-views-over-the-south-coast-difficulty-hard {
+  color: rgba(0, 0, 0, 0.55);
+  text-align: left;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 24px;
+  line-height: 140%;
+  letter-spacing: -0.005em;
+  font-weight: 500;
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.card-2 {
+  background: #ffffff;
+  border-radius: 16px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.1);
+  border-width: 1px;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 692px;
+  height: 740px;
+  position: absolute;
+  left: 944px;
+  top: 71px;
+  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.03),
+    0px 4px 8px 0px rgba(0, 0, 0, 0.02);
+  overflow: hidden;
+}
+.image2 {
+  flex-shrink: 0;
+  width: 693px;
+  height: 463px;
+  position: absolute;
+  left: -0.5px;
+  top: 0px;
+  object-fit: cover;
+}
+.body2 {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: flex-start;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 693px;
+  height: 261px;
+  position: absolute;
+  left: -0.5px;
+  top: 463px;
+}
+.le-morne-brabant {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-SemiBold", sans-serif;
+  font-size: 36px;
+  line-height: 145%;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.le-morne-is-a-spectacular-peninsula-and-mountain-in-the-southwest-of-mauritius-located-approximately-60-km-from-port-louis-dominated-by-le-morne-brabant-which-rises-to-555-meters-this-exceptional-site-is-listed-as-a-unesco-world-heritage-site-as-a-place-of-memory-for-escaped-slaves {
+  color: rgba(0, 0, 0, 0.55);
+  text-align: left;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 24px;
+  line-height: 140%;
+  letter-spacing: -0.005em;
+  font-weight: 500;
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.card-3 {
+  background: #ffffff;
+  border-radius: 16px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.1);
+  border-width: 1px;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 693px;
+  height: 740px;
+  position: absolute;
+  left: 1668px;
+  top: 71px;
+  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.03),
+    0px 4px 8px 0px rgba(0, 0, 0, 0.02);
+  overflow: hidden;
+}
+.image3 {
+  flex-shrink: 0;
+  width: 693px;
+  height: 471px;
+  position: absolute;
+  left: 0.5px;
+  top: 0px;
+  object-fit: cover;
+}
+.body3 {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: flex-start;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 693px;
+  height: 269px;
+  position: absolute;
+  left: 0.5px;
+  top: 471px;
+}
+.body4 {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.trou-aux-cerfs {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-SemiBold", sans-serif;
+  font-size: 36px;
+  line-height: 145%;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.trou-aux-cerfs-is-a-famous-tourist-attraction-known-for-its-beautiful-flora-it-comprises-of-a-dormant-volcano-crater-opening-hours-availabilty-of-tour-guide-difficulty-easy {
+  color: rgba(0, 0, 0, 0.55);
+  text-align: left;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 24px;
+  line-height: 140%;
+  letter-spacing: -0.005em;
+  font-weight: 500;
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.text-row-2 {
+  padding: 120px 64px 120px 64px;
+  display: flex;
+  flex-direction: row;
+  gap: 48px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 2245px;
+  height: 397px;
+  position: absolute;
+  left: 113px;
+  top: 2701px;
+  overflow: hidden;
+}
+.text-block-1 {
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.15);
+  border-width: 1px 0px 0px 0px;
+  padding: 24px 0px 0px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 694px;
+  height: 221px;
+  min-width: 324px;
+  position: absolute;
+  left: 33px;
+  top: 0px;
+}
+.police {
+  color: #1a1a1a;
+  text-align: left;
+  font-family: "Inter-Bold", sans-serif;
+  font-size: 36px;
+  line-height: 100%;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  position: relative;
+}
+._112-999 {
+  color: rgba(0, 0, 0, 0.55);
+  text-align: left;
+  font-family: "Inter-Bold", sans-serif;
+  font-size: 36px;
+  line-height: 150%;
+  letter-spacing: -0.005em;
+  font-weight: 700;
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.text-block-2 {
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.15);
+  border-width: 1px 0px 0px 0px;
+  padding: 24px 0px 0px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 695px;
+  height: 221px;
+  min-width: 324px;
+  position: absolute;
+  left: 775px;
+  top: 0px;
+}
+.samu {
+  color: #1a1a1a;
+  text-align: left;
+  font-family: "Inter-Bold", sans-serif;
+  font-size: 36px;
+  line-height: 100%;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  position: relative;
+}
+._114 {
+  color: rgba(0, 0, 0, 0.55);
+  text-align: left;
+  font-family: "Inter-Bold", sans-serif;
+  font-size: 36px;
+  line-height: 150%;
+  letter-spacing: -0.005em;
+  font-weight: 700;
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.text-block-3 {
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.15);
+  border-width: 1px 0px 0px 0px;
+  padding: 24px 0px 0px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 694px;
+  height: 221px;
+  min-width: 324px;
+  position: absolute;
+  left: 1518px;
+  top: 0px;
+}
+.fire {
+  color: #1a1a1a;
+  text-align: left;
+  font-family: "Inter-Bold", sans-serif;
+  font-size: 36px;
+  line-height: 100%;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  position: relative;
+}
+._115 {
+  color: rgba(0, 0, 0, 0.55);
+  text-align: left;
+  font-family: "Inter-Bold", sans-serif;
+  font-size: 36px;
+  line-height: 150%;
+  letter-spacing: -0.005em;
+  font-weight: 700;
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.header-2 {
+  padding: 24px 64px 24px 64px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  height: 127px;
+  position: absolute;
+  right: 12px;
+  left: 2px;
+  top: 16px;
+}
+.onlytourz {
+  color: #ffffff;
+  text-align: left;
+  text-decoration: underline;
+  position: absolute;
+  left: 209px;
+  top: 21.5px;
+  width: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  -webkit-text-stroke: 3px #3fd8e3;
+}
+.onlytourz-span {
+  font-family: "SwankyAndMooMoo-Regular", sans-serif;
+  font-size: 96px;
+  line-height: 110%;
+  letter-spacing: -0.03em;
+  font-weight: 400;
+}
+.onlytourz-span2 {
+  font-family: "Inter-Black", sans-serif;
+  font-size: 56px;
+  line-height: 110%;
+  letter-spacing: -0.03em;
+  font-weight: 900;
+}
+.image4 {
+  border-radius: 157px;
+  border-style: solid;
+  border-color: #3fd8e3;
+  border-width: 5px;
+  flex-shrink: 0;
+  width: 128px;
+  height: 128px;
+  position: absolute;
+  left: 64px;
+  top: 10.5px;
+  object-fit: cover;
+}
+.nav {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: absolute;
+  left: 1535px;
+  top: 35px;
+}
+.home2 {
+  color: #ffffff;
+  text-align: center;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 40px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 500;
+  text-decoration: underline;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.book-now2 {
+  color: #ffffff;
+  text-align: center;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 40px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 500;
+  text-decoration: underline;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.attractions {
+  color: #ffffff;
+  text-align: center;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 40px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 500;
+  text-decoration: underline;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tour-guide {
+  color: #ffffff;
+  text-align: center;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 40px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 500;
+  text-decoration: underline;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.log-in {
+  color: #ffffff;
+  text-align: center;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 40px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 500;
+  text-decoration: underline;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
