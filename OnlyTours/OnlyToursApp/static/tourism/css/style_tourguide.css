@@ -1,0 +1,1292 @@
+.tour-guide,
+.tour-guide * {
+  box-sizing: border-box;
+}
+.tour-guide {
+  background: rgba(255, 255, 255, 0.3);
+  height: 2133px;
+  position: relative;
+}
+.desktop {
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: center;
+  justify-content: flex-start;
+  width: 2586px;
+  min-height: 1080px;
+  position: absolute;
+  left: 64px;
+  top: 100px;
+  overflow-y: auto;
+}
+.header-6 {
+  background: conic-gradient(
+    from 180deg at 50% 50%,
+    rgba(237, 254, 255, 1) 41.826921701431274%,
+    rgba(63, 216, 227, 1) 61.538463830947876%
+  );
+  padding: 24px 64px 24px 64px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  align-self: stretch;
+  flex-shrink: 0;
+  height: 128px;
+  position: relative;
+}
+.image {
+  border-radius: 157px;
+  border-style: solid;
+  border-color: #3fd8e3;
+  border-width: 5px;
+  flex-shrink: 0;
+  width: 128px;
+  height: 128px;
+  position: absolute;
+  left: 15px;
+  top: 0px;
+  object-fit: cover;
+}
+.onlytourz {
+  color: var(--logo, #3fd8e3);
+  text-align: left;
+  text-decoration: underline;
+  position: absolute;
+  left: 160px;
+  top: 11px;
+  width: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.onlytourz-span {
+  font-family: "SwankyAndMooMoo-Regular", sans-serif;
+  font-size: 96px;
+  line-height: 110%;
+  letter-spacing: -0.03em;
+  font-weight: 400;
+}
+.onlytourz-span2 {
+  font-family: "Inter-Black", sans-serif;
+  font-size: 56px;
+  line-height: 110%;
+  letter-spacing: -0.03em;
+  font-weight: 900;
+}
+.nav {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: absolute;
+  left: 1548px;
+  top: 35px;
+}
+.home {
+  color: #ffffff;
+  text-align: center;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 40px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 500;
+  text-decoration: underline;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.book-now {
+  color: #ffffff;
+  text-align: center;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 40px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 500;
+  text-decoration: underline;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.attractions {
+  color: #ffffff;
+  text-align: center;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 40px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 500;
+  text-decoration: underline;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tour-guide2 {
+  color: #ffffff;
+  text-align: center;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 40px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 500;
+  text-decoration: underline;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.log-in {
+  color: #ffffff;
+  text-align: center;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 40px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 500;
+  text-decoration: underline;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tour-guides {
+  background: var(
+    --background,
+    conic-gradient(
+      from 180deg at 50% 50%,
+      rgba(237, 254, 255, 1) 41.826921701431274%,
+      rgba(63, 216, 227, 1) 61.538463830947876%
+    )
+  );
+  padding: 120px 64px 120px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.our-tour-guides {
+  color: var(--headings, #0067b1);
+  text-align: left;
+  font-family: "Inter-Bold", sans-serif;
+  font-size: 64px;
+  line-height: 120%;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.our-tour-guides-are-experienced-individuals-who-have-been-providing-their-touring-services-for-more-than-a-decade-their-priority-is-your-enjoyment-and-safety {
+  color: rgba(0, 0, 0, 0.55);
+  text-align: left;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 48px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 500;
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.gallery {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.column-1 {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.group-9 {
+  flex-shrink: 0;
+  width: 810px;
+  height: 652px;
+  position: static;
+}
+.card-2 {
+  background: var(
+    --cards,
+    linear-gradient(
+      180deg,
+      rgba(143, 255, 249, 1) 10.096153616905212%,
+      rgba(38, 226, 151, 1) 70.67307829856873%
+    )
+  );
+  border-radius: 16px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.1);
+  border-width: 1px;
+  padding: 33px 31px 33px 31px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 810px;
+  height: 652px;
+  position: absolute;
+  left: 1.25px;
+  top: 0px;
+  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.03),
+    0px 4px 8px 0px rgba(0, 0, 0, 0.02);
+  overflow: hidden;
+}
+.author {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 751px;
+  height: 146px;
+  position: relative;
+}
+.image2 {
+  flex-shrink: 0;
+  width: 136px;
+  height: 136px;
+  position: relative;
+  overflow: visible;
+  object-fit: cover;
+  aspect-ratio: 1;
+}
+.text {
+  flex-shrink: 0;
+  width: 589px;
+  height: 146px;
+  position: relative;
+}
+.sam-peterson {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-SemiBold", sans-serif;
+  font-size: 40px;
+  line-height: 150%;
+  letter-spacing: -0.005em;
+  font-weight: 600;
+  position: absolute;
+  left: 9px;
+  top: 50%;
+  translate: 0 -50%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.group-1 {
+  flex-shrink: 0;
+  width: 753px;
+  height: 348px;
+  position: static;
+}
+.about-me-born-and-raised-in-mauritius-i-am-passionate-about-sharing-our-island-s-beauty-from-stunning-beaches-to-hidden-waterfalls-let-me-guide-you-through-an-authentic-mauritian-experience {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 28.75px;
+  top: 250px;
+  width: 751px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.about-me-born-and-raised-in-mauritius-i-am-passionate-about-sharing-our-island-s-beauty-from-stunning-beaches-to-hidden-waterfalls-let-me-guide-you-through-an-authentic-mauritian-experience-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.about-me-born-and-raised-in-mauritius-i-am-passionate-about-sharing-our-island-s-beauty-from-stunning-beaches-to-hidden-waterfalls-let-me-guide-you-through-an-authentic-mauritian-experience-span2 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+}
+.years-of-experience-12-years {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 26.75px;
+  top: 400px;
+  width: 722px;
+  height: 31.97px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.years-of-experience-12-years-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.years-of-experience-12-years-span2 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+}
+.languages-spoken-english-turkish {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 31.75px;
+  top: 451px;
+  width: 593px;
+  height: 16.89px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.languages-spoken-english-turkish-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.languages-spoken-english-turkish-span2 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+}
+.phone-number-230-5811-5935-email-address-sampeterson-onlytours-intnet-mu {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 100%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 31.75px;
+  top: 486px;
+  width: 585px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.phone-number-230-5811-5935-email-address-sampeterson-onlytours-intnet-mu-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.phone-number-230-5811-5935-email-address-sampeterson-onlytours-intnet-mu-span2 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+}
+.phone-number-230-5811-5935-email-address-sampeterson-onlytours-intnet-mu-span3 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+  text-decoration: underline;
+}
+.card-3 {
+  background: var(
+    --cards,
+    linear-gradient(
+      180deg,
+      rgba(143, 255, 249, 1) 10.096153616905212%,
+      rgba(38, 226, 151, 1) 70.67307829856873%
+    )
+  );
+  border-radius: 16px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.1);
+  border-width: 1px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 810px;
+  height: 620px;
+  position: relative;
+  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.03),
+    0px 4px 8px 0px rgba(0, 0, 0, 0.02);
+  overflow: hidden;
+}
+.author2 {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.image3 {
+  border-radius: 8px;
+  flex-shrink: 0;
+  width: 136px;
+  height: 136px;
+  position: relative;
+  object-fit: cover;
+  aspect-ratio: 1;
+}
+.text2 {
+  flex: 1;
+  display: grid;
+  gap: 2px;
+  height: 49px;
+  position: relative;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  grid-template-rows: 49px;
+}
+.jean-jack {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-SemiBold", sans-serif;
+  font-size: 40px;
+  line-height: 150%;
+  letter-spacing: -0.005em;
+  font-weight: 600;
+  position: absolute;
+  left: 152px;
+  top: 43px;
+  width: 596.67px;
+  height: 49px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.group-2 {
+  flex-shrink: 0;
+  width: 752px;
+  height: 363px;
+  position: static;
+}
+.about-me-a-passionate-of-nature-who-aims-to-share-his-perspective-of-nature-to-the-unknown {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 28.75px;
+  top: 178px;
+  width: 749px;
+  height: 132px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.about-me-a-passionate-of-nature-who-aims-to-share-his-perspective-of-nature-to-the-unknown-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.about-me-a-passionate-of-nature-who-aims-to-share-his-perspective-of-nature-to-the-unknown-span2 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+}
+.years-of-experience-10-years {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 31.75px;
+  top: 292px;
+  width: 749px;
+  height: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.years-of-experience-10-years-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.years-of-experience-10-years-span2 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+}
+.languages-spoken-english-and-mandarin-chinese {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 31.75px;
+  top: 325px;
+  width: 749px;
+  height: 132px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.languages-spoken-english-and-mandarin-chinese-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.languages-spoken-english-and-mandarin-chinese-span2 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+}
+.phone-number-230-5945-4365-email-address-jeanjack-onlytours-intnet-mu {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 100%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 31.75px;
+  top: 426px;
+  width: 749px;
+  height: 115px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.phone-number-230-5945-4365-email-address-jeanjack-onlytours-intnet-mu-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.phone-number-230-5945-4365-email-address-jeanjack-onlytours-intnet-mu-span2 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+}
+.phone-number-230-5945-4365-email-address-jeanjack-onlytours-intnet-mu-span3 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+  text-decoration: underline;
+}
+.column-2 {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.card-32 {
+  background: var(
+    --cards,
+    linear-gradient(
+      180deg,
+      rgba(143, 255, 249, 1) 10.096153616905212%,
+      rgba(38, 226, 151, 1) 70.67307829856873%
+    )
+  );
+  border-radius: 16px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.1);
+  border-width: 1px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 810px;
+  height: 652px;
+  position: relative;
+  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.03),
+    0px 4px 8px 0px rgba(0, 0, 0, 0.02);
+  overflow: hidden;
+}
+.text3 {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 591px;
+  height: 77px;
+  position: absolute;
+  left: 157.33px;
+  top: 29px;
+}
+.jean-paul-de-lacroix {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-SemiBold", sans-serif;
+  font-size: 40px;
+  line-height: 150%;
+  letter-spacing: -0.005em;
+  font-weight: 600;
+  position: relative;
+  width: 716px;
+  height: 77px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.group-5 {
+  flex-shrink: 0;
+  width: 749px;
+  height: 396px;
+  position: static;
+}
+.about-me-i-love-exploring-our-island-s-rich-heritage-let-me-take-you-beyond-the-tourist-spots-to-discover-our-multicultural-traditions-and-colonial-past {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 32.25px;
+  top: 168px;
+  width: 746px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.about-me-i-love-exploring-our-island-s-rich-heritage-let-me-take-you-beyond-the-tourist-spots-to-discover-our-multicultural-traditions-and-colonial-past-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.about-me-i-love-exploring-our-island-s-rich-heritage-let-me-take-you-beyond-the-tourist-spots-to-discover-our-multicultural-traditions-and-colonial-past-span2 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+}
+.years-of-experience-28-years {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 30.25px;
+  top: 357px;
+  width: 748px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.years-of-experience-28-years-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.years-of-experience-28-years-span2 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+}
+.languages-spoken-english-french {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 33.25px;
+  top: 403px;
+  width: 746px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.languages-spoken-english-french-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.languages-spoken-english-french-span2 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+}
+.phone-number-230-5250-7845-email-address-jeanpauldelacroix-onlytours-intnet-mu {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 100%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 33.25px;
+  top: 452px;
+  width: 746px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.phone-number-230-5250-7845-email-address-jeanpauldelacroix-onlytours-intnet-mu-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.phone-number-230-5250-7845-email-address-jeanpauldelacroix-onlytours-intnet-mu-span2 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+}
+.phone-number-230-5250-7845-email-address-jeanpauldelacroix-onlytours-intnet-mu-span3 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+  text-decoration: underline;
+}
+.card-5 {
+  background: var(
+    --cards,
+    linear-gradient(
+      180deg,
+      rgba(143, 255, 249, 1) 10.096153616905212%,
+      rgba(38, 226, 151, 1) 70.67307829856873%
+    )
+  );
+  border-radius: 16px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.1);
+  border-width: 1px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 811px;
+  height: 620px;
+  position: relative;
+  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.03),
+    0px 4px 8px 0px rgba(0, 0, 0, 0.02);
+  overflow: hidden;
+}
+.text4 {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 596.67px;
+  position: absolute;
+  left: 151.33px;
+  top: 43px;
+}
+.red-john {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-SemiBold", sans-serif;
+  font-size: 40px;
+  line-height: 150%;
+  letter-spacing: -0.005em;
+  font-weight: 600;
+  position: relative;
+  align-self: stretch;
+  height: 49px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.group-3 {
+  flex-shrink: 0;
+  width: 751px;
+  height: 425.43px;
+  position: static;
+}
+.about-me-i-am-a-hard-working-nature-freak-who-aims-to-unravel-the-hidden-beauty-of-mauritius-fauna-and-flora {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 35.75px;
+  top: 146px;
+  width: 747px;
+  height: 204.28px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.about-me-i-am-a-hard-working-nature-freak-who-aims-to-unravel-the-hidden-beauty-of-mauritius-fauna-and-flora-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.about-me-i-am-a-hard-working-nature-freak-who-aims-to-unravel-the-hidden-beauty-of-mauritius-fauna-and-flora-span2 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+}
+.years-of-experience-18-years {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 31.75px;
+  top: 315.55px;
+  width: 747px;
+  height: 68.09px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.years-of-experience-18-years-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.years-of-experience-18-years-span2 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+}
+.languages-spoken-english-french-german-and-portuguese {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 31.75px;
+  top: 350px;
+  width: 747px;
+  height: 136.19px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.languages-spoken-english-french-german-and-portuguese-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.languages-spoken-english-french-german-and-portuguese-span2 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+}
+.phone-number-230-5677-6769-email-address-redjohn-onlytours-intnet-mu {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 100%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 32.75px;
+  top: 453px;
+  width: 747px;
+  height: 118.43px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.phone-number-230-5677-6769-email-address-redjohn-onlytours-intnet-mu-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.phone-number-230-5677-6769-email-address-redjohn-onlytours-intnet-mu-span2 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+}
+.phone-number-230-5677-6769-email-address-redjohn-onlytours-intnet-mu-span3 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+  text-decoration: underline;
+}
+.column-3 {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 813px;
+  height: 1178px;
+  position: relative;
+}
+.card-52 {
+  background: var(
+    --cards,
+    linear-gradient(
+      180deg,
+      rgba(143, 255, 249, 1) 10.096153616905212%,
+      rgba(38, 226, 151, 1) 70.67307829856873%
+    )
+  );
+  border-radius: 16px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.1);
+  border-width: 1px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 820px;
+  height: 652px;
+  position: relative;
+  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.03),
+    0px 4px 8px 0px rgba(0, 0, 0, 0.02);
+  overflow: hidden;
+}
+.author3 {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 770px;
+  height: 136px;
+  position: absolute;
+  left: 32.5px;
+  top: 32px;
+}
+.text5 {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 596.67px;
+  position: absolute;
+  left: 135.67px;
+  top: 44px;
+}
+.la-peace {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-SemiBold", sans-serif;
+  font-size: 40px;
+  line-height: 150%;
+  letter-spacing: -0.005em;
+  font-weight: 600;
+  position: relative;
+  align-self: stretch;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.about-me-a-calm-individual-who-love-helping-other-person-i-take-pride-in-making-sure-every-trip-feels-relaxed-and-personal-whether-you-re-after-quiet-nature-spots-or-a-friendly-chat-about-the-local-culture {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 32.5px;
+  top: 158px;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.about-me-a-calm-individual-who-love-helping-other-person-i-take-pride-in-making-sure-every-trip-feels-relaxed-and-personal-whether-you-re-after-quiet-nature-spots-or-a-friendly-chat-about-the-local-culture-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.about-me-a-calm-individual-who-love-helping-other-person-i-take-pride-in-making-sure-every-trip-feels-relaxed-and-personal-whether-you-re-after-quiet-nature-spots-or-a-friendly-chat-about-the-local-culture-span2 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+}
+.years-of-experience-7-years {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 30.5px;
+  top: 392px;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.years-of-experience-7-years-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.years-of-experience-7-years-span2 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+}
+.languages-spoken-english-arabic-and-hindi {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 32.5px;
+  top: 438px;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.languages-spoken-english-arabic-and-hindi-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.languages-spoken-english-arabic-and-hindi-span2 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+}
+.phone-number-230-5765-5289-email-address-lapeace-onlytours-intnet-mu {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 100%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 32.5px;
+  top: 504px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.phone-number-230-5765-5289-email-address-lapeace-onlytours-intnet-mu-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.phone-number-230-5765-5289-email-address-lapeace-onlytours-intnet-mu-span2 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+}
+.phone-number-230-5765-5289-email-address-lapeace-onlytours-intnet-mu-span3 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+  text-decoration: underline;
+}
+.card-6 {
+  background: var(
+    --cards,
+    linear-gradient(
+      180deg,
+      rgba(143, 255, 249, 1) 10.096153616905212%,
+      rgba(38, 226, 151, 1) 70.67307829856873%
+    )
+  );
+  border-radius: 16px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.1);
+  border-width: 1px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 820px;
+  height: 620px;
+  position: relative;
+  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.03),
+    0px 4px 8px 0px rgba(0, 0, 0, 0.02);
+  overflow: hidden;
+}
+.image4 {
+  border-radius: 8px;
+  flex-shrink: 0;
+  width: 137px;
+  height: 137px;
+  position: relative;
+  object-fit: cover;
+  aspect-ratio: 1;
+}
+.text6 {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 603px;
+  height: 48px;
+  position: absolute;
+  left: 153.5px;
+  top: 45px;
+}
+.simon-baker {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-SemiBold", sans-serif;
+  font-size: 40px;
+  line-height: 150%;
+  letter-spacing: -0.005em;
+  font-weight: 600;
+  position: relative;
+  align-self: stretch;
+  height: 41px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.group-7 {
+  flex-shrink: 0;
+  width: 756px;
+  height: 408px;
+  position: static;
+}
+.about-me-an-optimistic-individual-who-believes-that-human-and-nature-interaction-is-a-must-for-a-happy-life {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 32.5px;
+  top: 143px;
+  width: 756px;
+  height: 224px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.about-me-an-optimistic-individual-who-believes-that-human-and-nature-interaction-is-a-must-for-a-happy-life-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.about-me-an-optimistic-individual-who-believes-that-human-and-nature-interaction-is-a-must-for-a-happy-life-span2 {
+  font-family: "Inter-Regular", sans-serif;
+}
+.years-of-experience-13-years {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 32.5px;
+  top: 323px;
+  width: 756px;
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.years-of-experience-13-years-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.years-of-experience-13-years-span2 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+}
+.languages-spoken-english-spanish-and-russian {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 145%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 32.5px;
+  top: 372px;
+  width: 756px;
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.languages-spoken-english-spanish-and-russian-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.languages-spoken-english-spanish-and-russian-span2 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+}
+.phone-number-230-5857-4565-email-address-simonbaker-onlytours-intnet-mu {
+  color: #000000;
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 32px;
+  line-height: 100%;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  position: absolute;
+  left: 32.5px;
+  top: 421px;
+  width: 756px;
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.phone-number-230-5857-4565-email-address-simonbaker-onlytours-intnet-mu-span {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+}
+.phone-number-230-5857-4565-email-address-simonbaker-onlytours-intnet-mu-span2 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+}
+.phone-number-230-5857-4565-email-address-simonbaker-onlytours-intnet-mu-span3 {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+  text-decoration: underline;
+}
