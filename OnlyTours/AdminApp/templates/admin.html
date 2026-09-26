@@ -1,0 +1,236 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | OnlyTourz</title>
+
+    <!-- Fonts used in the Figma design -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&family=Swanky+and+Moo+Moo&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --logo: #3FD8E3;
+            --logo-light: #EDFEFF;
+            --card: #FDF8F8;
+            --tile: #EFEDED;
+            --tile-hover: #E2E0E0;
+            --text: #000;
+
+            /* Sizes taken from the 1366 x 1071 Figma frame */
+            --frame: min(100vw, 1366px);
+            --left-col: 547px;
+            --right-col: 518px;
+            --header-h: 111px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+       body {
+    background: conic-gradient(
+        from 315deg at 50% 50%,
+        var(--logo-light) 0deg,
+        var(--logo) 180deg,
+        var(--logo-light) 360deg
+    );
+}
+
+        /* Acts like the Figma frame: centred on wide screens, scales down on smaller ones */
+        .page {
+            width: 100%;
+            max-width: 1366px;
+            margin: 0 auto;
+        }
+
+        /* ---------- Header ---------- */
+        .site-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            height: var(--header-h);
+            padding: 2px 10px 0;
+        }
+
+        .site-header img {
+            width: 64px;
+            height: 64px;
+            flex: none;
+            border-radius: 50%;
+            border: 5px solid var(--logo);
+            object-fit: cover;
+        }
+
+        .brand {
+            font-family: "Swanky and Moo Moo", cursive;
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 400;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            color: var(--logo);
+            text-decoration: underline;
+            text-underline-offset: 6px;
+        }
+
+        /* ---------- Main layout ---------- */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: minmax(0, var(--left-col)) minmax(0, var(--right-col));
+            justify-content: space-between;
+            gap: 48px;
+            /* Figma margins: 117px left, 68px right, 38px bottom (as a share of the frame width) */
+            padding: 0 calc(var(--frame) * 0.0498) 38px calc(var(--frame) * 0.0857);
+            /* row height follows the screen, capped at Figma's 921px; grows if content needs more */
+            --row-h: clamp(520px, calc(100vh - var(--header-h) - 38px), 921px);
+        }
+
+        /* Left column: heading on top, card fills the rest so its bottom meets the image bottom */
+        .left-col {
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+            min-width: 0;
+            min-height: var(--row-h);
+            padding-top: 15px;
+            padding-bottom: 35px;
+        }
+
+        /* Figma indents the heading 50px in from the card edge */
+        .dashboard-heading {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-left: 50px;
+        }
+
+        .dashboard-heading h1,
+        .dashboard-heading h2 {
+            margin: 0;
+            font-size: 36px;
+            line-height: normal;
+        }
+
+        .dashboard-heading h1 { font-weight: 500; }
+        .dashboard-heading h2 { font-weight: 700; }
+
+        .panel {
+            flex: 1;
+            padding: 30px;
+            background: var(--card);
+            border-radius: 40px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 30px;
+            height: 100%;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 72px;
+            padding: 16px 20px;
+            background: var(--tile);
+            border-radius: 40px;
+            color: var(--text);
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 28px;
+            text-align: center;
+            text-decoration: none;
+            transition: background 0.15s ease, transform 0.15s ease;
+        }
+
+        .menu-item span { max-width: 123px; }  /* Figma label width; delete this line for single-line labels */
+
+        .menu-item:hover { background: var(--tile-hover); transform: translateY(-2px); }
+        .menu-item:focus-visible { outline: 3px solid var(--logo); outline-offset: 3px; }
+
+        /* Right column: image top lines up with the heading, bottom with the card */
+        /* the image fills whatever height the row ends up with, so it never forces the page taller */
+        .dashboard-layout aside { position: relative; min-height: var(--row-h); }
+
+        .hero-image {
+            position: absolute;
+            inset: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 60px;
+        }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 1000px) {
+            .site-header { height: auto; padding: 12px 24px; align-items: center; }
+            .dashboard-layout { grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 0 24px 32px; }
+            .dashboard-layout aside { position: static; min-height: 0; }
+            .left-col { min-height: 0; padding-top: 0; padding-bottom: 0; }
+            .dashboard-heading { padding-left: 12px; }
+            .hero-image { position: static; height: clamp(240px, 45vw, 420px); }
+            .panel { flex: none; }
+            .menu-grid { grid-template-rows: none; height: auto; }
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-heading h1, .dashboard-heading h2 { font-size: 28px; }
+            .menu-grid { grid-template-columns: 1fr; }
+            .menu-item { min-height: 80px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .menu-item { transition: none; }
+            .menu-item:hover { transform: none; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page">
+
+        <header class="site-header">
+            <img src="{% static 'images/image0.png' %}" alt="OnlyTourz logo">
+            <span class="brand">ONLYTOURZ</span>
+        </header>
+
+        <main class="dashboard-layout">
+
+            <section class="left-col">
+                <div class="dashboard-heading">
+                    <h1>Dashboard</h1>
+                    <h2>WELCOME ADMIN!</h2>
+                </div>
+
+                <!-- TODO: replace each href="#" with a real url tag once the page exists -->
+                <nav class="panel" aria-label="Admin sections">
+                    <div class="menu-grid">
+                        <a class="menu-item" href="#"><span>Create Admin</span></a>
+                        <a class="menu-item" href="#"><span>Reports</span></a>
+                        <a class="menu-item" href="#"><span>Manage Applications</span></a>
+                        <a class="menu-item" href="#"><span>Manage Places of Interest</span></a>
+                        <a class="menu-item" href="#"><span>Booking History</span></a>
+                        <a class="menu-item" href="#"><span>View tour guides</span></a>
+                        <a class="menu-item" href="#"><span>Manage reviews</span></a>
+                        <a class="menu-item" href="#"><span>Manage accounts</span></a>
+                    </div>
+                </nav>
+            </section>
+
+            <aside>
+                <img class="hero-image" src="{% static 'images/_5277724560626194-10.png' %}" alt="Collage of Mauritius beaches and mountains">
+            </aside>
+
+        </main>
+
+    </div>
+
+</body>
+</html>
