@@ -1,0 +1,178 @@
+/* =====================================================================
+   OnlyTours — shared base styles
+   Loaded on every page. Holds the color/spacing variables, a reset,
+   and the responsive header/nav that appears across the site.
+
+   NOTE ON FONTS: the original Figma export specified two custom fonts
+   ("SwankyAndMooMoo-Regular" for the logo script and the "Inter"
+   family for everything else) but the font files themselves weren't
+   part of the upload, so this stylesheet falls back to solid system
+   fonts that look good on every OS. Drop the real font files into
+   static/OnlyToursApp/fonts/ and add @font-face rules here (or a
+   Google Fonts link in the template <head>) to restore the exact
+   look — everything else (sizes, spacing) already accounts for it.
+   ===================================================================== */
+
+:root {
+  --logo: #3fd8e3;
+  --headings: #0067b1;
+  --accent: #fbba09;
+  --text-body: rgba(0, 0, 0, 0.65);
+  --input-bg: #efeded;
+
+  --font-script: "Brush Script MT", "Segoe Script", cursive;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  /* Fluid spacing tokens used throughout the site */
+  --space-xs: clamp(0.5rem, 1vw, 0.75rem);
+  --space-sm: clamp(0.75rem, 1.5vw, 1.25rem);
+  --space-md: clamp(1.25rem, 3vw, 2.5rem);
+  --space-lg: clamp(2rem, 5vw, 4rem);
+  --space-xl: clamp(3rem, 8vw, 6rem);
+
+  --radius-lg: clamp(20px, 3vw, 40px);
+  --max-content-width: 1280px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  color: #000;
+  background: #ffffff;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.site-brand-gradient {
+  background: conic-gradient(
+    from 180deg at 50% 50%,
+    rgba(237, 254, 255, 1) 41.8%,
+    rgba(63, 216, 227, 1) 61.5%
+  );
+}
+
+/* ---------------------------------------------------------------------
+   Site header / nav — used on the Home and Attractions pages.
+   Flexes and wraps so it never overflows on small screens.
+   --------------------------------------------------------------------- */
+.site-header {
+  padding: var(--space-sm) var(--space-lg);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.site-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+}
+
+.site-logo img {
+  border-radius: 50%;
+  border: clamp(3px, 0.5vw, 5px) solid var(--logo);
+  width: clamp(56px, 8vw, 96px);
+  height: clamp(56px, 8vw, 96px);
+  object-fit: cover;
+}
+
+.site-logo-text {
+  color: var(--logo);
+  text-decoration: underline;
+  white-space: nowrap;
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.site-logo-text .script {
+  font-family: var(--font-script);
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  letter-spacing: -0.02em;
+}
+
+.site-logo-text .bold {
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav a,
+.site-nav .site-nav-item {
+  color: #ffffff;
+  text-align: center;
+  font-weight: 500;
+  font-size: clamp(1rem, 1.6vw, 1.5rem);
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+/* Buttons/links styled like the accent "Create Account" pill button */
+.btn-accent {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  color: #000;
+  font-weight: 700;
+  text-decoration: underline;
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: clamp(0.9rem, 2vw, 1.4rem) clamp(1.5rem, 4vw, 3rem);
+  font-size: clamp(1.1rem, 2vw, 1.6rem);
+  cursor: pointer;
+  width: 100%;
+  max-width: 640px;
+}
+
+.btn-accent:hover,
+.btn-accent:focus-visible {
+  filter: brightness(0.97);
+}
+
+.page-shell {
+  width: 100%;
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  padding-inline: var(--space-md);
+}
