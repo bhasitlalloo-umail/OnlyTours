@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/style-booked-only.css' %}">
+
+    <style>
+        a,
+        button,
+        input,
+        select,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            border: none;
+            text-decoration: none;
+            background: none;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        menu,
+        ol,
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
+    <title>Booking Confirmed</title>
+</head>
+
+<body>
+
+    <div class="booked">
+
+        <div class="booked-header">
+
+            <nav class="booked-nav">
+                <div class="booked-logo">
+                    <!-- placeholder mark: swap for the real exported Figma icon asset -->
+                    <span class="booked-logo-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="9" stroke="#0a2540" stroke-width="1.6" />
+                            <path d="M12 6.5 15 12 12 17.5 9 12 12 6.5Z" stroke="#0a2540" stroke-width="1.4" stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                    <span class="booked-logo-text">ONLYTOURZ</span>
+                </div>
+
+                <ul class="booked-nav-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Book Now</a></li>
+                    <li><a href="#">Attractions</a></li>
+                    <li><a href="#">Tour Guide</a></li>
+                    <li><a href="#">Log In</a></li>
+                </ul>
+            </nav>
+
+            <div class="booked-hero">
+                <p class="booked-eyebrow">LET'S PLAN YOUR TRIP</p>
+                <h1 class="booked-title">Book Your Mauritius Adventure</h1>
+                <p class="booked-subtitle">
+                    Tell us what you're dreaming of, and we'll match you with the
+                    right guide and attraction- no back-and-forth required.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="booked-content">
+
+            <div class="booked-card">
+                <div class="booked-check">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 13l4 4L19 7" stroke="#ffffff" stroke-width="2.5"
+                              stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <p class="booked-message">Booking has been done<br>Successfully!</p>
+            </div>
+
+            <div class="booked-contact">
+                <h2>Get in Touch</h2>
+
+                <div class="booked-contact-item">
+                    <h3>Office</h3>
+                    <p>Reduit, Mauritius</p>
+                </div>
+
+                <div class="booked-contact-item">
+                    <h3>Phone</h3>
+                    <p>+230 5811 5935</p>
+                </div>
+
+                <div class="booked-contact-item">
+                    <h3>Email</h3>
+                    <p>hello@onlytourz.internet.mu</p>
+                </div>
+
+                <div class="booked-contact-item">
+                    <h3>Hours</h3>
+                    <p>Mon-Sat, 8am-6pm</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,176 @@
+/* ---------- Booked / Booking Confirmation page ---------- */
+.booked,
+.booked * {
+  box-sizing: border-box;
+}
+.booked {
+  min-height: 100vh;
+  background: #f3fdfd;
+  font-family: "Inter", sans-serif;
+}
+
+/* single continuous background behind nav + hero */
+.booked-header {
+  background: linear-gradient(135deg, #f2fffe 0%, #bdf3f8 35%, #3fd8e3 100%);
+}
+
+.booked-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 64px;
+}
+
+.booked-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.booked-logo-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.booked-logo-icon svg {
+  width: 18px;
+  height: 18px;
+}
+.booked-logo-text {
+  font-family: "SwankyAndMooMoo-Regular", cursive, sans-serif;
+  font-size: 26px;
+  font-weight: 400;
+  color: #3fd8e3;
+  text-decoration: underline;
+  letter-spacing: -0.02em;
+}
+
+.booked-nav-links {
+  display: flex;
+  gap: 32px;
+}
+.booked-nav-links a {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: underline;
+}
+.booked-nav-links a:hover {
+  opacity: 0.85;
+}
+
+.booked-hero {
+  text-align: center;
+  padding: 56px 24px 40px;
+}
+.booked-eyebrow {
+  color: #0067b1;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+.booked-title {
+  font-size: 40px;
+  font-weight: 800;
+  color: #0a0a0a;
+  margin-bottom: 16px;
+}
+.booked-subtitle {
+  max-width: 620px;
+  margin: 0 auto;
+  color: #1a1a1a;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.booked-content {
+  display: flex;
+  gap: 32px;
+  align-items: stretch;
+  max-width: 1080px;
+  margin: -32px auto 64px;
+  padding: 0 24px;
+}
+
+.booked-card {
+  flex: 2;
+  background: #fbf8f5;
+  border-radius: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 32px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+.booked-check {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: #8ce100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+.booked-check svg {
+  width: 56px;
+  height: 56px;
+}
+.booked-message {
+  font-size: 30px;
+  font-weight: 800;
+  color: #0a0a0a;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.booked-contact {
+  flex: 1;
+  min-width: 260px;
+  border-radius: 32px;
+  background: linear-gradient(160deg, #4fe1e9 0%, #34c98f 100%);
+  color: #ffffff;
+  padding: 40px 32px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+.booked-contact h2 {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 28px;
+}
+.booked-contact-item {
+  margin-bottom: 22px;
+}
+.booked-contact-item h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.booked-contact-item p {
+  font-size: 14px;
+  opacity: 0.95;
+}
+
+@media (max-width: 720px) {
+  .booked-content {
+    flex-direction: column;
+  }
+  .booked-nav {
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+  }
+  .booked-nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .booked-title {
+    font-size: 28px;
+  }
+}
