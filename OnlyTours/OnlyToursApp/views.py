@@ -7,3 +7,9 @@ def register(request):
 
 def booked(request):
 	return render(request,'booked.html')
+
+def homepage(request):
+	return render(request,'homepage.html')
+
+def tourGuide(request):
+	return render(request,'tour_guide.html')
