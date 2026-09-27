@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OnlyTours — Discover Mauritius</title>
+  <link rel="stylesheet" href="{% static 'OnlyToursApp/css/base.css' %}">
+  <style>
+    .hero {
+      display: flex;
+      flex-wrap: wrap-reverse;
+      align-items: center;
+      gap: var(--space-lg);
+      padding: var(--space-xl) var(--space-lg);
+      max-width: var(--max-content-width);
+      margin: 0 auto;
+    }
+    .hero-copy {
+      flex: 1 1 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-sm);
+    }
+    .hero-copy h1 {
+      color: var(--headings);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      line-height: 1.15;
+    }
+    .hero-copy p {
+      color: var(--text-body);
+      font-size: clamp(1rem, 2vw, 1.35rem);
+      max-width: 55ch;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+    .hero-actions .btn-accent {
+      width: auto;
+    }
+    .hero-image {
+      flex: 1 1 280px;
+      display: flex;
+      justify-content: center;
+    }
+    .hero-image img {
+      width: 100%;
+      max-width: 420px;
+      border-radius: var(--radius-lg);
+      object-fit: cover;
+      aspect-ratio: 931 / 1655;
+    }
+  </style>
+</head>
+<body>
+  {% include 'OnlyToursApp/partials/navbar.html' %}
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <h1>Discover Mauritius, your way.</h1>
+        <p>
+          From Casela's Big Cats Kingdom to sunset dolphin watching, OnlyTours
+          connects you with the island's best attractions and licensed local
+          guides — all in one place.
+        </p>
+        <div class="hero-actions">
+          <a class="btn-accent" href="{% url 'OnlyToursApp:attractions' %}">Explore Attractions</a>
+          <a class="btn-accent" href="{% url 'OnlyToursApp:register' %}">Create an Account</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="{% static 'OnlyToursApp/images/_5277724560626194-10.png' %}" alt="Scenic views of Mauritius" />
+      </div>
+    </section>
+  </main>
+</body>
+</html>

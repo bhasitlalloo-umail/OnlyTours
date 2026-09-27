@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page_title }} · OnlyTours</title>
+  <link rel="stylesheet" href="{% static 'OnlyToursApp/css/base.css' %}">
+  <style>
+    .coming-soon {
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: var(--space-sm);
+      padding: var(--space-lg) var(--space-md);
+    }
+    .coming-soon h1 {
+      color: var(--headings);
+      font-size: clamp(1.75rem, 5vw, 3rem);
+    }
+    .coming-soon p {
+      color: var(--text-body);
+      max-width: 40ch;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+    }
+  </style>
+</head>
+<body>
+  {% include 'OnlyToursApp/partials/navbar.html' %}
+  <main class="coming-soon">
+    <h1>{{ page_title }}</h1>
+    <p>{{ message }}</p>
+    <a class="btn-accent" href="{% url 'OnlyToursApp:home' %}">Back to Home</a>
+  </main>
+</body>
+</html>

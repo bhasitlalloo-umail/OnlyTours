@@ -1,0 +1,100 @@
+/* =====================================================================
+   Attractions — responsive rebuild.
+   Original rows used fixed pixel widths/heights (e.g. a 984×726px
+   image) that only fit one exact screen size, and several elements
+   had `href` attributes on <div>s, which browsers ignore entirely.
+   Everything here is a real <a> where it should be clickable, and
+   every image scales fluidly instead of using a fixed pixel box.
+   ===================================================================== */
+
+.attractions-page {
+  min-height: 100vh;
+}
+
+.attractions-list {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-lg) var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.attraction-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.attraction-row.reverse {
+  flex-direction: row-reverse;
+}
+
+.attraction-content {
+  flex: 1 1 320px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.attraction-title {
+  color: var(--headings);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  line-height: 1.2;
+}
+
+.attraction-title:hover,
+.attraction-title:focus-visible {
+  text-decoration: underline;
+}
+
+.attraction-copy {
+  color: var(--text-body);
+  font-weight: 500;
+  font-size: clamp(1rem, 1.8vw, 1.35rem);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.attraction-image {
+  flex: 1 1 320px;
+  max-width: 560px;
+  display: block;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.attraction-image img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3; /* fallback if a specific ratio below doesn't apply */
+  object-fit: cover;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+/* Exact aspect ratios matching each real photo, so nothing gets
+   cropped oddly or left with letterboxing at any screen size. */
+.img-casela img      { aspect-ratio: 1197 / 672; }
+.img-oceanarium img  { aspect-ratio: 984 / 726; }
+.img-mountain img    { aspect-ratio: 678 / 848; }
+.img-dolphin img     { aspect-ratio: 890 / 683; }
+
+.attraction-image-tall img {
+  aspect-ratio: 3 / 4;
+}
+
+.attraction-image:hover img,
+.attraction-image:focus-visible img {
+  transform: scale(1.03);
+}
+
+@media (max-width: 720px) {
+  .attraction-row,
+  .attraction-row.reverse {
+    flex-direction: column-reverse;
+  }
+  .attraction-image { max-width: 100%; }
+}
