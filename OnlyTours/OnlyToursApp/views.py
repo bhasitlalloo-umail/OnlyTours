@@ -13,3 +13,6 @@ def homepage(request):
 
 def tourGuide(request):
 	return render(request,'tour_guide.html')
+
+def booknow(request):
+	return render(request,'booknow.html')
