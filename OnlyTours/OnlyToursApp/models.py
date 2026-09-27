@@ -47,10 +47,29 @@ class Booking(models.Model):
 	NumberOfParticipants = models.IntegerField(null=True, blank=True, help_text='Enter the Number of Participants')
 	BookingStatus = models.CharField(max_length=20, choices = BOOKING_STATUS_CHOICES)
 
-	
-	
-	
 
+class Attractions(models.Model):
+
+    
+
+	DIFFICULTY_LEVEL_CHOICES = (("EASY", "Easy"),
+		("MODERATE", "Moderate"),
+		("DIFFICULT", "Difficult"),	)
+
+	AttractionID = models.AutoField(primary_key=True, help_text='Unique ID for the attraction')
+	Name = models.CharField(null=False, blank=False, max_length=200, help_text='Enter the name of the attraction')
+	Description = models.TextField(null=False, blank=False, help_text='Enter a description of the attraction')
+	Region = models.CharField(null=False, blank=False, max_length=100, help_text='Enter the region of the attraction')
+	IsFeatured = models.BooleanField(default=False, help_text='Indicate whether the attraction is featured')
+	Longitude = models.DecimalField(null=False, blank=False, max_digits=10, decimal_places=7, help_text='Enter the longitude of the attraction')
+	Latitude = models.DecimalField(null=False, blank=False, max_digits=10, decimal_places=7, help_text='Enter the latitude of the attraction')
+	Distance = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2, help_text='Enter the distance to the attraction')
+	DifficultyLevel = models.CharField(null=True, blank=True, max_length=50, choices=DIFFICULTY_LEVEL_CHOICES, help_text='Select the difficulty level of the attraction')
+	Type = models.CharField(null=False, blank=False, max_length=100, help_text='Enter the type of attraction')
+	DateAdded = models.DateField(null=False, blank=False, help_text='Enter the date the attraction was added')
+
+	def __str__(self):
+		return self.Name
 	
 	
 	
