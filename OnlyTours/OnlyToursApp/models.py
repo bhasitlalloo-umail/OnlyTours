@@ -8,7 +8,7 @@ from django.db.models.functions import Lower
 class Customer(models.Model):
 	FirstName = models.CharField(null=False, blank=False, max_length=200,  help_text='Enter your First Name')
 	Surname = models.CharField(null=False, blank=False, max_length=200,  help_text='Enter your Surname')
-	Email = models.EmailField(max_length=100, unique=True, null=False, blank=False help_text='Enter an Email address')
+	Email = models.EmailField(max_length=100, unique=True, null=False, blank=False, help_text='Enter an Email address')
 	DateRegistered = models.DateField()
 	PhoneNumber = models.CharField(null=True, blank=True, max_length=12, help_text='Enter a Phone Number')	
 	CountryOfOrigin = models.CharField(null=False, blank=False, max_length=50,  help_text='Enter your Country of Origin')
