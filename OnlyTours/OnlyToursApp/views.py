@@ -19,7 +19,6 @@ def booked(request):
 def register(request):
 	return render(request,'register.html')
 
-<<<<<<< HEAD
 def customerregister(request):
 	return render(request,'customerregister.html')
 
@@ -28,10 +27,3 @@ def guideregister(request):
 
 def login(request):
 	return render(request,'login.html')
-=======
-def tourGuide(request):
-	return render(request,'tour_guide.html')
-
-def booknow(request):
-	return render(request,'booknow.html')
->>>>>>> rishabh
