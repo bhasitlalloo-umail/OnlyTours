@@ -1,3 +1,11 @@
+/* =====================================================================
+   Register ("Which type of user are you?") — responsive rebuild.
+   The original export positioned every element with absolute px
+   coordinates on a fixed 2586×1969 canvas, which only ever looked
+   right at one exact screen size. This version uses flexbox and
+   fluid (clamp/%) sizing so it reflows correctly on phones, tablets,
+   laptops and desktops.
+   ===================================================================== */
 
 .register-page {
   min-height: 100vh;

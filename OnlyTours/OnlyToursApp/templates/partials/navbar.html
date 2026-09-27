@@ -1,0 +1,15 @@
+{% load static %}
+<header class="site-header site-brand-gradient">
+  <a class="site-logo" href="{% url 'OnlyToursApp:homepage' %}">
+    <img src="{% static 'images/image0.png' %}" alt="OnlyTours logo" />
+    <span class="site-logo-text">
+      <span class="script">Onlytourz</span>
+    </span>
+  </a>
+  <nav>
+    <ul class="site-nav">
+      <li><a href="{% url 'OnlyToursApp:homepage' %}">Home</a></li>
+      <li><a href="{% url 'OnlyToursApp:attractions' %}">Attractions</a></li>
+    </ul>
+  </nav>
+</header>
