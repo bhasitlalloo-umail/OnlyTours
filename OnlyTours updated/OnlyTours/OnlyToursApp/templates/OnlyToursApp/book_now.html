@@ -7,21 +7,21 @@
 <title>OnlyTourz | Book Your Mauritius Adventure</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Swanky+and+Moo+Moo&family=Poppins:wght@400;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{% static 'webtoursapp/booknow.css' %}">
+<link rel="stylesheet" href="{% static 'OnlyToursApp/css/book_now.css' %}">
 </head>
 <body>
 
   <header class="topnav">
     <div class="brand">
-      <img class="brand-logo" src="{% static 'webtoursapp/BookNowLogo.jpeg' %}" alt="OnlyTourz Logo">
+      <img class="brand-logo" src="{% static 'OnlyToursApp/images/BookNowLogo.jpeg' %}" alt="OnlyTourz Logo">
       <span class="brand-name"><u>ONLYTOURZ</u></span>
     </div>
     <nav class="links">
-      <a href="tempo.html">Home</a>
-      <a href="tempo.html">Book Now</a>
-      <a href="tempo.html">Attractions</a>
-      <a href="tempo.html">Tour Guide</a>
-      <a href="tempo.html">Log In</a>
+      <a href="{% url 'OnlyToursApp:home' %}">Home</a>
+      <a href="{% url 'OnlyToursApp:book_now' %}">Book Now</a>
+      <a href="{% url 'OnlyToursApp:attractions' %}">Attractions</a>
+      <a href="{% url 'OnlyToursApp:tour_guide' %}">Tour Guide</a>
+      <a href="{% url 'OnlyToursApp:log_in' %}">Log In</a>
     </nav>
   </header>
 
@@ -74,7 +74,7 @@
               <option value="Black River Gorges" data-price="2750">Black River Gorges — from Rs2750</option>
               <option value="Catamaran Sunset Sail" data-price="3500">Sunset Catamaran — from Rs3500</option>
             </select>
-            <div class="select-help"> Check out the <a href="tempo.html">Attractions page</a> for more details.</div>
+            <div class="select-help"> Check out the <a href="{% url 'OnlyToursApp:attractions' %}">Attractions page</a> for more details.</div>
             <div class="field-error" id="attractionSelectError"></div>
           </div>
           <div class="field">
@@ -86,7 +86,7 @@
               <option value="Simon B.">Simon B. — Nature, Creole/Spanish/English</option>
               <option value="Jack J.">Jack J. — Nature, English/Mandarin Chinese</option>
             </select>
-            <div class="select-help"> Check out the  <a href="tempo.html">Tour Guide page</a> for more details.</div>
+            <div class="select-help"> Check out the  <a href="{% url 'OnlyToursApp:tour_guide' %}">Tour Guide page</a> for more details.</div>
           </div>
           <div class="field">
             <label for="preferredDate">Preferred Date</label>
@@ -303,8 +303,6 @@
         return false;
       }
 
-      window.location.href = 'tempo.html';
-      return false;
     }
   </script>
 
