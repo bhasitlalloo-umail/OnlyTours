@@ -26,10 +26,7 @@ def tourGuideReg(request):
 
 
 def book_now(request):
-    return render(request, 'OnlyToursApp/coming_soon.html', {
-        'page_title': 'Book Now',
-        'message': "Booking is on its way — soon you'll be able to reserve a tour right from here.",
-    })
+    return render(request, 'OnlyToursApp/book_now.html')
 
 
 def tour_guide(request):

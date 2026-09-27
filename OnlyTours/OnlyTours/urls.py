@@ -22,3 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('OnlyToursApp.urls',namespace='OnlyToursApp')),
 ]
+urlpatterns += [
+    path('adminapp/', include('AdminApp.urls', namespace='AdminApp')),
+]
