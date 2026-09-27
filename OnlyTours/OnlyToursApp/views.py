@@ -13,3 +13,11 @@ def homepage(request):
 
 def tourGuide(request):
 	return render(request,'tour_guide.html')
+
+
+def attractions(request):
+    return render(request, 'attractions.html')
+
+
+def customerReg(request):
+    return render(request, 'customerReg.html')
