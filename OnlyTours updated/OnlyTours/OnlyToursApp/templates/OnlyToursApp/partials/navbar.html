@@ -1,0 +1,18 @@
+{% load static %}
+<header class="site-header site-brand-gradient">
+  <a class="site-logo" href="{% url 'OnlyToursApp:home' %}">
+    <img src="{% static 'OnlyToursApp/images/image0.png' %}" alt="OnlyTours logo" />
+    <span class="site-logo-text">
+      <span class="script">Onlytourz</span>
+    </span>
+  </a>
+  <nav>
+    <ul class="site-nav">
+      <li><a href="{% url 'OnlyToursApp:home' %}">Home</a></li>
+      <li><a href="{% url 'OnlyToursApp:book_now' %}">Book Now</a></li>
+      <li><a href="{% url 'OnlyToursApp:attractions' %}">Attractions</a></li>
+      <li><a href="{% url 'OnlyToursApp:tour_guide' %}">Tour Guide</a></li>
+      <li><a href="{% url 'OnlyToursApp:log_in' %}">Log In</a></li>
+    </ul>
+  </nav>
+</header>

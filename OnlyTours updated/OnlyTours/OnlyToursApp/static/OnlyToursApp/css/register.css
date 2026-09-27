@@ -1,0 +1,102 @@
+/* =====================================================================
+   Register ("Which type of user are you?") — responsive rebuild.
+   The original export positioned every element with absolute px
+   coordinates on a fixed 2586×1969 canvas, which only ever looked
+   right at one exact screen size. This version uses flexbox and
+   fluid (clamp/%) sizing so it reflows correctly on phones, tablets,
+   laptops and desktops.
+   ===================================================================== */
+
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-md) var(--space-lg) var(--space-xl);
+}
+
+.register-logo {
+  align-self: flex-start;
+  margin-bottom: var(--space-lg);
+}
+.register-logo .site-logo-text { color: var(--logo); }
+
+.register-grid {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xl);
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.register-copy {
+  flex: 1 1 380px;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.eyebrow {
+  font-weight: 500;
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
+  margin: 0;
+}
+
+.register-copy h1 {
+  font-weight: 700;
+  font-size: clamp(2.25rem, 6vw, 4rem);
+  margin: 0 0 var(--space-sm);
+}
+
+.register-copy h2 {
+  color: #000;
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  margin: 0 0 var(--space-md);
+}
+
+.user-type-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.user-type-card {
+  flex: 1 1 220px;
+  text-align: center;
+  background: var(--input-bg);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.5rem, 3vw, 2.5rem) var(--space-md);
+  font-weight: 500;
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
+  text-decoration: underline;
+  color: #000;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.user-type-card:hover,
+.user-type-card:focus-visible {
+  background: #e2e0e0;
+  transform: translateY(-2px);
+}
+
+.register-hero-image {
+  flex: 1 1 320px;
+  max-width: 480px;
+  display: block;
+}
+
+.register-hero-image img {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  object-fit: cover;
+  aspect-ratio: 931 / 1655;
+}
+
+@media (max-width: 640px) {
+  .register-hero-image { display: none; } /* keeps the form the focus on small phones */
+}

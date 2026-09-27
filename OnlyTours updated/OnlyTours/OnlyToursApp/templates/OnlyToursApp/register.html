@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create an Account · OnlyTours</title>
+  <link rel="stylesheet" href="{% static 'OnlyToursApp/css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'OnlyToursApp/css/register.css' %}">
+</head>
+<body>
+  <div class="register-page site-brand-gradient">
+
+    <a class="site-logo register-logo" href="{% url 'OnlyToursApp:home' %}">
+      <img src="{% static 'OnlyToursApp/images/image0.png' %}" alt="OnlyTours logo" />
+      <span class="site-logo-text"><span class="script">Onlytourz</span></span>
+    </a>
+
+    <div class="register-grid">
+      <div class="register-copy">
+        <p class="eyebrow">CREATE AN ACCOUNT</p>
+        <h1>WELCOME!</h1>
+        <h2>Which type of user are you?</h2>
+
+        <div class="user-type-options">
+          <a class="user-type-card" href="{% url 'OnlyToursApp:customerReg' %}">
+            Customer
+          </a>
+          <a class="user-type-card" href="{% url 'OnlyToursApp:tourGuideReg' %}">
+            Tour Guide
+          </a>
+        </div>
+      </div>
+
+      <a class="register-hero-image" href="{% url 'OnlyToursApp:home' %}" aria-label="OnlyTours — back to home">
+        <img src="{% static 'OnlyToursApp/images/_5277724560626194-10.png' %}" alt="Scenic views of Mauritius" />
+      </a>
+    </div>
+  </div>
+</body>
+</html>
