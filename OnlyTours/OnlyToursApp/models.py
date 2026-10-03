@@ -49,8 +49,21 @@ class Booking(models.Model):
 
 	
 	
-	
+#To check againnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+class TourGuideRegistration(models.Model):
+	REGISTRATION_STATUS_CHOICES = (
+        ("PENDING" , "pending"),
+        ("APPROVED" , "approved"),
+        ("REJECTED" , "rejected"),
+    )
+	Guide = models.ForeignKey(TourGuide, on_delete=models.CASCADE, help_text="Choose a Guide")
+	DocumentType = models.CharField(null=False, blank=False, max_length=100, help_text='Enter the Document Type')
+	SubmissionDate = models.DateTimeField(help_text='Enter the Submission Date')
+	RegistrationStatus = models.CharField(max_length=20, choices=REGISTRATION_STATUS_CHOICES, default="PENDING")
+	RejectionReason = models.CharField(null=True, blank=True, max_length=200, help_text='Enter a reason if rejected')
 
+	def __str__(self):
+		return f"{self.Guide} - {self.RegistrationStatus}"
 	
 	
 	

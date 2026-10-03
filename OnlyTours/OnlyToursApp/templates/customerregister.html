@@ -11,7 +11,7 @@
 <body>
   <div class="customerreg-page site-brand-gradient">
 
-    <a class="site-logo customerreg-logo" href="{% url 'OnlyToursApp:homepage' %}">
+    <a class="site-logo customerreg-logo" href="{% url 'OnlyToursApp:home' %}">
       <img src="{% static 'images/customerReg/image0.png' %}" alt="OnlyTours logo" />
       <span class="site-logo-text"><span class="script">Onlytourz</span></span>
     </a>
@@ -21,7 +21,7 @@
         <p class="eyebrow">CREATE AN ACCOUNT</p>
         <h1>Welcome new customer!</h1>
 
-        <form class="customerreg-form" method="post" action="{% url 'OnlyToursApp:customerReg' %}">
+        <form class="customerreg-form" method="post" action="{% url 'OnlyToursApp:customerregister' %}">
           {% csrf_token %}
 
           <div class="field field-full">
@@ -80,7 +80,7 @@
         </form>
       </div>
 
-      <a class="customerreg-hero-image" href="{% url 'OnlyToursApp:homepage' %}" aria-label="OnlyTours — back to home">
+      <a class="customerreg-hero-image" href="{% url 'OnlyToursApp:home' %}" aria-label="OnlyTours — back to home">
         <img src="{% static 'images/customerReg/_5277724560626194-10.png' %}" alt="Scenic views of Mauritius" />
       </a>
     </div>
