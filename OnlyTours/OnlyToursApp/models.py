@@ -3,13 +3,10 @@ from django.db import models
 from django.urls import reverse
 from django.db.models import UniqueConstraint
 from django.db.models.functions import Lower 
+from django.contrib.auth.models import User
 
 # Create your models here.
-class Customer(models.Model):
-	FirstName = models.CharField(null=False, blank=False, max_length=200,  help_text='Enter your First Name')
-	Surname = models.CharField(null=False, blank=False, max_length=200,  help_text='Enter your Surname')
-	Email = models.EmailField(max_length=100, unique=True, null=False, blank=False, help_text='Enter an Email address')
-	DateRegistered = models.DateField()
+class Customer(User):
 	PhoneNumber = models.CharField(null=True, blank=True, max_length=12, help_text='Enter a Phone Number')	
 	CountryOfOrigin = models.CharField(null=False, blank=False, max_length=50,  help_text='Enter your Country of Origin')
 	PrimaryLanguage = models.CharField(null=False, blank=False, max_length=30,  help_text='Enter your Primary Language')
