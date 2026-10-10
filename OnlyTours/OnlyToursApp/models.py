@@ -3,13 +3,10 @@ from django.db import models
 from django.urls import reverse
 from django.db.models import UniqueConstraint
 from django.db.models.functions import Lower 
+from django.contrib.auth.models import User
 
 # Create your models here.
-class Customer(models.Model):
-	FirstName = models.CharField(null=False, blank=False, max_length=200,  help_text='Enter your First Name')
-	Surname = models.CharField(null=False, blank=False, max_length=200,  help_text='Enter your Surname')
-	Email = models.EmailField(max_length=100, unique=True, null=False, blank=False, help_text='Enter an Email address')
-	DateRegistered = models.DateField()
+class Customer(User):
 	PhoneNumber = models.CharField(null=True, blank=True, max_length=12, help_text='Enter a Phone Number')	
 	CountryOfOrigin = models.CharField(null=False, blank=False, max_length=50,  help_text='Enter your Country of Origin')
 	PrimaryLanguage = models.CharField(null=False, blank=False, max_length=30,  help_text='Enter your Primary Language')
@@ -47,6 +44,23 @@ class Booking(models.Model):
 	NumberOfParticipants = models.IntegerField(null=True, blank=True, help_text='Enter the Number of Participants')
 	BookingStatus = models.CharField(max_length=20, choices = BOOKING_STATUS_CHOICES)
 
+	
+	
+
+class TourGuideRegistration(models.Model):#To check againnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+	REGISTRATION_STATUS_CHOICES = (
+        ("PENDING" , "pending"),
+        ("APPROVED" , "approved"),
+        ("REJECTED" , "rejected"),
+    )
+	Guide = models.ForeignKey(TourGuide, on_delete=models.CASCADE, help_text="Choose a Guide")
+	DocumentType = models.CharField(null=False, blank=False, max_length=100, help_text='Enter the Document Type')
+	SubmissionDate = models.DateTimeField(help_text='Enter the Submission Date')
+	RegistrationStatus = models.CharField(max_length=20, choices=REGISTRATION_STATUS_CHOICES, default="PENDING")
+	RejectionReason = models.CharField(null=True, blank=True, max_length=200, help_text='Enter a reason if rejected')
+
+	def __str__(self):
+		return f"{self.Guide} - {self.RegistrationStatus}"
 
 class Attractions(models.Model):
 
@@ -70,6 +84,29 @@ class Attractions(models.Model):
 
 	def __str__(self):
 		return self.Name
+
+class Listings(models.Model):
+	LISTING_STATUS_CHOICES = (
+		("ACTIVE", "active"),
+		("INACTIVE", "inactive"),
+	)
+	ListingID = models.AutoField(primary_key=True, help_text='Unique ID for the listing')
+	Guide = models.ForeignKey(TourGuide, on_delete=models.CASCADE, help_text="Choose a Guide")
+	TourName = models.CharField(null=False, blank=False, max_length=200, help_text='Enter the name of the tour')
+	LDescription = models.TextField(null=False, blank=False, help_text='Enter a description of the tour')
+	Duration = models.DecimalField(null=False, blank=False, max_digits=4, decimal_places=1, help_text='Enter the duration of the tour in hours')
+	MeetingPoint = models.CharField(null=False, blank=False, max_length=200, help_text='Enter the meeting point of the tour')
+	Price = models.DecimalField(null=False, blank=False, max_digits=10, decimal_places=2, help_text='Enter the price per person')
+	AvailabilityDate = models.DateField(null=False, blank=False, help_text='Enter the date the tour is available')
+	ListingsStatus = models.CharField(max_length=20, choices=LISTING_STATUS_CHOICES, help_text='Select the status of the listing')
+	DateCreated = models.DateField(null=False, blank=False, help_text='Enter the date the listing was created')
+
+	def __str__(self):
+		return self.TourName
+
+class ListingAttractions(models.Model):
+	Listing = models.ForeignKey(Listings, on_delete=models.CASCADE, help_text="Choose a Listing")
+	Attraction = models.ForeignKey(Attractions, on_delete=models.CASCADE, help_text="Choose an Attraction")
 	
 
 
