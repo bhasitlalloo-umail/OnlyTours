@@ -108,6 +108,22 @@ class ListingAttractions(models.Model):
 	Listing = models.ForeignKey(Listings, on_delete=models.CASCADE, help_text="Choose a Listing")
 	Attraction = models.ForeignKey(Attractions, on_delete=models.CASCADE, help_text="Choose an Attraction")
 	
+
+
+class Payment(models.Model):
+
+    PaymentID = models.AutoField(primary_key=True)
+    BookingID = models.ForeignKey(Booking, on_delete=models.CASCADE)
+    Amount = models.DecimalField(max_digits=10, decimal_places=2)
+    Currency = models.CharField(max_length=10)
+    ExchangeRate = models.DecimalField(max_digits=10, decimal_places=4)
+    TransactionDate = models.DateTimeField()
+    PaymentStatus = models.CharField(max_length=20)
+    PaymentMethod = models.CharField(max_length=30)
+
+    def __str__(self):
+        return str(self.PaymentID)
+	
 	
 	
 	
