@@ -46,8 +46,8 @@ class Booking(models.Model):
 
 	
 	
-#To check againnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-class TourGuideRegistration(models.Model):
+
+class TourGuideRegistration(models.Model):#To check againnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 	REGISTRATION_STATUS_CHOICES = (
         ("PENDING" , "pending"),
         ("APPROVED" , "approved"),
