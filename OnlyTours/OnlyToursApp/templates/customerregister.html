@@ -20,10 +20,13 @@
       <div class="customerreg-form-wrap">
         <p class="eyebrow">CREATE AN ACCOUNT</p>
         <h1>Welcome new customer!</h1>
-
-        <form class="customerreg-form" method="post" action="{% url 'OnlyToursApp:customerregister' %}">
+	<div class="ui error message">
+		{{ form.errors}}
+	</div>
+        <form class="customerreg-form" method="post">
           {% csrf_token %}
-
+	  {{ form.as_table }}
+	<!-----
           <div class="field field-full">
             <label for="email">Email Address</label>
             <input id="email" name="email" type="email" placeholder="you@example.com" required>
@@ -73,10 +76,11 @@
             <label for="confirm_password">Confirm Password</label>
             <input id="confirm_password" name="confirm_password" type="password" placeholder="Confirm your password" required minlength="8">
           </div>
-
+	----->
           <div class="field field-full">
             <button type="submit" class="btn-accent">Create Account</button>
           </div>
+	
         </form>
       </div>
 
