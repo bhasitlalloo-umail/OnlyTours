@@ -84,6 +84,29 @@ class Attractions(models.Model):
 
 	def __str__(self):
 		return self.Name
+
+class Listings(models.Model):
+	LISTING_STATUS_CHOICES = (
+		("ACTIVE", "active"),
+		("INACTIVE", "inactive"),
+	)
+	ListingID = models.AutoField(primary_key=True, help_text='Unique ID for the listing')
+	Guide = models.ForeignKey(TourGuide, on_delete=models.CASCADE, help_text="Choose a Guide")
+	TourName = models.CharField(null=False, blank=False, max_length=200, help_text='Enter the name of the tour')
+	LDescription = models.TextField(null=False, blank=False, help_text='Enter a description of the tour')
+	Duration = models.DecimalField(null=False, blank=False, max_digits=4, decimal_places=1, help_text='Enter the duration of the tour in hours')
+	MeetingPoint = models.CharField(null=False, blank=False, max_length=200, help_text='Enter the meeting point of the tour')
+	Price = models.DecimalField(null=False, blank=False, max_digits=10, decimal_places=2, help_text='Enter the price per person')
+	AvailabilityDate = models.DateField(null=False, blank=False, help_text='Enter the date the tour is available')
+	ListingsStatus = models.CharField(max_length=20, choices=LISTING_STATUS_CHOICES, help_text='Select the status of the listing')
+	DateCreated = models.DateField(null=False, blank=False, help_text='Enter the date the listing was created')
+
+	def __str__(self):
+		return self.TourName
+
+class ListingAttractions(models.Model):
+	Listing = models.ForeignKey(Listings, on_delete=models.CASCADE, help_text="Choose a Listing")
+	Attraction = models.ForeignKey(Attractions, on_delete=models.CASCADE, help_text="Choose an Attraction")
 	
 	
 	
