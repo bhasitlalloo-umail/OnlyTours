@@ -11,4 +11,5 @@ urlpatterns = [
     path('customerregister/',views.customerregister, name='customerregister'),
     path('guideregister/',views.guideregister, name='guideregister'),
     path('login/',views.login, name='login'),
+    path('login/',views.tourguideregister, name='tourguideregister'),
     ]
