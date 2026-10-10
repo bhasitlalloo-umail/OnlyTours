@@ -1,0 +1,285 @@
+:root {
+  --field-grey: #d9d9d9;
+  --yellow: #ffc117;
+  --text-dark: #0a0a0a;
+  --eyebrow-blue: #0e67cc;
+  --card-cream: #fdf8f8;
+  --error-red: #c0342d;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Helvetica, Arial, sans-serif;
+  color: var(--text-dark);
+  background: radial-gradient(
+    120% 100% at 12% 6%,
+    #eafdfe 0%,
+    #a9eef2 30%,
+    #5fd9e5 65%,
+    #45cfe0 100%
+  );
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+
+
+/* =========================
+   HEADER / NAVIGATION
+   ========================= */
+
+header.topnav {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(
+    90deg,
+    #cdf6f8 0%,
+    #74e3ea 55%,
+    #48d3e1 100%
+  );
+  padding: 10px 28px;
+  overflow: hidden;
+}
+
+header.topnav::after {
+  content: "";
+  position: absolute;
+  top: -40%;
+  left: 20%;
+  width: 45%;
+  height: 180%;
+  background: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.65) 45%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(8deg);
+  pointer-events: none;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+  text-decoration: none;
+}
+
+.brand-name {
+  font-family: "Swanky and Moo Moo", cursive;
+  font-size: 1.5rem;
+  color: #14b8b0;
+  letter-spacing: 2px;
+}
+
+.brand-logo {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+}
+
+nav.links {
+  display: flex;
+  gap: 22px;
+  position: relative;
+  z-index: 1;
+}
+
+nav.links a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: #ffffff;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+nav.links a:hover {
+  opacity: 0.85;
+}
+
+/* =========================
+   MAIN LAYOUT
+   ========================= */
+
+.signup-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 40px;
+  max-width: 1120px;
+  margin: 30px auto 50px;
+  padding: 0 20px;
+  align-items: stretch;
+}
+
+.signup-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.eyebrow {
+  color: #444;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.signup-col h1 {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  letter-spacing: -0.3px;
+  margin-bottom: 26px;
+}
+
+/* =========================
+   FORM FIELDS
+   ========================= */
+
+.field-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 24px;
+  row-gap: 18px;
+  margin-bottom: 26px;
+}
+
+.field.full {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+.field input {
+  width: 100%;
+  height: 46px;
+  border: none;
+  border-radius: 8px;
+  background: var(--field-grey);
+  padding: 0 16px;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  font-family: inherit;
+}
+
+.field input:focus {
+  outline: 2px solid var(--eyebrow-blue);
+  outline-offset: -1px;
+}
+
+.field input.invalid {
+  outline: 2px solid #e0453f;
+  outline-offset: -1px;
+  background: #fdecea;
+}
+
+.field-error {
+  display: none;
+  color: var(--error-red);
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 5px;
+}
+
+.field-error.show {
+  display: block;
+}
+
+/* =========================
+   SUBMIT BUTTON
+   ========================= */
+
+.submit-btn {
+  background: var(--yellow);
+  border: none;
+  padding: 16px 0;
+  width: 100%;
+  border-radius: 999px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-decoration: underline;
+  color: #000;
+  cursor: pointer;
+  font-family: inherit;
+  margin-top: auto;
+}
+
+.submit-btn:hover {
+  filter: brightness(0.97);
+}
+
+/* =========================
+   SIDE PHOTO
+   ========================= */
+
+.photo-col {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  min-height: 420px;
+}
+
+.photo-col img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+   ========================= */
+
+@media (max-width: 800px) {
+  .signup-layout {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .photo-col {
+    min-height: 260px;
+    order: 2;
+  }
+
+  .signup-col h1 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .field-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  header.topnav {
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px 18px;
+  }
+
+  nav.links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+  }
+}
