@@ -1,0 +1,226 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OnlyTourz | Guide Sign Up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Swanky+and+Moo+Moo&family=Poppins:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'OnlyToursApp/css/tourguideregister.css' %}">
+</head>
+<body>
+
+  <header class="topnav">
+
+        <div class="brand">
+
+            <img
+                class="brand-logo"
+                src="{% static 'images/BookNowLogo.jpeg' %}"
+                alt="OnlyTourz Logo"
+            >
+
+            <span class="brand-name">
+                <u>ONLYTOURZ</u>
+            </span>
+
+        </div>
+
+        <nav class="links">
+            <a href="{% url 'OnlyToursApp:home' %}">Home</a>
+            <a href="{% url 'OnlyToursApp:booknow' %}">Book Now</a>
+            <a href="{% url 'OnlyToursApp:attractions' %}">Attractions</a>
+            <a href="{% url 'OnlyToursApp:tourguides' %}">Tour Guide</a>
+            <a href="{% url 'OnlyToursApp:login' %}">Log In</a>
+        </nav>
+
+    </header>
+
+  <div class="signup-layout">
+
+    <form class="signup-col" id="signupForm" novalidate onsubmit="return validateAndSubmit(event)">
+      <div class="eyebrow">CREATE AN ACCOUNT</div>
+      <h1>WELCOME NEW GUIDE!</h1>
+
+      <div class="field-grid">
+        <div class="field">
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" required minlength="2" maxlength="30" autocomplete="given-name">
+          <div class="field-error" id="firstNameError"></div>
+        </div>
+        <div class="field">
+          <label for="lastName">Last Name</label>
+          <input type="text" id="lastName" required minlength="2" maxlength="30" autocomplete="family-name">
+          <div class="field-error" id="lastNameError"></div>
+        </div>
+
+        <div class="field full">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="e.g. rishabh123@gmail.com" required maxlength="100" autocomplete="email">
+          <div class="field-error" id="emailError"></div>
+        </div>
+
+        <div class="field full">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" placeholder="e.g. 5XXX XXXX" required minlength="7" maxlength="16" autocomplete="tel">
+          <div class="field-error" id="phoneError"></div>
+        </div>
+
+        <div class="field full">
+          <label for="password">Password</label>
+          <input type="password" id="password" required minlength="8" maxlength="64" autocomplete="new-password">
+          <div class="field-error" id="passwordError"></div>
+        </div>
+
+        <div class="field full">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" required maxlength="64" autocomplete="new-password">
+          <div class="field-error" id="confirmPasswordError"></div>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">Create Account</button>
+    </form>
+
+    <div class="photo-col">
+      <img src="{% static 'images/TGSidePhoto.jpg' %}" alt="Collage of Mauritius beaches, Le Morne and lagoons">
+    </div>
+
+  </div>
+
+  <script>
+    const firstNameInput = document.getElementById('firstName');
+    const lastNameInput = document.getElementById('lastName');
+    const emailInput = document.getElementById('email');
+    const phoneInput = document.getElementById('phone');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+
+    // Providers accepted for the email field — extend this list if you want to
+    // allow more (or switch to a plain format check to accept any domain).
+    const ALLOWED_EMAIL_DOMAINS = [
+      'gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com', 'icloud.com',
+      'live.com', 'aol.com', 'protonmail.com', 'msn.com', 'mail.com', 'ymail.com'
+    ];
+
+    // Each validator runs on the field's raw value and returns an error
+    // message, or null when the value is valid.
+    function validateName(v, label){
+      if (v.trim() === '') return 'Please enter your ' + label + '.';
+      if (!/^[A-Za-z\s'-]{2,30}$/.test(v.trim())) return label.charAt(0).toUpperCase() + label.slice(1) + ' must contain letters only (2-30 characters, no numbers or special characters).';
+      return null;
+    }
+
+    function validateFirstName(v){ return validateName(v, 'first name'); }
+    function validateLastName(v){ return validateName(v, 'last name'); }
+
+    function validateEmail(v){
+      if (v.trim() === '') return 'Please enter your email address.';
+      const match = v.trim().match(/^[^\s@]+@([^\s@]+\.[^\s@]+)$/);
+      if (!match) return 'Please enter a valid email address, e.g. name@gmail.com.';
+      const domain = match[1].toLowerCase();
+      if (!ALLOWED_EMAIL_DOMAINS.includes(domain)) {
+        return 'Please use a recognized email provider (e.g. Gmail, Yahoo, Outlook, iCloud).';
+      }
+      return null;
+    }
+
+    function validatePhone(v){
+      if (v.trim() === '') return 'Please enter your phone number.';
+      if (!/^\+?[0-9\s\-]{7,15}$/.test(v)) return 'Please enter a valid phone number (7-15 digits, may include + and spaces).';
+      return null;
+    }
+
+    function validatePassword(v){
+      if (v === '') return 'Please enter a password.';
+      if (v.length < 8) return 'Password must be at least 8 characters long.';
+      if (!/[A-Za-z]/.test(v) || !/[0-9]/.test(v)) return 'Password must contain both letters and numbers.';
+      return null;
+    }
+
+    function validateConfirmPassword(v){
+      if (v === '') return 'Please confirm your password.';
+      if (v !== passwordInput.value) return 'Passwords do not match.';
+      return null;
+    }
+
+    function showFieldError(field, errEl, msg){
+      field.classList.add('invalid');
+      errEl.textContent = msg;
+      errEl.classList.add('show');
+    }
+
+    function clearFieldError(field, errEl){
+      field.classList.remove('invalid');
+      errEl.textContent = '';
+      errEl.classList.remove('show');
+    }
+
+    // Wires a field up to its validate function + inline error element.
+    // Returns a check() you can call any time (e.g. on submit) that returns true/false.
+    function setupValidationMessage(field, validateFn){
+      const errEl = document.getElementById(field.id + 'Error');
+      const check = () => {
+        const msg = validateFn(field.value);
+        if (msg) {
+          showFieldError(field, errEl, msg);
+          return false;
+        }
+        clearFieldError(field, errEl);
+        return true;
+      };
+      field.addEventListener('input', check);
+      field.addEventListener('change', check);
+      field.addEventListener('blur', check);
+      return check;
+    }
+
+    const validators = [
+      setupValidationMessage(firstNameInput, validateFirstName),
+      setupValidationMessage(lastNameInput, validateLastName),
+      setupValidationMessage(emailInput, validateEmail),
+      setupValidationMessage(phoneInput, validatePhone),
+      setupValidationMessage(passwordInput, validatePassword),
+      setupValidationMessage(confirmPasswordInput, validateConfirmPassword)
+    ];
+
+    // If the password changes after the confirmation was typed, re-check the match.
+    passwordInput.addEventListener('input', () => {
+      if (confirmPasswordInput.value !== '') validators[5]();
+    });
+
+    // Runs every field's validator so ALL problems are flagged at once (not just
+    // the first one), then focuses/scrolls to the first invalid field, if any.
+    function validateAndSubmit(event){
+      event.preventDefault();
+
+      let firstInvalidField = null;
+      const requiredFields = [
+        firstNameInput,
+        lastNameInput,
+        emailInput,
+        phoneInput,
+        passwordInput,
+        confirmPasswordInput
+      ];
+
+      for (let i = 0; i < requiredFields.length; i++) {
+        if (!validators[i]() && !firstInvalidField) {
+          firstInvalidField = requiredFields[i];
+        }
+      }
+
+      if (firstInvalidField) {
+        firstInvalidField.focus();
+        firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return false;
+      }
+
+      window.location.href = 'booked/';
+      return true;
+    }
+  </script>
+
+</body>
+</html>
