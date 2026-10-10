@@ -2,6 +2,8 @@ from django.shortcuts import render
 from .forms import *
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
+from django.views.generic import ListView
+from .models import TourGuide
 
 # Create your views here.
 def home(request):
@@ -10,8 +12,10 @@ def home(request):
 def attractions(request):
 	return render(request,'attractions.html')
 
-def tourguides(request):
-	return render(request,'tour_guide.html')
+class TourGuideListView(ListView):
+	model = TourGuide
+	template_name = 'tour_guide.html'
+	context_object_name = 'tourguides'
 
 def booknow(request):
 	return render(request,'booknow.html')
