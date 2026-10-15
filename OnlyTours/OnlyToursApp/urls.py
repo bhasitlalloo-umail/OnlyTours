@@ -3,7 +3,7 @@ from . import views
 app_name = 'OnlyToursApp'
 urlpatterns = [
     path('', views.home, name='home'),
-    path('attractions/',views.attractions, name='attractions'),
+    path('attractions/',views.AttractionsView.as_view(), name='attractions'),
     path('tourguides/', views.tourguides, name='tourguides'),
     path('booknow/',views.booknow, name='booknow'),
     path('booked/', views.booked, name='booked'),

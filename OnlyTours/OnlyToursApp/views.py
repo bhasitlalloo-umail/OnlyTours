@@ -2,13 +2,14 @@ from django.shortcuts import render
 from .forms import *
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
+from django.views.generic import TemplateView
 
 # Create your views here.
 def home(request):
 	return render(request,'home.html')
 
-def attractions(request):
-	return render(request,'attractions.html')
+class AttractionsView(TemplateView):
+    template_name = 'attractions.html'
 
 def tourguides(request):
 	return render(request,'tour_guide.html')
