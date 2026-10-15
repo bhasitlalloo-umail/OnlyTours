@@ -881,3 +881,377 @@
   align-items: center;
   justify-content: center;
 }
+
+
+/* =========================================================
+   ONLYTOURZ RESPONSIVE OVERRIDES
+   These rules keep the original desktop styling and make
+   the Figma-exported layout adapt to smaller screens.
+   ========================================================= */
+
+/* Large laptops and tablets */
+@media (max-width: 1800px) {
+
+  .home {
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .home > .desktop {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    gap: 0;
+  }
+
+  .header-2 {
+    position: relative;
+    left: 0;
+    right: auto;
+    top: 0;
+    width: 100%;
+    height: auto;
+    min-height: 100px;
+    padding: 18px 4%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header-2 .onlytourz,
+  .header-2 .image4,
+  .header-2 .nav {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+  }
+
+  .header-2 .onlytourz {
+    width: auto;
+  }
+
+  .header-2 .image4 {
+    width: 75px;
+    height: 75px;
+  }
+
+  .header-2 .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .header-2 .nav a {
+    font-size: clamp(14px, 1.5vw, 24px);
+  }
+
+  .frame-1 {
+    width: 100%;
+    height: auto;
+    min-height: 700px;
+    padding: 0;
+    display: block;
+    position: relative;
+  }
+
+  .home-page {
+    width: 100%;
+    height: 700px;
+    position: relative;
+    left: 0;
+    top: 0;
+    aspect-ratio: auto;
+  }
+
+  .mauritius-aesthetic,
+  .mauritius-aesthetic-vectorized {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    transform: none;
+    object-fit: cover;
+  }
+
+  .discover-paradise-experience-the-beauty-of-mauritius-from-stunning-beaches-to-breathtaking-hikes-let-onlytourz-be-your-guide-to-unforgettable-memories {
+    left: 6%;
+    top: 16%;
+    width: 52%;
+    height: auto;
+    -webkit-text-stroke: 0;
+  }
+
+  .discover-paradise-experience-the-beauty-of-mauritius-from-stunning-beaches-to-breathtaking-hikes-let-onlytourz-be-your-guide-to-unforgettable-memories span {
+    font-size: clamp(28px, 3.2vw, 48px);
+    line-height: 1.15;
+  }
+
+  .discover-paradise-experience-the-beauty-of-mauritius-from-stunning-beaches-to-breathtaking-hikes-let-onlytourz-be-your-guide-to-unforgettable-memories-span4 {
+    font-size: clamp(38px, 4vw, 64px);
+  }
+
+  .discover-paradise-experience-the-beauty-of-mauritius-from-stunning-beaches-to-breathtaking-hikes-let-onlytourz-be-your-guide-to-unforgettable-memories-span5,
+  .discover-paradise-experience-the-beauty-of-mauritius-from-stunning-beaches-to-breathtaking-hikes-let-onlytourz-be-your-guide-to-unforgettable-memories-span6,
+  .discover-paradise-experience-the-beauty-of-mauritius-from-stunning-beaches-to-breathtaking-hikes-let-onlytourz-be-your-guide-to-unforgettable-memories-span7 {
+    font-size: clamp(58px, 7vw, 110px);
+  }
+
+  .button-explore,
+  .button-tg,
+  .book-now,
+  .explore-attractions {
+    position: absolute;
+  }
+
+  .button-explore {
+    left: 6%;
+    top: 70%;
+    width: 24%;
+    height: auto;
+    min-height: 60px;
+  }
+
+  .book-now {
+    left: 6%;
+    top: 70%;
+    width: 24%;
+    height: auto;
+    font-size: clamp(18px, 2vw, 30px);
+    line-height: 1.2;
+  }
+
+  .button-tg {
+    left: 33%;
+    top: 70%;
+    width: 25%;
+    height: auto;
+    min-height: 60px;
+  }
+
+  .explore-attractions {
+    left: 33%;
+    top: 70%;
+    width: 25%;
+    height: auto;
+    font-size: clamp(18px, 2vw, 30px);
+    line-height: 1.2;
+  }
+
+  .feature-cards-1 {
+    width: 100%;
+    height: auto;
+    padding: 70px 5%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .feature-cards-1 .card-1,
+  .feature-cards-1 .card-2,
+  .feature-cards-1 .card-3 {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    height: auto;
+    min-height: 480px;
+  }
+
+  .feature-cards-1 .card-1 *,
+  .feature-cards-1 .card-2 *,
+  .feature-cards-1 .card-3 * {
+    max-width: 100%;
+  }
+
+  .text-row-2 {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    height: auto;
+    padding: 60px 5%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    overflow: visible;
+  }
+
+  .text-row-2 .text-block-1,
+  .text-row-2 .text-block-2,
+  .text-row-2 .text-block-3 {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    height: auto;
+    min-width: 0;
+  }
+
+  .text-row-2 .police,
+  .text-row-2 .samu,
+  .text-row-2 .fire,
+  .text-row-2 ._112-999,
+  .text-row-2 ._114,
+  .text-row-2 ._115 {
+    font-size: clamp(20px, 2vw, 30px);
+  }
+}
+
+
+/* Tablets */
+@media (max-width: 900px) {
+
+  .header-2 {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 25px;
+  }
+
+  .header-2 .onlytourz {
+    flex: 1 1 250px;
+  }
+
+  .header-2 .image4 {
+    width: 60px;
+    height: 60px;
+  }
+
+  .header-2 .nav {
+    width: 100%;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .home-page {
+    height: 620px;
+  }
+
+  .discover-paradise-experience-the-beauty-of-mauritius-from-stunning-beaches-to-breathtaking-hikes-let-onlytourz-be-your-guide-to-unforgettable-memories {
+    left: 6%;
+    top: 13%;
+    width: 62%;
+  }
+
+  .feature-cards-1 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .text-row-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Phones */
+@media (max-width: 600px) {
+
+  .header-2 {
+    padding: 14px 5%;
+    flex-direction: column;
+  }
+
+  .header-2 .onlytourz {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .header-2 .onlytourz-span {
+    font-size: 58px;
+  }
+
+  .header-2 .onlytourz-span2 {
+    font-size: 32px;
+  }
+
+  .header-2 .image4 {
+    width: 55px;
+    height: 55px;
+  }
+
+  .header-2 .nav {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .header-2 .nav a {
+    font-size: 16px;
+  }
+
+  .home-page {
+    height: 720px;
+  }
+
+  .discover-paradise-experience-the-beauty-of-mauritius-from-stunning-beaches-to-breathtaking-hikes-let-onlytourz-be-your-guide-to-unforgettable-memories {
+    left: 7%;
+    top: 9%;
+    width: 86%;
+    text-align: center;
+  }
+
+  .discover-paradise-experience-the-beauty-of-mauritius-from-stunning-beaches-to-breathtaking-hikes-let-onlytourz-be-your-guide-to-unforgettable-memories span {
+    font-size: clamp(23px, 7vw, 34px);
+    line-height: 1.2;
+  }
+
+  .discover-paradise-experience-the-beauty-of-mauritius-from-stunning-beaches-to-breathtaking-hikes-let-onlytourz-be-your-guide-to-unforgettable-memories-span4 {
+    font-size: clamp(34px, 10vw, 52px);
+  }
+
+  .discover-paradise-experience-the-beauty-of-mauritius-from-stunning-beaches-to-breathtaking-hikes-let-onlytourz-be-your-guide-to-unforgettable-memories-span5,
+  .discover-paradise-experience-the-beauty-of-mauritius-from-stunning-beaches-to-breathtaking-hikes-let-onlytourz-be-your-guide-to-unforgettable-memories-span6,
+  .discover-paradise-experience-the-beauty-of-mauritius-from-stunning-beaches-to-breathtaking-hikes-let-onlytourz-be-your-guide-to-unforgettable-memories-span7 {
+    font-size: clamp(48px, 15vw, 80px);
+  }
+
+  .button-explore,
+  .book-now,
+  .button-tg,
+  .explore-attractions {
+    left: 10%;
+    width: 80%;
+  }
+
+  .button-explore {
+    top: 62%;
+    min-height: 56px;
+  }
+
+  .book-now {
+    top: 62%;
+    font-size: 20px;
+  }
+
+  .button-tg {
+    top: 74%;
+    min-height: 56px;
+  }
+
+  .explore-attractions {
+    top: 74%;
+    font-size: 20px;
+  }
+
+  .feature-cards-1 {
+    grid-template-columns: 1fr;
+    padding: 50px 6%;
+  }
+
+  .feature-cards-1 .card-1,
+  .feature-cards-1 .card-2,
+  .feature-cards-1 .card-3 {
+    min-height: 0;
+  }
+
+  .text-row-2 {
+    padding: 40px 6%;
+    gap: 25px;
+  }
+}

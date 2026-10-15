@@ -46,5 +46,8 @@ def customerregister(request):
 def guideregister(request):
 	return render(request,'guideregister.html')
 
+def tourguideregister(request):
+	return render(request,'tourguideregister.html')
+
 def login(request):
 	return render(request,'login.html')
