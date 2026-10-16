@@ -99,436 +99,58 @@
 
 
                 <!-- GALLERY -->
-                <div class="gallery">
+                <div class="gallery guide-grid">
 
+                    {% for guide in tourguides %}
+                    <div class="guide-card">
 
-                    <!-- COLUMN 1 -->
-                    <div class="column-1">
+                        <div class="author2">
 
+                            <img
+                                class="image3"
+                                src="{% static 'tourism/images/image2.png' %}"
+                                alt="{{ guide.FirstName }} {{ guide.Surname }}"
+                            >
 
-                        <!-- SAM PETERSON -->
-                        <div class="group-9">
-
-                            <div class="card-2">
-
-                                <div class="author">
-
-                                    <img
-                                        class="image2"
-                                        src="{% static 'tourism/images/image1.svg' %}"
-                                        alt="Sam Peterson"
-                                    >
-
-                                    <div class="text">
-
-                                        <div class="sam-peterson">
-                                            Sam Peterson
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-
-                                <div class="group-1">
-
-                                    <div class="about-me-born-and-raised-in-mauritius-i-am-passionate-about-sharing-our-island-s-beauty-from-stunning-beaches-to-hidden-waterfalls-let-me-guide-you-through-an-authentic-mauritian-experience">
-
-                                        <strong>About me:</strong>
-
-                                        Born and raised in Mauritius, I am passionate
-                                        about sharing our island's beauty. From stunning
-                                        beaches to hidden waterfalls, let me guide you
-                                        through an authentic Mauritian experience.
-
-                                    </div>
-
-
-                                    <div class="years-of-experience-12-years">
-
-                                        <strong>Years of Experience:</strong>
-                                        12 years
-
-                                    </div>
-
-
-                                    <div class="languages-spoken-english-turkish">
-
-                                        <strong>Languages Spoken:</strong>
-                                        English, Turkish
-
-                                    </div>
-
-
-                                    <div class="phone-number-230-5811-5935-email-address-sampeterson-onlytours-intnet-mu">
-
-                                        <strong>Phone Number:</strong>
-                                        +230 5811 5935
-
-                                        <br>
-
-                                        <strong>Email Address:</strong>
-                                        sampeterson@onlytours.intnet.mu
-
-                                    </div>
-
-                                </div>
-
+                            <div class="guide-name">
+                                {{ guide.FirstName }} {{ guide.Surname }}
                             </div>
 
                         </div>
 
+                        <div class="guide-info">
 
-                        <!-- JEAN JACK -->
-                        <div class="card-3">
-
-                            <div class="author2">
-
-                                <img
-                                    class="image3"
-                                    src="{% static 'tourism/images/image2.png' %}"
-                                    alt="Jean Jack"
-                                >
-
-                                <div class="text2"></div>
-
-                                <div class="jean-jack">
-                                    Jean Jack
-                                </div>
-
-                            </div>
-
-
-                            <div class="group-2">
-
-                                <div class="about-me-a-passionate-of-nature-who-aims-to-share-his-perspective-of-nature-to-the-unknown">
-
-                                    <strong>About me:</strong>
-
-                                    A passionate of nature, who aims to share
-                                    his perspective of nature to the unknown.
-
-                                </div>
-
-
-                                <div class="years-of-experience-10-years">
-
-                                    <strong>Years of Experience:</strong>
-                                    10 years
-
-                                </div>
-
-
-                                <div class="languages-spoken-english-and-mandarin-chinese">
-
-                                    <strong>Languages Spoken:</strong>
-                                    English and Mandarin Chinese
-
-                                </div>
-
-
-                                <div class="phone-number-230-5945-4365-email-address-jeanjack-onlytours-intnet-mu">
-
-                                    <strong>Phone Number:</strong>
-                                    +230 5945 4365
-
-                                    <br>
-
-                                    <strong>Email Address:</strong>
-                                    jeanjack@onlytours.intnet.mu
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- COLUMN 2 -->
-                    <div class="column-2">
-
-
-                        <!-- JEAN PAUL DE LACROIX -->
-                        <div class="card-32">
-
-                            <div class="author2">
-
-                                <img
-                                    class="image3"
-                                    src="{% static 'tourism/images/image3.png' %}"
-                                    alt="Jean Paul De Lacroix"
-                                >
-
-                                <div class="text3">
-
-                                    <div class="jean-paul-de-lacroix">
-                                        Jean Paul De Lacroix
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="group-5">
-
-                                <div class="about-me-i-love-exploring-our-island-s-rich-heritage-let-me-take-you-beyond-the-tourist-spots-to-discover-our-multicultural-traditions-and-colonial-past">
-
-                                    <strong>About me:</strong>
-
-                                    I love exploring our island's rich heritage.
-                                    Let me take you beyond the tourist spots to
-                                    discover our multicultural traditions and
-                                    colonial past.
-
-                                </div>
-
-
-                                <div class="years-of-experience-28-years">
-
-                                    <strong>Years of Experience:</strong>
-                                    28 years
-
-                                </div>
-
-
-                                <div class="languages-spoken-english-french">
-
-                                    <strong>Languages Spoken:</strong>
-                                    English, French
-
-                                </div>
-
-
-                                <div class="phone-number-230-5250-7845-email-address-jeanpauldelacroix-onlytours-intnet-mu">
-
-                                    <strong>Phone Number:</strong>
-                                    +230 5250 7845
-
-                                    <br>
-
-                                    <strong>Email Address:</strong>
-                                    jeanpauldelacroix@onlytours.intnet.mu
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <!-- RED JOHN -->
-                        <div class="card-5">
-
-                            <div class="author2">
-
-                                <img
-                                    class="image3"
-                                    src="{% static 'tourism/images/image4.png' %}"
-                                    alt="Red John"
-                                >
-
-                                <div class="text4">
-
-                                    <div class="red-john">
-                                        Red John
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="group-3">
-
-                                <div class="about-me-i-am-a-hard-working-nature-freak-who-aims-to-unravel-the-hidden-beauty-of-mauritius-fauna-and-flora">
-
-                                    <strong>About me:</strong>
-
-                                    I am a hard-working nature freak who aims
-                                    to unravel the hidden beauty of Mauritius’
-                                    fauna and flora.
-
-                                </div>
-
-
-                                <div class="years-of-experience-18-years">
-
-                                    <strong>Years of Experience:</strong>
-                                    18 years
-
-                                </div>
-
-
-                                <div class="languages-spoken-english-french-german-and-portuguese">
-
-                                    <strong>Languages Spoken:</strong>
-                                    English, French, German and Portuguese
-
-                                </div>
-
-
-                                <div class="phone-number-230-5677-6769-email-address-redjohn-onlytours-intnet-mu">
-
-                                    <strong>Phone Number:</strong>
-                                    +230 5677 6769
-
-                                    <br>
-
-                                    <strong>Email Address:</strong>
-                                    redjohn@onlytours.intnet.mu
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- COLUMN 3 -->
-                    <div class="column-3">
-
-
-                        <!-- LA PEACE -->
-                        <div class="card-52">
-
-                            <div class="author3">
-
-                                <img
-                                    class="image3"
-                                    src="{% static 'tourism/images/image5.png' %}"
-                                    alt="La Peace"
-                                >
-
-                                <div class="text5">
-
-                                    <div class="la-peace">
-                                        La Peace
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="about-me-a-calm-individual-who-love-helping-other-person-i-take-pride-in-making-sure-every-trip-feels-relaxed-and-personal-whether-you-re-after-quiet-nature-spots-or-a-friendly-chat-about-the-local-culture">
-
+                            <p>
                                 <strong>About me:</strong>
+                                {{ guide.Biography|default:"Not provided" }}
+                            </p>
 
-                                A calm individual who love helping other person.
-                                I take pride in making sure every trip feels relaxed
-                                and personal, whether you’re after quiet nature spots
-                                or a friendly chat about the local culture.
-
-                            </div>
-
-
-                            <div class="years-of-experience-7-years">
-
+                            <p>
                                 <strong>Years of Experience:</strong>
-                                7 years
+                                {% if guide.YearsofExperience is not None %}{{ guide.YearsofExperience }} years{% else %}Not provided{% endif %}
+                            </p>
 
-                            </div>
-
-
-                            <div class="languages-spoken-english-arabic-and-hindi">
-
+                            <p>
                                 <strong>Languages Spoken:</strong>
-                                English, Arabic and Hindi
+                                {% for lang in guide.languagesspoken_set.all %}{{ lang.Language|default_if_none:"" }}{% if not forloop.last %}, {% endif %}{% empty %}Not provided{% endfor %}
+                            </p>
 
-                            </div>
-
-
-                            <div class="phone-number-230-5765-5289-email-address-lapeace-onlytours-intnet-mu">
-
+                            <p>
                                 <strong>Phone Number:</strong>
-                                +230 5765 5289
-
+                                {{ guide.PhoneNumber|default:"Not provided" }}
                                 <br>
-
                                 <strong>Email Address:</strong>
-                                lapeace@onlytours.intnet.mu
-
-                            </div>
-
-                        </div>
-
-
-                        <!-- SIMON BAKER -->
-                        <div class="card-6">
-
-                            <div class="author2">
-
-                                <img
-                                    class="image4"
-                                    src="{% static 'tourism/images/image6.png' %}"
-                                    alt="Simon Baker"
-                                >
-
-                                <div class="text6">
-
-                                    <div class="simon-baker">
-                                        Simon Baker
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="group-7">
-
-                                <div class="about-me-an-optimistic-individual-who-believes-that-human-and-nature-interaction-is-a-must-for-a-happy-life">
-
-                                    <strong>About me:</strong>
-
-                                    An optimistic individual who believes that
-                                    human and nature interaction is a must
-                                    for a happy life.
-
-                                </div>
-
-
-                                <div class="years-of-experience-13-years">
-
-                                    <strong>Years of Experience:</strong>
-                                    13 years
-
-                                </div>
-
-
-                                <div class="languages-spoken-english-spanish-and-russian">
-
-                                    <strong>Languages Spoken:</strong>
-                                    English, Spanish and Russian
-
-                                </div>
-
-
-                                <div class="phone-number-230-5857-4565-email-address-simonbaker-onlytours-intnet-mu">
-
-                                    <strong>Phone Number:</strong>
-                                    +230 5857 4565
-
-                                    <br>
-
-                                    <strong>Email Address:</strong>
-                                    simonbaker@onlytours.intnet.mu
-
-                                </div>
-
-                            </div>
+                                {{ guide.Email }}
+                            </p>
 
                         </div>
 
                     </div>
+                    {% empty %}
+                    <p class="guide-empty">No tour guides available yet.</p>
+                    {% endfor %}
 
                 </div>
-
             </div>
 
         </div>

@@ -3,7 +3,8 @@ from django.contrib.auth.views import LoginView
 from .forms import *
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
-from django.views.generic import TemplateView
+from django.views.generic import ListView
+from .models import TourGuide
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
@@ -24,8 +25,10 @@ def attractions(request):
 class AttractionsView(TemplateView):
     template_name = 'attractions.html'
 
-def tourguides(request):
-	return render(request,'tour_guide.html')
+class TourGuideListView(ListView):
+	model = TourGuide
+	template_name = 'tour_guide.html'
+	context_object_name = 'tourguides'
 
 
 class BookNowView(LoginRequiredMixin, CreateView):
