@@ -86,18 +86,18 @@ class CustomerAdmin(admin.ModelAdmin):
 @admin.register(TourGuide)
 class TourGuideAdmin(admin.ModelAdmin):
     list_display = (
-        'FirstName',
-        'Surname',
+        'first_name',
+        'last_name',
         'Email',
         'YearsofExperience',
         'PrimaryLanguage',
         'DateRegistered',
         'language_list',             
     )
-    list_display_links = ('FirstName', 'Surname')
+    list_display_links = ('first_name', 'last_name')
     list_filter = ('PrimaryLanguage',)
-    search_fields = ('FirstName', 'Surname', 'Email', 'PhoneNumber', 'Biography')
-    ordering = ('Surname', 'FirstName')
+    search_fields = ('first_name', 'last_name', 'Email', 'PhoneNumber', 'Biography')
+    ordering = ('last_name', 'first_name')
     list_per_page = 20
     date_hierarchy = 'DateRegistered'
     list_editable = ('YearsofExperience',)  
@@ -105,7 +105,7 @@ class TourGuideAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Personal information', {
-            'fields': ('FirstName', 'Surname', 'Email', 'PhoneNumber')
+            'fields': ('first_name', 'last_name', 'Email', 'PhoneNumber')
         }),
         ('Guide profile', {
             'fields': ('YearsofExperience', 'PrimaryLanguage', 'Biography'),
@@ -270,7 +270,7 @@ class CustomerTravelPreferencesAdmin(admin.ModelAdmin):
 class LanguagesSpokenAdmin(admin.ModelAdmin):
     list_display = ('id', 'Guide', 'Language')
     list_filter = ('Language',)
-    search_fields = ('Guide__FirstName', 'Guide__Surname', 'Language')
+    search_fields = ('Guide__first_name', 'Guide__last_name', 'Language')
     list_select_related = ('Guide',)
     ordering = ('Language',)
     list_per_page = 25
@@ -289,8 +289,8 @@ class TourGuideRegistrationAdmin(admin.ModelAdmin):
     list_display_links = ('id', 'Guide')
     list_filter = ('RegistrationStatus', 'DocumentType')
     search_fields = (
-        'Guide__FirstName',
-        'Guide__Surname',
+        'Guide__first_name',
+        'Guide__last_name',
         'Guide__Email',
         'DocumentType',
     )
@@ -346,7 +346,7 @@ class ListingsAdmin(admin.ModelAdmin):
     )
     list_display_links = ('ListingID', 'TourName')
     list_filter = ('ListingsStatus', 'AvailabilityDate')
-    search_fields = ('TourName', 'LDescription', 'MeetingPoint', 'Guide__FirstName', 'Guide__Surname')
+    search_fields = ('TourName', 'LDescription', 'MeetingPoint', 'Guide__first_name', 'Guide__last_name')
     ordering = ('-DateCreated',)
     list_per_page = 20
     date_hierarchy = 'AvailabilityDate'
