@@ -4,6 +4,8 @@ from django.urls import reverse
 from django.db.models import UniqueConstraint
 from django.db.models.functions import Lower 
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator  # put this with your other imports at the top
+
 
 # Create your models here.
 class Customer(User):
@@ -43,9 +45,12 @@ class Booking(models.Model):
 	TotalPrice = models.DecimalField(decimal_places=2, max_digits=10)
 	NumberOfParticipants = models.IntegerField(null=True, blank=True, help_text='Enter the Number of Participants')
 	BookingStatus = models.CharField(max_length=20, choices = BOOKING_STATUS_CHOICES)
+	
 
-	
-	
+	def __str__(self):
+		return f"Booking {self.id} - {self.Customer}"
+
+   
 
 class TourGuideRegistration(models.Model):#To check againnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 	REGISTRATION_STATUS_CHOICES = (
@@ -124,6 +129,22 @@ class Payment(models.Model):
     def __str__(self):
         return str(self.PaymentID)
 	
-	
+
+
+class Review(models.Model):
+
+	ReviewID = models.AutoField(primary_key=True, help_text='Unique ID for the review')
+	Booking = models.OneToOneField(Booking, on_delete=models.CASCADE, help_text="Choose the Booking being reviewed")
+	Rating = models.IntegerField(
+		validators=[MinValueValidator(1), MaxValueValidator(5)],
+		help_text='Enter a rating from 1 to 5'
+	)
+	Comment = models.TextField(null=True, blank=True, help_text='Enter your comment')
+	DateSubmitted = models.DateTimeField(auto_now_add=True)
+	IsFlagged = models.BooleanField(default=False, help_text='Indicate whether the review has been flagged')
+	GuideResponse = models.TextField(null=True, blank=True, help_text='Response from the guide')
+
+	def __str__(self):
+		return f"Review {self.ReviewID} - {self.Rating}/5"	
 	
 	
