@@ -87,12 +87,17 @@ class Listings(models.Model):
 	Price = models.DecimalField(null=False, blank=False, max_digits=10, decimal_places=2, help_text='Enter the price per person')
 	AvailabilityDate = models.DateField(null=False, blank=False, help_text='Enter the date the tour is available')
 	ListingsStatus = models.CharField(max_length=20, choices=LISTING_STATUS_CHOICES, help_text='Select the status of the listing')
+<<<<<<< HEAD
 	DateCreated = models.DateField(null=False, blank=False, auto_now_add=True)
 	Attraction = models.ManyToManyField('Attractions')
+=======
+	DateCreated = models.DateField(null=False, blank=False, help_text='Enter the date the listing was created')
+>>>>>>> 637e5f3de038780c362dfbf728c366e8d61e270a
 
 	def __str__(self):
 		return self.TourName
 
+<<<<<<< HEAD
 class Booking(models.Model):
 	BOOKING_STATUS_CHOICES = (
         ("PAID" , "paid"),
@@ -112,6 +117,27 @@ class Booking(models.Model):
 
 	def __str__(self):
 		return f"Booking {self.BookingID} - {self.Customer}"
+=======
+class ListingAttractions(models.Model):
+	Listing = models.ForeignKey(Listings, on_delete=models.CASCADE, help_text="Choose a Listing")
+	Attraction = models.ForeignKey(Attractions, on_delete=models.CASCADE, help_text="Choose an Attraction")
+	
+
+
+class Payment(models.Model):
+
+    PaymentID = models.AutoField(primary_key=True)
+    BookingID = models.ForeignKey(Booking, on_delete=models.CASCADE)
+    Amount = models.DecimalField(max_digits=10, decimal_places=2)
+    Currency = models.CharField(max_length=10)
+    ExchangeRate = models.DecimalField(max_digits=10, decimal_places=4)
+    TransactionDate = models.DateTimeField()
+    PaymentStatus = models.CharField(max_length=20)
+    PaymentMethod = models.CharField(max_length=30)
+
+    def __str__(self):
+        return str(self.PaymentID)
+>>>>>>> 637e5f3de038780c362dfbf728c366e8d61e270a
 	
 
 class Payment(models.Model):
