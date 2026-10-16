@@ -1,17 +1,3 @@
-/* =====================================================================
-   OnlyTours — shared base styles
-   Loaded on every page. Holds the color/spacing variables, a reset,
-   and the responsive header/nav that appears across the site.
-
-   NOTE ON FONTS: the original Figma export specified two custom fonts
-   ("SwankyAndMooMoo-Regular" for the logo script and the "Inter"
-   family for everything else) but the font files themselves weren't
-   part of the upload, so this stylesheet falls back to solid system
-   fonts that look good on every OS. Drop the real font files into
-   static/OnlyToursApp/fonts/ and add @font-face rules here (or a
-   Google Fonts link in the template <head>) to restore the exact
-   look — everything else (sizes, spacing) already accounts for it.
-   ===================================================================== */
 
 :root {
   --logo: #3fd8e3;
