@@ -88,9 +88,6 @@ def customerregister(request):
 	return render(request,'customerregister.html',{'form':form})
 
 def guideregister(request):
-<<<<<<< Updated upstream
-	return render(request,'guideregister.html')
-=======
 	if request.method == 'POST':
 		form = GuideRegisterForm(request.POST)
 		if form.is_valid():
@@ -109,10 +106,6 @@ def guideregister(request):
 	else:	
 		form = GuideRegisterForm()
 	return render(request,'tourguideregister.html',{'form':form})
->>>>>>> Stashed changes
-
-def tourguideregister(request):
-	return render(request,'tourguideregister.html')
 
 def login(request):
 	return render(request,'login.html')
