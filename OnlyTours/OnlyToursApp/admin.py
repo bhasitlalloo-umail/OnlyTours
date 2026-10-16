@@ -10,6 +10,11 @@ from .models import (
     LanguagesSpoken,
     Booking,
     Attractions,
+    TourGuideRegistration,
+    Listings,
+    ListingAttractions,
+    Payment,
+    Review,
 )
 
 
@@ -81,18 +86,18 @@ class CustomerAdmin(admin.ModelAdmin):
 @admin.register(TourGuide)
 class TourGuideAdmin(admin.ModelAdmin):
     list_display = (
-        'FirstName',
-        'Surname',
+        'first_name',
+        'last_name',
         'Email',
         'YearsofExperience',
         'PrimaryLanguage',
         'DateRegistered',
         'language_list',             
     )
-    list_display_links = ('FirstName', 'Surname')
+    list_display_links = ('first_name', 'last_name')
     list_filter = ('PrimaryLanguage',)
-    search_fields = ('FirstName', 'Surname', 'Email', 'PhoneNumber', 'Biography')
-    ordering = ('Surname', 'FirstName')
+    search_fields = ('first_name', 'last_name', 'Email', 'PhoneNumber', 'Biography')
+    ordering = ('last_name', 'first_name')
     list_per_page = 20
     date_hierarchy = 'DateRegistered'
     list_editable = ('YearsofExperience',)  
@@ -100,7 +105,7 @@ class TourGuideAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Personal information', {
-            'fields': ('FirstName', 'Surname', 'Email', 'PhoneNumber')
+            'fields': ('first_name', 'last_name', 'Email', 'PhoneNumber')
         }),
         ('Guide profile', {
             'fields': ('YearsofExperience', 'PrimaryLanguage', 'Biography'),
@@ -133,7 +138,7 @@ class TourGuideAdmin(admin.ModelAdmin):
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
     list_display = (
-        'id',
+        'BookingID',
         'Customer',
         'TourDate',
         'DateTimeRequested',
@@ -141,12 +146,12 @@ class BookingAdmin(admin.ModelAdmin):
         'TotalPrice',
         'colored_status',           
     )
-    list_display_links = ('id', 'Customer')
+    list_display_links = ('BookingID', 'Customer')
     list_filter = ('BookingStatus',)        
     search_fields = (
-        'Customer__FirstName',
-        'Customer__Surname',
-        'Customer__Email',
+        'Customer__first_name',
+        'Customer__last_name',
+        'Customer__email',
     )
     ordering = ('-DateTimeRequested',)
     list_per_page = 25
@@ -254,9 +259,9 @@ class AttractionsAdmin(admin.ModelAdmin):
 class CustomerTravelPreferencesAdmin(admin.ModelAdmin):
     list_display = ('id', 'Customer', 'TravelPreferences')
     list_filter = ('TravelPreferences',)
-    search_fields = ('Customer__FirstName', 'Customer__Surname', 'TravelPreferences')
+    search_fields = ('Customer__first_name', 'Customer__last_name', 'TravelPreferences')
     list_select_related = ('Customer',)
-    ordering = ('Customer__Surname',)
+    ordering = ('Customer__last_name',)
     list_per_page = 25
     empty_value_display = '—'
 
@@ -265,8 +270,241 @@ class CustomerTravelPreferencesAdmin(admin.ModelAdmin):
 class LanguagesSpokenAdmin(admin.ModelAdmin):
     list_display = ('id', 'Guide', 'Language')
     list_filter = ('Language',)
-    search_fields = ('Guide__FirstName', 'Guide__Surname', 'Language')
+    search_fields = ('Guide__first_name', 'Guide__last_name', 'Language')
     list_select_related = ('Guide',)
     ordering = ('Language',)
     list_per_page = 25
     empty_value_display = '—'
+
+@admin.register(TourGuideRegistration)
+class TourGuideRegistrationAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'Guide',
+        'DocumentType',
+        'SubmissionDate',
+        'RegistrationStatus',
+        'RejectionReason',
+    )
+    list_display_links = ('id', 'Guide')
+    list_filter = ('RegistrationStatus', 'DocumentType')
+    search_fields = (
+        'Guide__first_name',
+        'Guide__last_name',
+        'Guide__Email',
+        'DocumentType',
+    )
+    ordering = ('-SubmissionDate',)
+    list_per_page = 25
+    date_hierarchy = 'SubmissionDate'
+    list_select_related = ('Guide',)
+    empty_value_display = '—'
+
+    fieldsets = (
+        ('Guide', {
+            'fields': ('Guide',)
+        }),
+        ('Document', {
+            'fields': ('DocumentType', 'SubmissionDate'),
+        }),
+        ('Status', {
+            'fields': ('RegistrationStatus', 'RejectionReason'),
+        }),
+    )
+
+    radio_fields = {'RegistrationStatus': admin.HORIZONTAL}
+
+    actions = ['mark_as_approved', 'mark_as_rejected', 'mark_as_pending']
+
+    @admin.action(description='Mark selected registrations as APPROVED')
+    def mark_as_approved(self, request, queryset):
+        updated = queryset.update(RegistrationStatus='APPROVED', RejectionReason=None)
+        self.message_user(request, f"{updated} registration(s) approved.")
+
+    @admin.action(description='Mark selected registrations as REJECTED')
+    def mark_as_rejected(self, request, queryset):
+        updated = queryset.update(RegistrationStatus='REJECTED')
+        self.message_user(request, f"{updated} registration(s) rejected.")
+
+    @admin.action(description='Mark selected registrations as PENDING')
+    def mark_as_pending(self, request, queryset):
+        updated = queryset.update(RegistrationStatus='PENDING', RejectionReason=None)
+        self.message_user(request, f"{updated} registration(s) reset to pending.")
+
+
+@admin.register(Listings)
+class ListingsAdmin(admin.ModelAdmin):
+    list_display = (
+        'ListingID',
+        'TourName',
+        'Guide',
+        'Duration',
+        'Price',
+        'AvailabilityDate',
+        'ListingsStatus',
+        'DateCreated',
+    )
+    list_display_links = ('ListingID', 'TourName')
+    list_filter = ('ListingsStatus', 'AvailabilityDate')
+    search_fields = ('TourName', 'LDescription', 'MeetingPoint', 'Guide__first_name', 'Guide__last_name')
+    ordering = ('-DateCreated',)
+    list_per_page = 20
+    date_hierarchy = 'AvailabilityDate'
+    list_select_related = ('Guide',)
+    list_editable = ('ListingsStatus',)
+    empty_value_display = '—'
+
+    fieldsets = (
+        ('Guide', {
+            'fields': ('Guide',)
+        }),
+        ('Tour information', {
+            'fields': ('TourName', 'LDescription', 'Duration', 'MeetingPoint', 'Price'),
+        }),
+        ('Availability & status', {
+            'fields': ('AvailabilityDate', 'ListingsStatus', 'DateCreated'),
+        }),
+    )
+
+    radio_fields = {'ListingsStatus': admin.HORIZONTAL}
+
+    actions = ['activate_listings', 'deactivate_listings']
+
+    @admin.action(description='Mark selected listings as ACTIVE')
+    def activate_listings(self, request, queryset):
+        updated = queryset.update(ListingsStatus='ACTIVE')
+        self.message_user(request, f"{updated} listing(s) activated.")
+
+    @admin.action(description='Mark selected listings as INACTIVE')
+    def deactivate_listings(self, request, queryset):
+        updated = queryset.update(ListingsStatus='INACTIVE')
+        self.message_user(request, f"{updated} listing(s) deactivated.")
+
+
+@admin.register(ListingAttractions)
+class ListingAttractionsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'Listing', 'Attraction')
+    list_display_links = ('id', 'Listing')
+    list_filter = ('Listing__ListingsStatus',)
+    search_fields = ('Listing__TourName', 'Attraction__Name')
+    ordering = ('Listing__TourName', 'Attraction__Name')
+    list_select_related = ('Listing', 'Attraction')
+    list_per_page = 25
+    empty_value_display = '—'
+
+
+@admin.register(Payment)
+class PaymentAdmin(admin.ModelAdmin):
+    list_display = (
+        'PaymentID',
+        'BookingID',
+        'Amount',
+        'Currency',
+        'PaymentStatus',
+        'PaymentMethod',
+        'TransactionDate',
+        'colored_payment_status',
+    )
+    list_display_links = ('PaymentID', 'BookingID')
+    list_filter = ('PaymentStatus', 'PaymentMethod', 'Currency')
+    search_fields = (
+        'BookingID__Customer__first_name',
+        'BookingID__Customer__last_name',
+        'PaymentMethod',
+        'Currency',
+    )
+    ordering = ('-TransactionDate',)
+    list_per_page = 25
+    date_hierarchy = 'TransactionDate'
+    list_select_related = ('BookingID',)
+    list_editable = ('PaymentStatus',)
+    empty_value_display = '—'
+
+    fieldsets = (
+        ('Booking', {
+            'fields': ('BookingID',)
+        }),
+        ('Payment details', {
+            'fields': ('Amount', 'Currency', 'ExchangeRate', 'PaymentMethod'),
+        }),
+        ('Status & date', {
+            'fields': ('PaymentStatus', 'TransactionDate'),
+        }),
+    )
+
+    @admin.display(description='Status', ordering='PaymentStatus')
+    def colored_payment_status(self, obj):
+        if not obj.PaymentStatus:
+            return '—'
+        status = obj.PaymentStatus.upper()
+        color = '#1a7f37' if status == 'PAID' else '#b42318' if status == 'FAILED' else '#b54708'
+        return format_html(
+            '<span style="color:{};font-weight:700;">{}</span>',
+            color, status
+        )
+
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = (
+        'ReviewID',
+        'Booking',
+        'star_rating',
+        'short_comment',
+        'DateSubmitted',
+        'IsFlagged',
+        'has_guide_response',
+    )
+    list_display_links = ('ReviewID', 'Booking')
+    list_filter = ('IsFlagged', 'Rating', 'DateSubmitted')
+    search_fields = ('Comment', 'GuideResponse')
+    ordering = ('-DateSubmitted',)
+    list_per_page = 25
+    date_hierarchy = 'DateSubmitted'
+    list_select_related = ('Booking',)
+    list_editable = ('IsFlagged',)
+    empty_value_display = '—'
+
+    readonly_fields = ('DateSubmitted',)
+
+    fieldsets = (
+        ('Review', {
+            'fields': ('Booking', 'Rating', 'Comment')
+        }),
+        ('Moderation', {
+            'fields': ('IsFlagged',),
+        }),
+        ('Guide response', {
+            'fields': ('GuideResponse',),
+        }),
+        ('Meta', {
+            'fields': ('DateSubmitted',),
+        }),
+    )
+
+    actions = ['flag_reviews', 'unflag_reviews']
+
+    @admin.display(description='Rating', ordering='Rating')
+    def star_rating(self, obj):
+        return '★' * obj.Rating + '☆' * (5 - obj.Rating)
+
+    @admin.display(description='Comment')
+    def short_comment(self, obj):
+        if not obj.Comment:
+            return '—'
+        return obj.Comment[:50] + ('…' if len(obj.Comment) > 50 else '')
+
+    @admin.display(boolean=True, description='Guide replied?')
+    def has_guide_response(self, obj):
+        return bool(obj.GuideResponse)
+
+    @admin.action(description='Flag selected reviews')
+    def flag_reviews(self, request, queryset):
+        updated = queryset.update(IsFlagged=True)
+        self.message_user(request, f"{updated} review(s) flagged.")
+
+    @admin.action(description='Remove flag from selected reviews')
+    def unflag_reviews(self, request, queryset):
+        updated = queryset.update(IsFlagged=False)
+        self.message_user(request, f"{updated} review(s) unflagged.")
+

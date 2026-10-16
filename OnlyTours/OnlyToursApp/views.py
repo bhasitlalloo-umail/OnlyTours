@@ -88,10 +88,6 @@ def customerregister(request):
 	return render(request,'customerregister.html',{'form':form})
 
 def guideregister(request):
-
-	return render(request,'guideregister.html')
-
-<<<<<<< HEAD
 	if request.method == 'POST':
 		form = GuideRegisterForm(request.POST)
 		if form.is_valid():
@@ -110,11 +106,6 @@ def guideregister(request):
 	else:	
 		form = GuideRegisterForm()
 	return render(request,'tourguideregister.html',{'form':form})
-
-=======
->>>>>>> 637e5f3de038780c362dfbf728c366e8d61e270a
-def tourguideregister(request):
-	return render(request,'tourguideregister.html')
 
 def login(request):
 	return render(request,'login.html')
