@@ -1290,3 +1290,341 @@
   font-weight: 500;
   text-decoration: underline;
 }
+
+
+/* =========================================================
+   ONLYTOURZ RESPONSIVE OVERRIDES
+   ========================================================= */
+
+@media (max-width: 1800px) {
+
+  .tour-guide {
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .tour-guide > .desktop {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    min-height: 0;
+    height: auto;
+    overflow: visible;
+  }
+
+  .header-6 {
+    width: 100%;
+    height: auto;
+    min-height: 95px;
+    padding: 14px 4%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: space-between;
+  }
+
+  .header-6 .image,
+  .header-6 .onlytourz,
+  .header-6 .nav {
+    position: relative;
+    left: auto;
+    top: auto;
+    right: auto;
+  }
+
+  .header-6 .image {
+    width: 70px;
+    height: 70px;
+  }
+
+  .header-6 .onlytourz {
+    width: auto;
+  }
+
+  .header-6 .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .header-6 .nav a {
+    font-size: clamp(14px, 1.4vw, 22px);
+  }
+
+  .tour-guides {
+    width: 100%;
+    padding: 70px 5%;
+    gap: 45px;
+  }
+
+  .our-tour-guides {
+    font-size: clamp(36px, 4.5vw, 64px);
+  }
+
+  .our-tour-guides-are-experienced-individuals-who-have-been-providing-their-touring-services-for-more-than-a-decade-their-priority-is-your-enjoyment-and-safety {
+    font-size: clamp(18px, 2.2vw, 30px);
+  }
+
+  .gallery {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 25px;
+    align-items: start;
+  }
+
+  .column-1,
+  .column-2,
+  .column-3 {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .gallery .card-2,
+  .gallery .card-3,
+  .gallery .card-32,
+  .gallery .card-5,
+  .gallery .card-52,
+  .gallery .card-6 {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    height: auto;
+    min-height: 500px;
+    padding: 25px;
+    flex-shrink: 1;
+  }
+
+  /* Reset the Figma-exported absolute text positions inside cards. */
+  .gallery .card-2 *,
+  .gallery .card-3 *,
+  .gallery .card-32 *,
+  .gallery .card-5 *,
+  .gallery .card-52 *,
+  .gallery .card-6 * {
+    max-width: 100%;
+  }
+
+  .gallery .card-2 > *,
+  .gallery .card-3 > *,
+  .gallery .card-32 > *,
+  .gallery .card-5 > *,
+  .gallery .card-52 > *,
+  .gallery .card-6 > * {
+    position: relative;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    width: 100%;
+    height: auto;
+  }
+
+  .gallery .card-2 [class*="about-me-"],
+  .gallery .card-3 [class*="about-me-"],
+  .gallery .card-32 [class*="about-me-"],
+  .gallery .card-5 [class*="about-me-"],
+  .gallery .card-52 [class*="about-me-"],
+  .gallery .card-6 [class*="about-me-"] {
+    margin-top: 20px;
+  }
+
+  .gallery .card-2 [class*="years-of-experience-"],
+  .gallery .card-3 [class*="years-of-experience-"],
+  .gallery .card-32 [class*="years-of-experience-"],
+  .gallery .card-5 [class*="years-of-experience-"],
+  .gallery .card-52 [class*="years-of-experience-"],
+  .gallery .card-6 [class*="years-of-experience-"],
+  .gallery [class*="languages-spoken-"],
+  .gallery [class*="phone-number-"] {
+    margin-top: 10px;
+  }
+
+  .gallery [class*="about-me-"],
+  .gallery [class*="years-of-experience-"],
+  .gallery [class*="languages-spoken-"],
+  .gallery [class*="phone-number-"] {
+    font-size: clamp(15px, 1.5vw, 22px);
+    line-height: 1.5;
+  }
+
+  .gallery .author,
+  .gallery .author2,
+  .gallery .author3 {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .gallery .author *,
+  .gallery .author2 *,
+  .gallery .author3 * {
+    position: relative;
+    left: auto !important;
+    top: auto !important;
+    width: auto;
+    height: auto;
+  }
+
+  .gallery .author img,
+  .gallery .author2 img,
+  .gallery .author3 img,
+  .gallery .image2,
+  .gallery .image3,
+  .gallery .image4 {
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    object-fit: cover;
+  }
+
+  .gallery .text,
+  .gallery .text2,
+  .gallery .text3,
+  .gallery .text4,
+  .gallery .text5,
+  .gallery .text6 {
+    width: auto;
+    height: auto;
+    position: relative;
+  }
+
+  .gallery .text *,
+  .gallery .text2 *,
+  .gallery .text3 *,
+  .gallery .text4 *,
+  .gallery .text5 *,
+  .gallery .text6 * {
+    position: relative;
+    left: auto !important;
+    top: auto !important;
+    width: auto;
+    height: auto;
+  }
+}
+
+
+/* Tablets */
+@media (max-width: 900px) {
+
+  .header-6 {
+    justify-content: center;
+  }
+
+  .header-6 .onlytourz {
+    flex: 1 1 250px;
+  }
+
+  .header-6 .nav {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tour-guides {
+    padding: 55px 5%;
+  }
+}
+
+
+/* Phones */
+@media (max-width: 600px) {
+
+  .header-6 {
+    flex-direction: column;
+    padding: 14px 5%;
+  }
+
+  .header-6 .image {
+    width: 60px;
+    height: 60px;
+  }
+
+  .header-6 .onlytourz-span {
+    font-size: 58px;
+  }
+
+  .header-6 .onlytourz-span2 {
+    font-size: 32px;
+  }
+
+  .header-6 .nav {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .header-6 .nav a {
+    font-size: 16px;
+  }
+
+  .tour-guides {
+    padding: 40px 6%;
+    gap: 30px;
+  }
+
+  .our-tour-guides {
+    font-size: 34px;
+    text-align: center;
+  }
+
+  .our-tour-guides-are-experienced-individuals-who-have-been-providing-their-touring-services-for-more-than-a-decade-their-priority-is-your-enjoyment-and-safety {
+    font-size: 16px;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .gallery .card-2,
+  .gallery .card-3,
+  .gallery .card-32,
+  .gallery .card-5,
+  .gallery .card-52,
+  .gallery .card-6 {
+    min-height: 0;
+    padding: 20px;
+  }
+
+  .gallery .author,
+  .gallery .author2,
+  .gallery .author3 {
+    gap: 12px;
+  }
+
+  .gallery .author img,
+  .gallery .author2 img,
+  .gallery .author3 img,
+  .gallery .image2,
+  .gallery .image3,
+  .gallery .image4 {
+    width: 75px;
+    height: 75px;
+  }
+
+  .gallery [class*="about-me-"],
+  .gallery [class*="years-of-experience-"],
+  .gallery [class*="languages-spoken-"],
+  .gallery [class*="phone-number-"] {
+    font-size: 15px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+}
