@@ -12,7 +12,6 @@ from .models import (
     Attractions,
     TourGuideRegistration,
     Listings,
-    ListingAttractions,
     Payment,
     Review,
 )
@@ -88,31 +87,31 @@ class TourGuideAdmin(admin.ModelAdmin):
     list_display = (
         'first_name',
         'last_name',
-        'Email',
+        'email',
         'YearsofExperience',
         'PrimaryLanguage',
-        'DateRegistered',
+        'date_joined',
         'language_list',             
     )
     list_display_links = ('first_name', 'last_name')
     list_filter = ('PrimaryLanguage',)
-    search_fields = ('first_name', 'last_name', 'Email', 'PhoneNumber', 'Biography')
+    search_fields = ('first_name', 'last_name', 'email', 'PhoneNumber', 'Biography')
     ordering = ('last_name', 'first_name')
     list_per_page = 20
-    date_hierarchy = 'DateRegistered'
+    date_hierarchy = 'date_joined'
     list_editable = ('YearsofExperience',)  
     empty_value_display = '—'
 
     fieldsets = (
         ('Personal information', {
-            'fields': ('first_name', 'last_name', 'Email', 'PhoneNumber')
+            'fields': ('first_name', 'last_name', 'email', 'PhoneNumber')
         }),
         ('Guide profile', {
             'fields': ('YearsofExperience', 'PrimaryLanguage', 'Biography'),
             'description': 'Biography is capped at 30 characters in the model.',
         }),
         ('Registration', {
-            'fields': ('DateRegistered',),
+            'fields': ('date_joined',),
         }),
     )
 
@@ -381,16 +380,6 @@ class ListingsAdmin(admin.ModelAdmin):
         self.message_user(request, f"{updated} listing(s) deactivated.")
 
 
-@admin.register(ListingAttractions)
-class ListingAttractionsAdmin(admin.ModelAdmin):
-    list_display = ('id', 'Listing', 'Attraction')
-    list_display_links = ('id', 'Listing')
-    list_filter = ('Listing__ListingsStatus',)
-    search_fields = ('Listing__TourName', 'Attraction__Name')
-    ordering = ('Listing__TourName', 'Attraction__Name')
-    list_select_related = ('Listing', 'Attraction')
-    list_per_page = 25
-    empty_value_display = '—'
 
 
 @admin.register(Payment)
