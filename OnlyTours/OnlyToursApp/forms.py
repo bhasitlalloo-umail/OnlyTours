@@ -1,19 +1,21 @@
 from django import forms
 from django.utils import timezone
-from .models import Customer,Booking,Listings
+from .models import Customer,TourGuide,Booking,Listings
 from django.core.validators import MinLengthValidator
 from django.contrib.auth.forms import UserCreationForm
 
 
-class RegisterForm(forms.ModelForm):
-
+class CustomerRegisterForm(forms.ModelForm):
 	class Meta:
 		model = Customer
 		fields = ['username','password','first_name','last_name','email','PhoneNumber','CountryOfOrigin','PrimaryLanguage']
 		widgets = {'password':forms.PasswordInput}
 
-
-
+class GuideRegisterForm(forms.ModelForm):
+	class Meta:
+		model = TourGuide
+		fields = ['username','password','first_name','last_name','email','PhoneNumber','YearsofExperience','PrimaryLanguage','Biography']
+		widgets = {'password':forms.PasswordInput}	
 
 class BookingForm(forms.ModelForm):
     class Meta:
@@ -55,4 +57,4 @@ class BookingForm(forms.ModelForm):
         if n < 1 or n > 20:
             raise forms.ValidationError('Number of guests must be between 1 and 20.')
         return n		
-    
+   
