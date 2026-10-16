@@ -3,8 +3,8 @@ from django.contrib.auth.views import LoginView
 from .forms import *
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
-from django.views.generic import ListView
-from .models import TourGuide
+from django.views.generic import TemplateView
+from django.shortcuts import render
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
