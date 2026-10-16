@@ -13,5 +13,4 @@ urlpatterns = [
     path('customerregister/',views.customerregister, name='customerregister'),
     path('guideregister/',views.guideregister, name='guideregister'),
     path('login/', UserLoginView.as_view(), name='login'),
-    path('tourguideregister/',views.tourguideregister, name='tourguideregister'),
     ]
