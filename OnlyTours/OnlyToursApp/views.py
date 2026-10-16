@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.views.generic import TemplateView
+from django.contrib.auth.views import LoginView
 from .forms import *
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
@@ -13,9 +14,13 @@ from .forms import BookingForm
 from .models import Booking, Listings, Customer
 
 # Create your views here.
-def home(request):
-	return render(request,'home.html')
+class HomeView(TemplateView):
+	template_name = 'home.html'
 
+class UserLoginView(LoginView):
+	template_name = 'login.html'
+def attractions(request):
+	return render(request,'attractions.html')
 class AttractionsView(TemplateView):
     template_name = 'attractions.html'
 
