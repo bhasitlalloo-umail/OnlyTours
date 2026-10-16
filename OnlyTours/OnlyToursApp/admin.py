@@ -14,6 +14,7 @@ from .models import (
     Listings,
     ListingAttractions,
     Payment,
+    Review,
 )
 
 
@@ -137,7 +138,7 @@ class TourGuideAdmin(admin.ModelAdmin):
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
     list_display = (
-        'id',
+        'BookingID',
         'Customer',
         'TourDate',
         'DateTimeRequested',
@@ -145,7 +146,7 @@ class BookingAdmin(admin.ModelAdmin):
         'TotalPrice',
         'colored_status',           
     )
-    list_display_links = ('id', 'Customer')
+    list_display_links = ('BookingID', 'Customer')
     list_filter = ('BookingStatus',)        
     search_fields = (
         'Customer__first_name',
@@ -441,3 +442,69 @@ class PaymentAdmin(admin.ModelAdmin):
             '<span style="color:{};font-weight:700;">{}</span>',
             color, status
         )
+
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = (
+        'ReviewID',
+        'Booking',
+        'star_rating',
+        'short_comment',
+        'DateSubmitted',
+        'IsFlagged',
+        'has_guide_response',
+    )
+    list_display_links = ('ReviewID', 'Booking')
+    list_filter = ('IsFlagged', 'Rating', 'DateSubmitted')
+    search_fields = ('Comment', 'GuideResponse')
+    ordering = ('-DateSubmitted',)
+    list_per_page = 25
+    date_hierarchy = 'DateSubmitted'
+    list_select_related = ('Booking',)
+    list_editable = ('IsFlagged',)
+    empty_value_display = '—'
+
+    readonly_fields = ('DateSubmitted',)
+
+    fieldsets = (
+        ('Review', {
+            'fields': ('Booking', 'Rating', 'Comment')
+        }),
+        ('Moderation', {
+            'fields': ('IsFlagged',),
+        }),
+        ('Guide response', {
+            'fields': ('GuideResponse',),
+        }),
+        ('Meta', {
+            'fields': ('DateSubmitted',),
+        }),
+    )
+
+    actions = ['flag_reviews', 'unflag_reviews']
+
+    @admin.display(description='Rating', ordering='Rating')
+    def star_rating(self, obj):
+        return '★' * obj.Rating + '☆' * (5 - obj.Rating)
+
+    @admin.display(description='Comment')
+    def short_comment(self, obj):
+        if not obj.Comment:
+            return '—'
+        return obj.Comment[:50] + ('…' if len(obj.Comment) > 50 else '')
+
+    @admin.display(boolean=True, description='Guide replied?')
+    def has_guide_response(self, obj):
+        return bool(obj.GuideResponse)
+
+    @admin.action(description='Flag selected reviews')
+    def flag_reviews(self, request, queryset):
+        updated = queryset.update(IsFlagged=True)
+        self.message_user(request, f"{updated} review(s) flagged.")
+
+    @admin.action(description='Remove flag from selected reviews')
+    def unflag_reviews(self, request, queryset):
+        updated = queryset.update(IsFlagged=False)
+        self.message_user(request, f"{updated} review(s) unflagged.")
+

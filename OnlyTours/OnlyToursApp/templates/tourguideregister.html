@@ -39,10 +39,15 @@
 
   <div class="signup-layout">
 
-    <form class="signup-col" id="signupForm" novalidate onsubmit="return validateAndSubmit(event)">
+    <form class="signup-col" id="signupForm" method="post">
       <div class="eyebrow">CREATE AN ACCOUNT</div>
       <h1>WELCOME NEW GUIDE!</h1>
-
+	<div class="ui error message" style="color:red">
+		{{ form.errors}}
+	</div>
+	{% csrf_token %}
+	{{ form.as_table }}
+	<!-----
       <div class="field-grid">
         <div class="field">
           <label for="firstName">First Name</label>
@@ -79,14 +84,14 @@
           <div class="field-error" id="confirmPasswordError"></div>
         </div>
       </div>
-
+	!----->
       <button type="submit" class="submit-btn">Create Account</button>
     </form>
 
     <div class="photo-col">
       <img src="{% static 'images/TGSidePhoto.jpg' %}" alt="Collage of Mauritius beaches, Le Morne and lagoons">
     </div>
-
+	
   </div>
 
   <script>
