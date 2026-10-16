@@ -3,6 +3,15 @@ from django.contrib.auth.views import LoginView
 from .forms import *
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
+from django.views.generic import TemplateView
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy
+from django.utils import timezone
+from django.views.generic import CreateView
+from .forms import BookingForm
+from .models import Booking, Listings, Customer
 
 # Create your views here.
 class HomeView(TemplateView):
@@ -12,12 +21,45 @@ class UserLoginView(LoginView):
 	template_name = 'login.html'
 def attractions(request):
 	return render(request,'attractions.html')
+class AttractionsView(TemplateView):
+    template_name = 'attractions.html'
 
 def tourguides(request):
 	return render(request,'tour_guide.html')
 
-def booknow(request):
-	return render(request,'booknow.html')
+
+class BookNowView(LoginRequiredMixin, CreateView):
+    model = Booking
+    form_class = BookingForm
+    template_name = 'booknow.html'
+    login_url = reverse_lazy('OnlyToursApp:login')
+    success_url = reverse_lazy('OnlyToursApp:booked')
+
+    def get_context_data(self, **kwargs):
+        # data for the live Trip Summary (name, guide, price of each tour)
+        context = super().get_context_data(**kwargs)
+        listings = Listings.objects.filter(ListingsStatus='ACTIVE').select_related('Guide')
+        context['listing_data'] = {
+            str(l.pk): {
+                'name': l.TourName,
+                'guide': f"{l.Guide.FirstName} {l.Guide.Surname}",
+                'price': float(l.Price),
+            }
+            for l in listings
+        }
+        return context
+
+    def form_valid(self, form):
+        # fill in the fields the user doesn't type, then let CreateView save
+        booking = form.instance
+        booking.Customer = get_object_or_404(Customer, pk=self.request.user.pk)
+        booking.DateTimeRequested = timezone.now()
+        booking.TotalPrice = booking.Listing.Price * booking.NumberOfParticipants
+        booking.BookingStatus = 'UNPAID'
+        booking.Guide = booking.Listing.Guide
+        return super().form_valid(form)
+
+
 
 def booked(request):
 	return render(request,'booked.html')
