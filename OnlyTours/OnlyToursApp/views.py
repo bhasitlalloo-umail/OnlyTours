@@ -24,7 +24,7 @@ def register(request):
 
 def customerregister(request):
 	if request.method == 'POST':
-		form = RegisterForm(request.POST)
+		form = CustomerRegisterForm(request.POST)
 		if form.is_valid():
 			customer = Customer(username=form.cleaned_data['username'],
 			first_name=form.cleaned_data['first_name'],
@@ -38,12 +38,33 @@ def customerregister(request):
 			return redirect('OnlyToursApp:home')
 			
 	else:	
-		form = RegisterForm()
+		form = CustomerRegisterForm()
 
 	return render(request,'customerregister.html',{'form':form})
 
 def guideregister(request):
+<<<<<<< Updated upstream
 	return render(request,'guideregister.html')
+=======
+	if request.method == 'POST':
+		form = GuideRegisterForm(request.POST)
+		if form.is_valid():
+			guide = TourGuide(username=form.cleaned_data['username'],
+			first_name=form.cleaned_data['first_name'],
+			last_name=form.cleaned_data['last_name'],
+			email=form.cleaned_data['email'],
+			PhoneNumber=form.cleaned_data['PhoneNumber'],
+			YearsofExperience=form.cleaned_data['YearsofExperience'],
+			PrimaryLanguage=form.cleaned_data['PrimaryLanguage'],
+			Biography=form.cleaned_data['Biography'])
+			guide.set_password(form.cleaned_data['password'])
+			guide.save()
+			return redirect('OnlyToursApp:home')
+			
+	else:	
+		form = GuideRegisterForm()
+	return render(request,'tourguideregister.html',{'form':form})
+>>>>>>> Stashed changes
 
 def login(request):
 	return render(request,'login.html')

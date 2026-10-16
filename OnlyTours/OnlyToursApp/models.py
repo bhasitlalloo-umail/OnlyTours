@@ -18,11 +18,7 @@ class CustomerTravelPreferences(models.Model):
 	Customer = models.ForeignKey(Customer, on_delete=models.CASCADE, help_text="Choose a Customer" )
 	TravelPreferences = models.CharField(null=True, blank=True, max_length=30)
 
-class TourGuide(models.Model):
-	FirstName = models.CharField(null=True, blank=True, max_length=200,  help_text='Enter your First Name')
-	Surname = models.CharField(null=True, blank=True, max_length=200,  help_text='Enter your Surname')
-	Email = models.EmailField(max_length=100, unique=True, help_text='Enter an Email address')
-	DateRegistered = models.DateField()
+class TourGuide(User):
 	PhoneNumber = models.CharField(null=True, blank=True, max_length=12, help_text='Enter a Phone Number')
 	YearsofExperience = models.IntegerField(null=True, blank=True, help_text='Enter your Years of Experience')
 	PrimaryLanguage = models.CharField(null=True, blank=True, max_length=30,  help_text='Enter your Primary Language')
