@@ -134,7 +134,7 @@ class TourGuideAdmin(admin.ModelAdmin):
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
     list_display = (
-        'id',
+        'BookingID',
         'Customer',
         'TourDate',
         'DateTimeRequested',
@@ -142,7 +142,7 @@ class BookingAdmin(admin.ModelAdmin):
         'TotalPrice',
         'colored_status',           
     )
-    list_display_links = ('id', 'Customer')
+    list_display_links = ('BookingID', 'Customer')
     list_filter = ('BookingStatus',)        
     search_fields = (
         'Customer__FirstName',
