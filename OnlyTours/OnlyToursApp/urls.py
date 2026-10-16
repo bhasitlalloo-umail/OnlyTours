@@ -1,11 +1,13 @@
 from django.urls import path
 from . import views
+
+from .views import BookNowView
 app_name = 'OnlyToursApp'
 urlpatterns = [
     path('', views.home, name='home'),
     path('attractions/',views.AttractionsView.as_view(), name='attractions'),
     path('tourguides/', views.tourguides, name='tourguides'),
-    path('booknow/',views.booknow, name='booknow'),
+    path('booknow/',BookNowView.as_view(), name='booknow'),
     path('booked/', views.booked, name='booked'),
     path('register/', views.register, name='register'),
     path('customerregister/',views.customerregister, name='customerregister'),
