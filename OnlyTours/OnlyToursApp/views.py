@@ -51,7 +51,7 @@ class BookNowView(LoginRequiredMixin, CreateView):
         context['listing_data'] = {
             str(l.pk): {
                 'name': l.TourName,
-                'guide': f"{l.Guide.FirstName} {l.Guide.Surname}",
+                'guide': f"{l.Guide.first_name} {l.Guide.last_name}",
                 'price': float(l.Price),
             }
             for l in listings
