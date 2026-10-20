@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from django.contrib.auth.views import LoginView
 from .forms import *
 from django.shortcuts import redirect
