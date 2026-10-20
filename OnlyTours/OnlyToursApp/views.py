@@ -31,8 +31,10 @@ def attractions(request):
 class AttractionsView(TemplateView):
     template_name = 'attractions.html'
 
-def tourguides(request):
-	return render(request,'tour_guide.html')
+class TourGuideListView(ListView):
+	model = TourGuide
+	template_name = 'tour_guide.html'
+	context_object_name = 'tourguides'
 
 
 class BookNowView(LoginRequiredMixin, CreateView):
