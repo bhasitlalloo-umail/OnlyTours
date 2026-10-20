@@ -4,6 +4,8 @@ from django.urls import reverse
 from django.db.models import UniqueConstraint
 from django.db.models.functions import Lower 
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
+
 
 # Create your models here.
 class Customer(User):
@@ -12,42 +14,27 @@ class Customer(User):
 	PrimaryLanguage = models.CharField(null=False, blank=False, max_length=30,  help_text='Enter your Primary Language')
 
 	def __str__(self):
-        	return self.FirstName + " " + self.Surname
+        	return self.first_name + " " + self.last_name
 
 class CustomerTravelPreferences(models.Model):
 	Customer = models.ForeignKey(Customer, on_delete=models.CASCADE, help_text="Choose a Customer" )
 	TravelPreferences = models.CharField(null=True, blank=True, max_length=30)
 
-class TourGuide(models.Model):
-	FirstName = models.CharField(null=True, blank=True, max_length=200,  help_text='Enter your First Name')
-	Surname = models.CharField(null=True, blank=True, max_length=200,  help_text='Enter your Surname')
-	Email = models.EmailField(max_length=100, unique=True, help_text='Enter an Email address')
-	DateRegistered = models.DateField()
+class TourGuide(User):
 	PhoneNumber = models.CharField(null=True, blank=True, max_length=12, help_text='Enter a Phone Number')
 	YearsofExperience = models.IntegerField(null=True, blank=True, help_text='Enter your Years of Experience')
 	PrimaryLanguage = models.CharField(null=True, blank=True, max_length=30,  help_text='Enter your Primary Language')
 	Biography = models.CharField(null=True, blank=True, max_length=30,  help_text='Enter a biography of yourself')
+	
+	def __str__(self):
+        	return self.first_name + " " + self.last_name
 
 class LanguagesSpoken(models.Model):
 	Guide = models.ForeignKey(TourGuide, on_delete=models.CASCADE, help_text="Choose a Guide" )
 	Language = models.CharField(null=True, blank=True, max_length=30,help_text="Enter a language" )
 
-class Booking(models.Model):
-	BOOKING_STATUS_CHOICES = (
-        ("PAID" , "paid"),
-        ("UNPAID" , "unpaid"),
-    )
-	Customer = models.ForeignKey(Customer, on_delete=models.CASCADE, help_text="Choose a Customer")
-	DateTimeRequested = models.DateTimeField()
-	TourDate = models.DateField()
-	TotalPrice = models.DecimalField(decimal_places=2, max_digits=10)
-	NumberOfParticipants = models.IntegerField(null=True, blank=True, help_text='Enter the Number of Participants')
-	BookingStatus = models.CharField(max_length=20, choices = BOOKING_STATUS_CHOICES)
 
-	
-	
-
-class TourGuideRegistration(models.Model):#To check againnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+class TourGuideRegistration(models.Model):
 	REGISTRATION_STATUS_CHOICES = (
         ("PENDING" , "pending"),
         ("APPROVED" , "approved"),
@@ -63,9 +50,6 @@ class TourGuideRegistration(models.Model):#To check againnnnnnnnnnnnnnnnnnnnnnnn
 		return f"{self.Guide} - {self.RegistrationStatus}"
 
 class Attractions(models.Model):
-
-    
-
 	DIFFICULTY_LEVEL_CHOICES = (("EASY", "Easy"),
 		("MODERATE", "Moderate"),
 		("DIFFICULT", "Difficult"),	)
@@ -81,6 +65,10 @@ class Attractions(models.Model):
 	DifficultyLevel = models.CharField(null=True, blank=True, max_length=50, choices=DIFFICULTY_LEVEL_CHOICES, help_text='Select the difficulty level of the attraction')
 	Type = models.CharField(null=False, blank=False, max_length=100, help_text='Enter the type of attraction')
 	DateAdded = models.DateField(null=False, blank=False, help_text='Enter the date the attraction was added')
+	AverageRating = models.IntegerField(
+		validators=[MinValueValidator(1), MaxValueValidator(5)],
+		help_text='Enter a rating from 1 to 5'
+	)
 
 	def __str__(self):
 		return self.Name
@@ -99,15 +87,63 @@ class Listings(models.Model):
 	Price = models.DecimalField(null=False, blank=False, max_digits=10, decimal_places=2, help_text='Enter the price per person')
 	AvailabilityDate = models.DateField(null=False, blank=False, help_text='Enter the date the tour is available')
 	ListingsStatus = models.CharField(max_length=20, choices=LISTING_STATUS_CHOICES, help_text='Select the status of the listing')
-	DateCreated = models.DateField(null=False, blank=False, help_text='Enter the date the listing was created')
+	DateCreated = models.DateField(null=False, blank=False, auto_now_add=True)
+	Attraction = models.ManyToManyField('Attractions')
 
 	def __str__(self):
 		return self.TourName
 
-class ListingAttractions(models.Model):
-	Listing = models.ForeignKey(Listings, on_delete=models.CASCADE, help_text="Choose a Listing")
-	Attraction = models.ForeignKey(Attractions, on_delete=models.CASCADE, help_text="Choose an Attraction")
+class Booking(models.Model):
+	BOOKING_STATUS_CHOICES = (
+        ("PAID" , "paid"),
+        ("UNPAID" , "unpaid"),
+    )
+	BookingID = models.AutoField(primary_key=True, help_text='Unique ID for the booking')
+	Customer = models.ForeignKey(Customer, on_delete=models.CASCADE, help_text="Choose a Customer")
+	Listing = models.ForeignKey(Listings, on_delete=models.CASCADE, help_text="Choose a Tour")
+	Guide = models.ForeignKey(TourGuide, on_delete=models.SET_NULL, null=True, blank=True, help_text="Guide assigned to this booking")
+	DateTimeRequested = models.DateTimeField(auto_now_add=True)
+	TourDate = models.DateField()
+	TimeSlot = models.TimeField(help_text='Enter the preferred time')
+	TotalPrice = models.DecimalField(decimal_places=2, max_digits=10)
+	NumberOfParticipants = models.IntegerField(null=True, blank=True, help_text='Enter the Number of Participants')
+	BookingStatus = models.CharField(max_length=20, choices = BOOKING_STATUS_CHOICES)
+	SpecialRequests = models.TextField(null=True, blank=True, max_length=500, help_text='Any special requests')
+
+	def __str__(self):
+		return f"Booking {self.BookingID} - {self.Customer}"
 	
+
+class Payment(models.Model):
+
+    PaymentID = models.AutoField(primary_key=True)
+    BookingID = models.ForeignKey(Booking, on_delete=models.CASCADE)
+    Amount = models.DecimalField(max_digits=10, decimal_places=2)
+    Currency = models.CharField(max_length=10)
+    ExchangeRate = models.DecimalField(max_digits=10, decimal_places=4)
+    TransactionDate = models.DateTimeField()
+    PaymentStatus = models.CharField(max_length=20)
+    PaymentMethod = models.CharField(max_length=30)
+
+    def __str__(self):
+        return str(self.PaymentID)
 	
+
+
+class Review(models.Model):
+
+	ReviewID = models.AutoField(primary_key=True, help_text='Unique ID for the review')
+	Booking = models.OneToOneField(Booking, on_delete=models.CASCADE, help_text="Choose the Booking being reviewed")
+	Rating = models.IntegerField(
+		validators=[MinValueValidator(1), MaxValueValidator(5)],
+		help_text='Enter a rating from 1 to 5'
+	)
+	Comment = models.TextField(null=True, blank=True, help_text='Enter your comment')
+	DateSubmitted = models.DateTimeField(auto_now_add=True)
+	IsFlagged = models.BooleanField(default=False, help_text='Indicate whether the review has been flagged')
+	GuideResponse = models.TextField(null=True, blank=True, help_text='Response from the guide')
+
+	def __str__(self):
+		return f"Review {self.ReviewID} - {self.Rating}/5"	
 	
 	
