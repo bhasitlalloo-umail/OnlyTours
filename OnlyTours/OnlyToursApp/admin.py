@@ -160,13 +160,13 @@ class BookingAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Customer', {
-            'fields': ('Customer',)
+            'fields': ('Customer',"Listing", "Guide",),
         }),
         ('Booking dates', {
-            'fields': ('DateTimeRequested', 'TourDate'),
+            'fields': ('TourDate','TimeSlot',),
         }),
         ('Booking details', {
-            'fields': ('NumberOfParticipants', 'TotalPrice', 'BookingStatus'),
+            'fields': ('NumberOfParticipants', 'TotalPrice', 'BookingStatus',),
         }),
     )
 
@@ -361,7 +361,7 @@ class ListingsAdmin(admin.ModelAdmin):
             'fields': ('TourName', 'LDescription', 'Duration', 'MeetingPoint', 'Price'),
         }),
         ('Availability & status', {
-            'fields': ('AvailabilityDate', 'ListingsStatus', 'DateCreated'),
+            'fields': ('AvailabilityDate', 'ListingsStatus',),
         }),
     )
 

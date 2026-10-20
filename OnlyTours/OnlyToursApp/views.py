@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from django.contrib.auth.views import LoginView
 from .forms import *
 from django.shortcuts import redirect
@@ -6,13 +6,19 @@ from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import TemplateView
 from django.shortcuts import render
 
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import CreateView
 from .forms import BookingForm
 from .models import Booking, Listings, Customer
+
+
+from django.views.generic import FormView
+from .forms import ReviewForm
+from .models import Review
+
 
 # Create your views here.
 class HomeView(TemplateView):
@@ -112,3 +118,19 @@ def guideregister(request):
 
 def login(request):
 	return render(request,'login.html')
+
+
+class ReviewView(FormView):
+    template_name = 'review.html'
+    form_class = ReviewForm
+    success_url = reverse_lazy('OnlyToursApp:home')
+
+    def form_valid(self, form):
+        # same pattern as customerregister: build the object from cleaned_data, then save it
+        review = Review(
+            Booking=form.cleaned_data['booking'],
+            Rating=form.cleaned_data['Rating'],
+            Comment=form.cleaned_data['Comment'],
+        )
+        review.save()
+        return super().form_valid(form)    # redirects to home
