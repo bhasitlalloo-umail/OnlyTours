@@ -65,13 +65,13 @@ class Attractions(models.Model):
 	DifficultyLevel = models.CharField(null=True, blank=True, max_length=50, choices=DIFFICULTY_LEVEL_CHOICES, help_text='Select the difficulty level of the attraction')
 	Type = models.CharField(null=False, blank=False, max_length=100, help_text='Enter the type of attraction')
 	DateAdded = models.DateField(null=False, blank=False, help_text='Enter the date the attraction was added')
-	AverageRating = models.IntegerField(
-		validators=[MinValueValidator(1), MaxValueValidator(5)],
-		help_text='Enter a rating from 1 to 5'
-	)
+	Image = models.ImageField(upload_to='attractions/', blank=True, help_text='Upload a photo of the attraction')
 
 	def __str__(self):
 		return self.Name
+
+	def get_absolute_url(self):
+		return reverse('OnlyToursApp:attraction_detail', args=[self.pk])
 
 class Listings(models.Model):
 	LISTING_STATUS_CHOICES = (
