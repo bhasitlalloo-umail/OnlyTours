@@ -5,17 +5,16 @@ from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import TemplateView
 from django.shortcuts import render
-
-
 from django.contrib.auth.decorators import login_required, permission_required
-
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DetailView, FormView
+from django.db.models import Avg, Count
+from .forms import BookingForm, ReviewForm
+from .models import Booking, Listings, Customer, Attractions, TourGuide, Review
 
-from .models import Booking, Listings, Customer,Attractions,TourGuide
 
 # Create your views here.
 class HomeView(TemplateView):
@@ -25,9 +24,45 @@ class UserLoginView(LoginView):
 	template_name = 'login.html'
 def attractions(request):
 	return render(request,'attractions.html')
-class AttractionsView(TemplateView):
-    template_name = 'attractions.html'
 
+def attractions_with_rating():
+	# AverageRating is DERIVED (as in the ERD): the average of the ratings on the reviews of
+	# bookings whose tour includes the attraction (same idea as TopHouseListView in week 8).
+	return Attractions.objects.annotate(
+		avg_rating=Avg('listings__booking__review__Rating'),
+		review_count=Count('listings__booking__review'),
+	)
+
+
+class AttractionsListView(ListView):
+	model = Attractions
+	template_name = 'attractions.html'
+	context_object_name = 'attractions'
+	paginate_by = 6
+
+	def get_queryset(self):
+		return attractions_with_rating().order_by('-IsFeatured', 'Name')
+
+
+class AttractionDetailView(DetailView):
+	model = Attractions
+	template_name = 'attraction_detail.html'
+	context_object_name = 'attraction'
+
+	def get_queryset(self):
+		return attractions_with_rating()
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		# active tours (of approved guides) that include this attraction
+		context['tours'] = Listings.objects.filter(
+			Attraction=self.object, ListingsStatus='ACTIVE',
+			Guide__tourguideregistration__RegistrationStatus='APPROVED').order_by('TourName')
+		# the latest reviews of tours that include this attraction (flagged ones are hidden)
+		context['reviews'] = Review.objects.filter(
+			Booking__Listing__Attraction=self.object, IsFlagged=False).order_by('-DateSubmitted')[:5]
+		return context
+	
 class TourGuideListView(ListView):
 	model = TourGuide
 	template_name = 'tour_guide.html'
@@ -48,7 +83,7 @@ class BookNowView(LoginRequiredMixin, CreateView):
         context['listing_data'] = {
             str(l.pk): {
                 'name': l.TourName,
-                'guide': f"{l.Guide.FirstName} {l.Guide.Surname}",
+                'guide': f"{l.Guide.first_name} {l.Guide.last_name}",
                 'price': float(l.Price),
             }
             for l in listings
@@ -119,97 +154,6 @@ def login(request):
 
 
 @login_required
-@permission_required('OnlyToursApp.add_attractions', raise_exception=True)
-
-def add_attraction(request):
-    # If this is a POST request then process the Form data
-    if request.method == 'POST':
-
-        # Create a form instance and populate it with data from the request (binding):
-        form = AddAttractionForm(request.POST)
-
-        # Check if the form is valid:
-        if form.is_valid():
-            # process the data in form.cleaned_data as required 
-            attraction=Attractions( Name=form.cleaned_data['name'],
-            
-            Description = form.cleaned_data["description"],
-            Region = form.cleaned_data["region"],
-            IsFeatured = form.cleaned_data["is_featured"],
-            Longitude = form.cleaned_data["longitude"],
-            Latitude = form.cleaned_data["latitude"],
-            Distance = form.cleaned_data["distance"],
-            DifficultyLevel = form.cleaned_data["difficulty_level"],
-            Type = form.cleaned_data["type"],
-            DateAdded = form.cleaned_data["date_added"],
-            AverageRating=form.cleaned_data["average_rating"], )
-			
-            attraction.save()
-
-            # redirect to a new URL:
-            return redirect('OnlyToursApp:home')
-    else:
-        form = AddAttractionForm()
-
-    active_class = 'owners'
-    context = {
-        'form': form,
-         'active_class': active_class,    }
-	
-    return render(request, 'addattractions.html', context)
-
-
-
-
-from django.contrib.auth.decorators import login_required, permission_required
-from django.shortcuts import render, redirect
-
-from .forms import AddAttractionForm
-from .models import Attractions
-
-
-@login_required
-@permission_required('OnlyToursApp.add_attractions', raise_exception=True)
-def add_attraction(request):
-    # If this is a POST request then process the Form data
-    if request.method == 'POST':
-
-        # Create a form instance and populate it with data from the request (binding):
-        form = AddAttractionForm(request.POST)
-
-        # Check if the form is valid:
-        if form.is_valid():
-            # process the data in form.cleaned_data as required
-            attraction = Attractions(
-                Name=form.cleaned_data['name'],
-
-                Description=form.cleaned_data["description"],
-                Region=form.cleaned_data["region"],
-                IsFeatured=form.cleaned_data["is_featured"],
-                Longitude=form.cleaned_data["longitude"],
-                Latitude=form.cleaned_data["latitude"],
-                Distance=form.cleaned_data["distance"],
-                DifficultyLevel=form.cleaned_data["difficulty_level"],
-                Type=form.cleaned_data["type"],
-                DateAdded=form.cleaned_data["date_added"],
-                AverageRating=form.cleaned_data["average_rating"],
-            )
-            attraction.save()
-
-            # redirect to a new URL:
-            return redirect('OnlyToursApp:home')
-    else:
-        form = AddAttractionForm()
-
-    active_class = 'owners'
-    context = {
-        'form': form,
-        'active_class': active_class,
-    }
-
-    return render(request, 'addattractions.html', context)
-
-@login_required
 def guide_listings(request):
 	# the guide's own tours (the ERD's "Tour Guide creates Listings")
 	guide = get_object_or_404(TourGuide, pk=request.user.pk)
@@ -242,3 +186,17 @@ def guide_listing_edit(request, listing_id):
 		form.save()
 		return redirect('OnlyToursApp:guide_listings')
 	return render(request, 'guide_listing_form.html', {'form': form, 'editing': True, 'listing': listing})
+class ReviewView(FormView):
+    template_name = 'review.html'
+    form_class = ReviewForm
+    success_url = reverse_lazy('OnlyToursApp:home')
+
+    def form_valid(self, form):
+        # same pattern as customerregister: build the object from cleaned_data, then save it
+        review = Review(
+            Booking=form.cleaned_data['booking'],
+            Rating=form.cleaned_data['Rating'],
+            Comment=form.cleaned_data['Comment'],
+        )
+        review.save()
+        return super().form_valid(form)    # redirects to home

@@ -160,13 +160,13 @@ class BookingAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Customer', {
-            'fields': ('Customer',)
+            'fields': ('Customer',"Listing", "Guide",),
         }),
         ('Booking dates', {
-            'fields': ('DateTimeRequested', 'TourDate'),
+            'fields': ('TourDate','TimeSlot',),
         }),
         ('Booking details', {
-            'fields': ('NumberOfParticipants', 'TotalPrice', 'BookingStatus'),
+            'fields': ('NumberOfParticipants', 'TotalPrice', 'BookingStatus',),
         }),
     )
 
@@ -190,7 +190,6 @@ class BookingAdmin(admin.ModelAdmin):
     def mark_as_unpaid(self, request, queryset):
         updated = queryset.update(BookingStatus='UNPAID')
         self.message_user(request, f"{updated} booking(s) marked as unpaid.")
-
 
 
 
@@ -221,7 +220,7 @@ class AttractionsAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Basic information', {
-            'fields': ('Name', 'Description', 'Type', 'Region')
+            'fields': ('Name', 'Description', 'Type', 'Region', 'Image')
         }),
         ('Classification', {
             'fields': ('DifficultyLevel', 'IsFeatured', 'Distance'),
@@ -250,6 +249,7 @@ class AttractionsAdmin(admin.ModelAdmin):
     def unfeature_attractions(self, request, queryset):
         updated = queryset.update(IsFeatured=False)
         self.message_user(request, f"{updated} attraction(s) unfeatured.")
+
 
 
 
@@ -361,7 +361,7 @@ class ListingsAdmin(admin.ModelAdmin):
             'fields': ('TourName', 'LDescription', 'Duration', 'MeetingPoint', 'Price'),
         }),
         ('Availability & status', {
-            'fields': ('AvailabilityDate', 'ListingsStatus', 'DateCreated'),
+            'fields': ('AvailabilityDate', 'ListingsStatus',),
         }),
     )
 

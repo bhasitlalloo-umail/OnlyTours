@@ -1,83 +1,53 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Attractions · OnlyTours</title>
-  <link rel="stylesheet" href="{% static 'css/base.css' %}">
-  <link rel="stylesheet" href="{% static 'css/attractions.css' %}">
-</head>
-<body>
-  <div class="attractions-page site-brand-gradient">
-    {% include 'partials/navbar.html' %}
 
-  
-    <main class="attractions-list">
+{% block title %}Attractions · OnlyTours{% endblock %}
 
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/attractions.css' %}?v=2">
+{% endblock %}
+
+{% block content %}
+<div class="attractions-page site-brand-gradient">
+  <div class="attractions-inner">
+
+    <div class="attractions-intro">
+      <h1 class="attractions-title">Attractions</h1>
+      <p class="attractions-lead">Places to visit across Mauritius. Open one to see the tours that include it.</p>
+    </div>
+
+    <div class="attractions-list">
+      {% for attraction in attractions %}
       <article class="attraction-row">
         <div class="attraction-content">
-          <a class="attraction-title" href="{% url 'OnlyToursApp:attractions' %}">Casela Nature Walk</a>
-          <p class="attraction-copy">
-            At Casela, you can explore the Big Cats Kingdom, ride a zip line
-            across scenic valleys, or take a safari truck through the African
-            savannah to spot zebras and rhinos.
-            <br>Opening Hours: Mon–Sun, 9 am–5 pm
-          </p>
+          {% if attraction.IsFeatured %}<span class="attraction-badge">Featured</span>{% endif %}
+          <h2 class="attraction-row-title">
+            <a href="{{ attraction.get_absolute_url }}">{{ attraction.Name }}</a>
+          </h2>
+          <p class="attraction-tags">{{ attraction.Region }} &middot; {{ attraction.Type }}{% if attraction.DifficultyLevel %} &middot; {{ attraction.get_DifficultyLevel_display }}{% endif %}</p>
+          <p class="attraction-copy">{{ attraction.Description|truncatechars:260|linebreaksbr }}</p>
+          <div class="attraction-row-foot">
+            {% include 'partials/rating.html' with attraction=attraction %}
+            <a class="attraction-more" href="{{ attraction.get_absolute_url }}">View details</a>
+          </div>
         </div>
-        <a class="attraction-image img-casela" href="{% url 'OnlyToursApp:attractions' %}">
-          <img src="{% static 'images/attractions/image1.png' %}" alt="Casela Nature Walk">
+        <a class="attraction-image" href="{{ attraction.get_absolute_url }}" tabindex="-1" aria-hidden="true">
+          {% if attraction.Image %}<img src="{{ attraction.Image.url }}" alt="{{ attraction.Name }}" loading="lazy">{% else %}<span class="attraction-photo-none">&#127796;</span>{% endif %}
         </a>
       </article>
+      {% empty %}
+      <p class="attraction-empty">No attractions have been added yet.</p>
+      {% endfor %}
+    </div>
 
-      <article class="attraction-row reverse">
-        <a class="attraction-image img-oceanarium" href="{% url 'OnlyToursApp:attractions' %}">
-          <img src="{% static 'images/attractions/image-30.png' %}" alt="Odysseo Oceanarium">
-        </a>
-        <div class="attraction-content">
-          <a class="attraction-title" href="{% url 'OnlyToursApp:attractions' %}">Odysseo Oceanarium</a>
-          <p class="attraction-copy">
-            Our purpose is not only to amaze our visitors, but also to awaken
-            their curiosity and their desire to learn more about the
-            equilibrium between marine ecosystems.
-            <br>Opening Hours: Mon–Sun, 9am–5pm
-          </p>
-        </div>
-      </article>
+    {% if is_paginated %}
+    <nav class="attraction-pages" aria-label="Attractions pages">
+      {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}">&laquo; Previous</a>{% endif %}
+      <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+      {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}">Next &raquo;</a>{% endif %}
+    </nav>
+    {% endif %}
 
-      <article class="attraction-row">
-        <div class="attraction-content">
-          <a class="attraction-title" href="{% url 'OnlyToursApp:attractions' %}">Le Pouce Mountain Climb</a>
-          <p class="attraction-copy">
-            Reaching the top gives you a 360° view over Port Louis and the
-            Moka range. A moderately challenging hike of about 3–4 hours
-            (round trip) — rewarding and family bonding for anyone up for a
-            bit of adventure.
-            <br>Opening Hours: Availability of Tour Guide
-          </p>
-        </div>
-        <a class="attraction-image attraction-image-tall img-mountain" href="{% url 'OnlyToursApp:attractions' %}">
-          <img src="{% static 'images/attractions/image-50.png' %}" alt="Le Pouce Mountain Climb">
-        </a>
-      </article>
-
-      <article class="attraction-row reverse">
-        <a class="attraction-image img-dolphin" href="{% url 'OnlyToursApp:attractions' %}">
-          <img src="{% static 'images/attractions/image-10.png' %}" alt="Dolphin and Whale Watching">
-        </a>
-        <div class="attraction-content">
-          <a class="attraction-title" href="{% url 'OnlyToursApp:attractions' %}">Dolphin and Whale Watching</a>
-          <p class="attraction-copy">
-            Witness the giants of nature live, in person, from a safe
-            distance — without encroaching on or impeding their way of life.
-            We deal only with operators holding a license from the Tourism
-            Authority.
-            <br>Opening Hours: Availability of Tour
-          </p>
-        </div>
-      </article>
-
-    </main>
   </div>
-</body>
-</html>
+</div>
+{% endblock %}

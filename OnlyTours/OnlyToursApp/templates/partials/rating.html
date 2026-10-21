@@ -1,0 +1,7 @@
+{% comment %} Shows the calculated rating. Needs: attraction (with avg_rating and review_count annotations) {% endcomment %}
+{% if attraction.review_count %}
+  <span class="rating"><span class="rating-star" aria-hidden="true">&#9733;</span> {{ attraction.avg_rating|floatformat:1 }}
+    <span class="rating-count">({{ attraction.review_count }} review{{ attraction.review_count|pluralize }})</span></span>
+{% else %}
+  <span class="rating rating-none">No ratings yet</span>
+{% endif %}

@@ -3,7 +3,8 @@ from django.utils import timezone
 from .models import Customer,TourGuide,Booking,Listings
 from django.core.validators import MinLengthValidator
 from django.contrib.auth.forms import UserCreationForm
-
+from .models import Booking
+from .models import Review
 
 class CustomerRegisterForm(forms.ModelForm):
 	class Meta:
@@ -100,3 +101,64 @@ class AddListingForm(forms.ModelForm):
             'ListingsStatus': forms.Select(attrs={'class' })
             ,}    #'ui dropdown'
     
+   
+
+
+
+
+
+RATING_CHOICES = [
+    (5, '5 ★'),
+    (4, '4 ★'),
+    (3, '3 ★'),
+    (2, '2 ★'),
+    (1, '1 ★'),
+]
+
+
+class ReviewForm(forms.ModelForm):
+    # not stored on Review: only used to find the customer's booking
+    email = forms.EmailField(
+        label='Email Address',
+        widget=forms.EmailInput(attrs={'placeholder': 'you@example.com'}),
+    )
+    booking_id = forms.IntegerField(
+        min_value=1, label='Booking Number',
+        widget=forms.NumberInput(attrs={'placeholder': 'e.g. 12'}),
+    )
+
+    class Meta:
+        model = Review
+        fields = ['Rating', 'Comment']
+        labels = {'Rating': 'Your Rating', 'Comment': 'Your Review'}
+        widgets = {
+            'Rating': forms.RadioSelect(choices=RATING_CHOICES),
+            'Comment': forms.Textarea(attrs={'rows': 5, 'placeholder': 'Tell us about your tour...'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['Comment'].required = True    # the model allows blank, the review form shouldn't
+
+    def clean_Comment(self):
+        comment = self.cleaned_data['Comment'].strip()
+        if len(comment) < 10:
+            raise forms.ValidationError('Please write at least 10 characters.')
+        return comment
+
+    def clean(self):
+        cleaned = super().clean()
+        email = cleaned.get('email')
+        booking_id = cleaned.get('booking_id')
+        if email and booking_id:
+            # the email must belong to a customer already in the database,
+            # and the booking must belong to that customer
+            booking = Booking.objects.filter(pk=booking_id, Customer__email__iexact=email).first()
+            if booking is None:
+                raise forms.ValidationError(
+                    "We couldn't find that booking under this email address."
+                )
+            if Review.objects.filter(Booking=booking).exists():
+                raise forms.ValidationError('This booking has already been reviewed.')
+            cleaned['booking'] = booking
+        return cleaned
