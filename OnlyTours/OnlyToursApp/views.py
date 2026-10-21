@@ -1,23 +1,19 @@
-from django.views.generic import TemplateView, ListView
-from django.contrib.auth.views import LoginView
+from django.views.generic import TemplateView,ListView
+from django.contrib.auth.views import LoginView     
 from .forms import *
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import TemplateView
 from django.shortcuts import render
-
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.views.generic import CreateView, DetailView
-from .forms import BookingForm
-from .models import Booking, Listings, Customer, Attractions
+from django.views.generic import CreateView, DetailView, FormView
 from django.db.models import Avg, Count
-
-from django.views.generic import FormView
-from .forms import ReviewForm
-from .models import Review
+from .forms import BookingForm, ReviewForm
+from .models import Booking, Listings, Customer, Attractions, TourGuide, Review
 
 
 # Create your views here.
@@ -101,7 +97,7 @@ class BookNowView(LoginRequiredMixin, CreateView):
         booking.DateTimeRequested = timezone.now()
         booking.TotalPrice = booking.Listing.Price * booking.NumberOfParticipants
         booking.BookingStatus = 'UNPAID'
-        booking.Guide = booking.Listing.Guide
+       
         return super().form_valid(form)
 
 
@@ -146,6 +142,7 @@ def guideregister(request):
 			Biography=form.cleaned_data['Biography'])
 			guide.set_password(form.cleaned_data['password'])
 			guide.save()
+		
 			return redirect('OnlyToursApp:home')
 			
 	else:	
@@ -156,6 +153,39 @@ def login(request):
 	return render(request,'login.html')
 
 
+@login_required
+def guide_listings(request):
+	# the guide's own tours (the ERD's "Tour Guide creates Listings")
+	guide = get_object_or_404(TourGuide, pk=request.user.pk)
+	context = {'guide': guide, 'listings': Listings.objects.filter(Guide=guide).order_by('-DateCreated', '-ListingID')}
+	context.update(registration_context(guide))
+	return render(request, 'guide_listings.html', context)
+
+
+@login_required
+def guide_listing_create(request):
+	guide = get_object_or_404(TourGuide, pk=request.user.pk)
+	if not is_approved(guide):
+		return redirect('OnlyToursApp:guide_listings')
+	# the guide is set on the new listing here, so it can never come from the form
+	form = ListingForm(request.POST or None, instance=Listings(Guide=guide))
+	if request.method == 'POST' and form.is_valid():
+		form.save()
+		return redirect('OnlyToursApp:guide_listings')
+	return render(request, 'guide_listing_form.html', {'form': form, 'editing': False})
+
+@login_required
+def guide_listing_edit(request, listing_id):
+	guide = get_object_or_404(TourGuide, pk=request.user.pk)
+	# a guide can only open their own listings; anyone else's gives "not found"
+	listing = get_object_or_404(Listings, pk=listing_id, Guide=guide)
+	if not is_approved(guide):
+		return redirect('OnlyToursApp:guide_listings')
+	form = ListingForm(request.POST or None, instance=listing)
+	if request.method == 'POST' and form.is_valid():
+		form.save()
+		return redirect('OnlyToursApp:guide_listings')
+	return render(request, 'guide_listing_form.html', {'form': form, 'editing': True, 'listing': listing})
 class ReviewView(FormView):
     template_name = 'review.html'
     form_class = ReviewForm
