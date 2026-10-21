@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if editing %}Edit Listing{% else %}New Listing{% endif %} · OnlyTours{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/customerReg.css' %}?v=2">
+  <link rel="stylesheet" href="{% static 'css/guide_listings.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="customerreg-page site-brand-gradient">
+  <div class="customerreg-grid">
+    <div class="customerreg-form-wrap gl-form-wrap">
+      <p class="eyebrow">TOUR GUIDE</p>
+      <h1>{% if editing %}Edit your tour{% else %}Add a new tour{% endif %}</h1>
+
+      <form class="customerreg-form" method="post" novalidate>
+        {% csrf_token %}
+        {% include 'partials/form_fields.html' with form=form %}
+        <div class="field field-full">
+          <button type="submit" class="btn-accent">{% if editing %}Save changes{% else %}Create listing{% endif %}</button>
+        </div>
+        <p class="form-switch"><a href="{% url 'OnlyToursApp:guide_listings' %}">Back to My Listings</a></p>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,96 @@
+/* Guide area: registration banner, My Listings and the listing form.
+   Loaded together with guide_bookings.css (cards) or customerReg.css (form fields). */
+
+.gl-intro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.gb-banner {
+  margin: 0 0 var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.gb-banner p { margin: 0 0 var(--space-xs); }
+.gb-banner a { text-decoration: underline; font-weight: 700; }
+.gb-banner-ok { background: #e6f6ea; color: #14532d; }
+.gb-banner-wait { background: #fff4d6; color: #7a4b00; }
+.gb-banner-no { background: #fde8e6; color: #7f1d1d; }
+
+.gb-resubmit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.gb-resubmit select {
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: #ffffff;
+}
+
+.gl-status {
+  display: inline-block;
+  padding: 0.15rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.gl-status-active { background: #e6f6ea; color: #14532d; }
+.gl-status-inactive { background: #ececec; color: #444; }
+
+.gl-edit {
+  color: var(--headings);
+  text-decoration: underline;
+}
+
+.gl-form-wrap {
+  flex: 1 1 520px;
+  max-width: 760px;
+}
+
+/* form widgets that customerReg.css does not style */
+.field textarea {
+  background: var(--input-bg);
+  border: none;
+  border-radius: 20px;
+  padding: 1rem 1.25rem;
+  font: inherit;
+  width: 100%;
+  resize: vertical;
+}
+
+.field input[type="checkbox"] {
+  width: auto;
+  accent-color: var(--headings);
+}
+
+.field input[type="checkbox"] + * { margin-left: 0.4rem; }
+
+.field [id$="Attraction"],
+.field div[id^="id_Attraction"] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  background: var(--input-bg);
+  border-radius: 20px;
+  padding: 1rem 1.25rem;
+  max-height: 14rem;
+  overflow-y: auto;
+}
+
+.field div[id^="id_Attraction"] label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
