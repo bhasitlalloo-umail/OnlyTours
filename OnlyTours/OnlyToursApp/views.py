@@ -10,10 +10,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DetailView
 from .forms import BookingForm
-from .models import Booking, Listings, Customer
-
+from .models import Booking, Listings, Customer, Attractions
+from django.db.models import Avg, Count
 
 from django.views.generic import FormView
 from .forms import ReviewForm
@@ -28,9 +28,45 @@ class UserLoginView(LoginView):
 	template_name = 'login.html'
 def attractions(request):
 	return render(request,'attractions.html')
-class AttractionsView(TemplateView):
-    template_name = 'attractions.html'
 
+def attractions_with_rating():
+	# AverageRating is DERIVED (as in the ERD): the average of the ratings on the reviews of
+	# bookings whose tour includes the attraction (same idea as TopHouseListView in week 8).
+	return Attractions.objects.annotate(
+		avg_rating=Avg('listings__booking__review__Rating'),
+		review_count=Count('listings__booking__review'),
+	)
+
+
+class AttractionsListView(ListView):
+	model = Attractions
+	template_name = 'attractions.html'
+	context_object_name = 'attractions'
+	paginate_by = 6
+
+	def get_queryset(self):
+		return attractions_with_rating().order_by('-IsFeatured', 'Name')
+
+
+class AttractionDetailView(DetailView):
+	model = Attractions
+	template_name = 'attraction_detail.html'
+	context_object_name = 'attraction'
+
+	def get_queryset(self):
+		return attractions_with_rating()
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		# active tours (of approved guides) that include this attraction
+		context['tours'] = Listings.objects.filter(
+			Attraction=self.object, ListingsStatus='ACTIVE',
+			Guide__tourguideregistration__RegistrationStatus='APPROVED').order_by('TourName')
+		# the latest reviews of tours that include this attraction (flagged ones are hidden)
+		context['reviews'] = Review.objects.filter(
+			Booking__Listing__Attraction=self.object, IsFlagged=False).order_by('-DateSubmitted')[:5]
+		return context
+	
 class TourGuideListView(ListView):
 	model = TourGuide
 	template_name = 'tour_guide.html'

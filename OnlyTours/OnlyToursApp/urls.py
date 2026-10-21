@@ -5,7 +5,8 @@ from . import views
 app_name = 'OnlyToursApp'
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
-    path('attractions/',views.attractions, name='attractions'),
+    path('attractions/', views.AttractionsListView.as_view(), name='attractions'),
+    path('attractions/<int:pk>/', views.AttractionDetailView.as_view(), name='attraction_detail'),    
     path('tourguides/', views.TourGuideListView.as_view(), name='tourguides'),
     path('booknow/',views.BookNowView.as_view(), name='booknow'),
     path('booked/', views.booked, name='booked'),
