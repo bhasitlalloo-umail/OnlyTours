@@ -69,38 +69,27 @@ DIFFICULTY_LEVEL_CHOICES = (("EASY", "Easy"),
 
 
 
-class AddAttractionForm(forms.Form):
-    name = forms.CharField( help_text="Enter the name of the attraction", required=True,label="Name", max_length=200,)
-    description = forms.CharField(help_text="Enter a description of the attraction", required=True, label="Description", widget=forms.Textarea,)
-    region = forms.CharField(help_text="Enter the region of the attraction", required=True, label="Region", max_length=100,)
-    is_featured = forms.BooleanField( help_text="Indicate whether the attraction is featured",
-        required=False, label="Is Featured",initial=False,)
-    longitude = forms.DecimalField(help_text="Enter the longitude of the attraction", required=True,label="Longitude", max_digits=10, decimal_places=7,)
-    latitude = forms.DecimalField( help_text="Enter the latitude of the attraction",required=True,label="Latitude", max_digits=10,decimal_places=7,)
-    distance = forms.DecimalField( help_text="Enter the distance to the attraction",required=False,label="Distance", max_digits=10, decimal_places=2,min_value=0)
-    difficulty_level = forms.ChoiceField(help_text="Select the difficulty level of the attraction",required=False,   label="Difficulty Level",choices=DIFFICULTY_LEVEL_CHOICES,)
-    type = forms.CharField( help_text="Enter the type of attraction", required=True, label="Type", max_length=100, )
-    date_added = forms.DateField( help_text="Enter the date the attraction was added", required=True, label="Date Added", )
-    average_rating=forms.DecimalField(help_text="Enter the average rating of the attraction ", label="average rating")
 
-class AddListingForm(forms.ModelForm):
-     class Meta:
-          model= Listings
-          fields = [ 'Guide', 'TourName', 'LDescription','Duration', 'MeetingPoint','Price', 'AvailabilityDate','ListingsStatus' ]
-          labels = {'Guide': 'Tour Guide', 'TourName': 'Tour Name', 'LDescription': 'Tour Description', 'Duration': 'Duration (in hours)', 'MeetingPoint': 'Meeting Point', 'Price': 'Price per Person', 'AvailabilityDate': 'Available Date', 'ListingsStatus': 'Status',}
- 
-          widgets = {
-            'Guide': forms.Select(attrs={'class': 'ui dropdown'}),
-            'TourName': forms.TextInput(attrs={'placeholder': 'Enter the name of the tour'}),
-            'LDescription': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Enter a description of the tour'}),
-            'Duration': forms.NumberInput(attrs={'step': '0.1', 'placeholder':'Enter the duration in hours e.g., 2.5'}),
-            'MeetingPoint': forms.TextInput(attrs={'placeholder': 'Enter the meeting point'}),
-            'Price': forms.NumberInput(attrs={'step': '0.01', 'placeholder': '0.00'}),
-            'AvailabilityDate': forms.DateInput( attrs={'type': 'date','min': timezone.localdate().isoformat() }),
-            
-            'ListingsStatus': forms.Select(attrs={'class' })
-            ,}    #'ui dropdown'
-    
+class ListingForm(forms.ModelForm):
+      class Meta:
+        model = Listings
+        fields = ['TourName', 'LDescription', 'Duration', 'MeetingPoint', 'Price',
+                  'AvailabilityDate', 'ListingsStatus', 'Attraction']
+        labels = {
+            'TourName': 'Tour name',
+            'LDescription': 'Description',
+            'Duration': 'Duration (hours)',
+            'MeetingPoint': 'Meeting point',
+            'Price': 'Price per person (Rs)',
+            'AvailabilityDate': 'Available from',
+            'ListingsStatus': 'Status',
+            'Attraction': 'Attractions this tour visits',
+        }
+        widgets = {
+            'AvailabilityDate': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
+            'LDescription': forms.Textarea(attrs={'rows': 4}),
+            'Attraction': forms.CheckboxSelectMultiple,
+        }
    
 
 

@@ -101,7 +101,6 @@ class Booking(models.Model):
 	BookingID = models.AutoField(primary_key=True, help_text='Unique ID for the booking')
 	Customer = models.ForeignKey(Customer, on_delete=models.CASCADE, help_text="Choose a Customer")
 	Listing = models.ForeignKey(Listings, on_delete=models.CASCADE, help_text="Choose a Tour")
-	
 	DateTimeRequested = models.DateTimeField(auto_now_add=True)
 	TourDate = models.DateField()
 	TimeSlot = models.TimeField(help_text='Enter the preferred time')
