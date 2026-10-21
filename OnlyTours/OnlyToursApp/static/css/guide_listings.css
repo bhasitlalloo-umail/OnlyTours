@@ -1,5 +1,3 @@
-/* Guide area: registration banner, My Listings and the listing form.
-   Loaded together with guide_bookings.css (cards) or customerReg.css (form fields). */
 
 .gl-intro {
   display: flex;
@@ -58,7 +56,7 @@
   max-width: 760px;
 }
 
-/* form widgets that customerReg.css does not style */
+
 .field textarea {
   background: var(--input-bg);
   border: none;

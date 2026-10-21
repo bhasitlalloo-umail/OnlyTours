@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Bookings · OnlyTours{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/guide_bookings.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="gb-page site-brand-gradient">
+  <div class="gb-inner">
+    <div class="gb-intro">
+      <p class="gb-eyebrow">TOUR GUIDE</p>
+      <h1 class="gb-title">My Bookings</h1>
+      <p class="gb-lead">
+        Welcome, {{ guide.first_name|default:guide.username }}.
+        These are the paid bookings for your tours.
+      </p>
+    </div>
+
+    <h2 class="gb-heading">Upcoming ({{ upcoming|length }})</h2>
+    <div class="gb-grid">
+      {% for booking in upcoming %}
+      <article class="gb-card">
+        <p class="gb-when">{{ booking.TourDate|date:"j F Y" }} · {{ booking.TimeSlot|time:"g:i A" }}</p>
+        <h3 class="gb-tour">{{ booking.Listing.TourName }}</h3>
+        <p class="gb-meeting">Meeting point: {{ booking.Listing.MeetingPoint }}</p>
+        <dl class="gb-details">
+          <div><dt>Customer</dt><dd>{{ booking.Customer.first_name }} {{ booking.Customer.last_name }}</dd></div>
+          <div><dt>Guests</dt><dd>{{ booking.NumberOfParticipants }}</dd></div>
+          <div><dt>Total</dt><dd>Rs {{ booking.TotalPrice }}</dd></div>
+        </dl>
+      </article>
+      {% empty %}
+      <p class="gb-empty">No upcoming paid bookings yet.</p>
+      {% endfor %}
+    </div>
+
+    {% if past %}
+    <h2 class="gb-heading">Past ({{ past|length }})</h2>
+    <div class="gb-grid gb-past">
+      {% for booking in past %}
+      <article class="gb-card">
+        <p class="gb-when">{{ booking.TourDate|date:"j F Y" }} · {{ booking.TimeSlot|time:"g:i A" }}</p>
+        <h3 class="gb-tour">{{ booking.Listing.TourName }}</h3>
+        <p class="gb-meeting">Meeting point: {{ booking.Listing.MeetingPoint }}</p>
+        <dl class="gb-details">
+          <div><dt>Customer</dt><dd>{{ booking.Customer.first_name }} {{ booking.Customer.last_name }}</dd></div>
+          <div><dt>Guests</dt><dd>{{ booking.NumberOfParticipants }}</dd></div>
+          <div><dt>Total</dt><dd>Rs {{ booking.TotalPrice }}</dd></div>
+        </dl>
+      </article>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
