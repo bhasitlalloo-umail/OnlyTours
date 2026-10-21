@@ -160,7 +160,7 @@ class BookingAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Customer', {
-            'fields': ('Customer',"Listing", "Guide",),
+            'fields': ('Customer',"Listing",),
         }),
         ('Booking dates', {
             'fields': ('TourDate','TimeSlot',),

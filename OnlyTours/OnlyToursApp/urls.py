@@ -20,4 +20,5 @@ urlpatterns = [
     path('guide/listings/new/', views.guide_listing_create, name='guide_listing_create'),
     path('guide/listings/<int:listing_id>/edit/', views.guide_listing_edit, name='guide_listing_edit'),
     path('review/', views.ReviewView.as_view(), name='review'),
+    path('guide/bookings/', views.guide_bookings, name='guide_bookings'),
     ]

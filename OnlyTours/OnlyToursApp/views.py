@@ -218,3 +218,19 @@ class ReviewView(FormView):
         return super().form_valid(form)    # redirects to home
 
 
+@login_required
+def guide_bookings(request):
+    guide = get_object_or_404(TourGuide, pk=request.user.pk)
+
+    paid_bookings = Booking.objects.filter(
+        Listing__Guide=guide,
+        BookingStatus='PAID',
+    ).select_related('Customer', 'Listing')
+
+    today = timezone.localdate()
+
+    context = { 'guide': guide, 'upcoming': paid_bookings.filter(  TourDate__gte=today
+       ).order_by('TourDate', 'TimeSlot'),'past': paid_bookings.filter( TourDate__lt=today
+        ).order_by('-TourDate', '-TimeSlot'),  }
+
+    return render(request, 'guide_bookings.html', context)
