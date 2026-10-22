@@ -32,7 +32,7 @@
        <dl class="receipt">
         <div><dt>Booking number</dt><dd>#{{ booking.BookingID }}</dd></div>
         <div><dt>Tour</dt><dd>{{ booking.Listing.TourName }}</dd></div>
-        <div><dt>Guide</dt><dd>{{ booking.Listing.Guide.first_name }} {{ booking.Guide.last_name }}</dd></div>
+        <div><dt>Guide</dt><dd>{{ booking.Listing.Guide.first_name }} {{ booking.Listing.Guide.last_name }}</dd></div>
         <div><dt>Date and time</dt><dd>{{ booking.TourDate|date:"j F Y" }}, {{ booking.TimeSlot|time:"H:i" }}</dd></div>
         <div><dt>Guests</dt><dd>{{ booking.NumberOfParticipants }}</dd></div>
         {% if payment %}

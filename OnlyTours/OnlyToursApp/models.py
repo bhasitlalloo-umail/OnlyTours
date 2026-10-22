@@ -114,6 +114,10 @@ class Booking(models.Model):
 	
 
 class Payment(models.Model):
+    PAYMENT_STATUS_CHOICES = (
+        ("PAID", "paid"),
+        ("FAILED", "failed"),
+    )
 
     PaymentID = models.AutoField(primary_key=True)
     BookingID = models.ForeignKey(Booking, on_delete=models.CASCADE)
@@ -121,12 +125,11 @@ class Payment(models.Model):
     Currency = models.CharField(max_length=10)
     ExchangeRate = models.DecimalField(max_digits=10, decimal_places=4)
     TransactionDate = models.DateTimeField()
-    PaymentStatus = models.CharField(max_length=20)
+    PaymentStatus = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES)
     PaymentMethod = models.CharField(max_length=30)
 
     def __str__(self):
         return str(self.PaymentID)
-	
 
 
 class Review(models.Model):

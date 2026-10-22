@@ -14,6 +14,7 @@ from django.db.models import Avg, Count
 from .forms import BookingForm, ReviewForm
 from .models import Booking, Listings, Customer, Attractions, TourGuide, Review, Payment
 from django.http import HttpResponse
+from . import payments
 
 
 
@@ -75,8 +76,8 @@ class BookNowView(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
     
     def get_success_url(self):
-    # after booking, go straight to the payment page for this booking
-    	return reverse('OnlyToursApp:booked', kwargs={'booking_id': self.object.pk})
+        # after booking, go straight to the payment page for this booking
+        return reverse('OnlyToursApp:pay', kwargs={'booking_id': self.object.pk})
 
     def get_context_data(self, **kwargs):
         # data for the live Trip Summary (name, guide, price of each tour)
@@ -261,5 +262,37 @@ def my_trips(request):
 
 @login_required
 def pay(request, booking_id):
-	#DUMMY FUNCTION ---TO BE CHANGED ---
-	return HttpResponse("Payment for Booking " + str(booking_id) + " : Page Coming Soon")
+    # only the customer who made the booking can pay for it
+    customer = get_object_or_404(Customer, pk=request.user.pk)
+    booking = get_object_or_404(Booking.objects.select_related('Listing', 'Listing__Guide'), pk=booking_id, Customer=customer)
+
+    if booking.BookingStatus == 'PAID':
+        return redirect('OnlyToursApp:booked', booking_id=booking.pk)
+
+    decline_message = ''
+    if request.method == 'POST':
+        form = PaymentForm(request.POST)
+        if form.is_valid():
+            number = form.cleaned_data['card_number']
+            payment = Payment(
+                BookingID=booking,
+                Amount=booking.TotalPrice,  # always the price saved on the booking, never from the form
+                Currency='MUR',
+                ExchangeRate=1,
+                TransactionDate=timezone.now(),
+                PaymentMethod=f'Card ending {number[-4:]}',
+            )
+            if number in payments.DECLINED_TEST_CARDS:
+                payment.PaymentStatus = 'FAILED'
+                payment.save()
+                decline_message = payments.DECLINED_TEST_CARDS[number]
+            else:
+                payment.PaymentStatus = 'PAID'
+                payment.save()
+                booking.BookingStatus = 'PAID'
+                booking.save()
+                return redirect('OnlyToursApp:booked', booking_id=booking.pk)
+    else:
+        form = PaymentForm()
+
+    return render(request, 'payment.html', {'form': form, 'booking': booking, 'decline_message': decline_message})
