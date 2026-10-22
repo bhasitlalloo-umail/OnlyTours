@@ -6,14 +6,33 @@
       <span class="script">Onlytourz</span>
     </span>
   </a>
-  <nav>
-{% block navbar %}
+  <nav aria-label="Main navigation">
     <ul class="site-nav">
       <li><a href="{% url 'OnlyToursApp:home' %}">Home</a></li>
       <li><a href="{% url 'OnlyToursApp:attractions' %}">Attractions</a></li>
-      <li><a href="{% url 'OnlyToursApp:register' %}">Register</a></li>
+      <li><a href="{% url 'OnlyToursApp:tourguides' %}">Tour Guide</a></li>
+      {% if user.tourguide %}
+      <li><a href="{% url 'OnlyToursApp:guide_bookings' %}">My Bookings</a></li>
+      <li><a href="{% url 'OnlyToursApp:guide_listings' %}">My Listings</a></li>
+      <li><a href="{% url 'OnlyToursApp:guide_reviews' %}">My Reviews</a></li>
+      {% else %}
       <li><a href="{% url 'OnlyToursApp:booknow' %}">Book Now</a></li>
+      {% if user.customer %}
+      <li><a href="{% url 'OnlyToursApp:my_trips' %}">My Trips</a></li>
+      {% endif %}
+      {% endif %}
+      {% if user.is_authenticated %}
+      <li class="site-nav-user">Hi, {{ user.first_name|default:user.username }}</li>
+      <li>
+        <form class="site-nav-logout" method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit">Log Out</button>
+        </form>
+      </li>
+      {% else %}
+      <li><a href="{% url 'login' %}">Log In</a></li>
+      <li><a href="{% url 'OnlyToursApp:register' %}">Register</a></li>
+      {% endif %}
     </ul>
-{% endblock navbar%}
   </nav>
 </header>
