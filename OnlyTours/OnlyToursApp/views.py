@@ -21,8 +21,6 @@ from django.http import HttpResponse
 class HomeView(TemplateView):
 	template_name = 'home.html'
 
-class UserLoginView(LoginView):
-	template_name = 'login.html'
 def attractions(request):
 	return render(request,'attractions.html')
 
