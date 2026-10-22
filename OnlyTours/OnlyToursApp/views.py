@@ -20,7 +20,13 @@ from . import payments
 
 # Create your views here.
 class HomeView(TemplateView):
-	template_name = 'home.html'
+    template_name = 'home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['featured'] = Attractions.objects.filter(IsFeatured=True).order_by('Name')[:3]
+        return context
+
 
 def attractions(request):
 	return render(request,'attractions.html')
