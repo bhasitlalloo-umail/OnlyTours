@@ -3,17 +3,18 @@ from django.contrib.auth.views import LoginView
 from .forms import *
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
-from django.views.generic import TemplateView
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.utils import timezone
 from django.views.generic import CreateView, DetailView, FormView
 from django.db.models import Avg, Count
 from .forms import BookingForm, ReviewForm
-from .models import Booking, Listings, Customer, Attractions, TourGuide, Review
+from .models import Booking, Listings, Customer, Attractions, TourGuide, Review, Payment
+from django.http import HttpResponse
+
 
 
 # Create your views here.
@@ -73,8 +74,11 @@ class BookNowView(LoginRequiredMixin, CreateView):
     model = Booking
     form_class = BookingForm
     template_name = 'booknow.html'
-    login_url = reverse_lazy('OnlyToursApp:login')
-    success_url = reverse_lazy('OnlyToursApp:booked')
+    login_url = reverse_lazy('login')
+    
+    def get_success_url(self):
+    # after booking, go straight to the payment page for this booking
+    	return reverse('OnlyToursApp:booked', kwargs={'booking_id': self.object.pk})
 
     def get_context_data(self, **kwargs):
         # data for the live Trip Summary (name, guide, price of each tour)
@@ -102,8 +106,16 @@ class BookNowView(LoginRequiredMixin, CreateView):
 
 
 
-def booked(request):
-	return render(request,'booked.html')
+def booked(request,booking_id):
+	customer = get_object_or_404(Customer, pk=request.user.pk)
+	booking = get_object_or_404(Booking.objects.select_related('Listing', 'Listing__Guide'), pk=booking_id, Customer=customer)
+	if booking.BookingStatus != 'PAID':
+		return redirect('OnlyToursApp:pay', booking_id=booking.pk)
+	paid_payments = Payment.objects.filter(BookingID=booking, PaymentStatus='PAID').order_by('-TransactionDate')
+	payment = None
+	if len(paid_payments) > 0:
+		payment = paid_payments[0]
+	return render(request, 'booked.html', {'booking': booking, 'payment': payment})
 
 def register(request):
 	return render(request,'register.html')
@@ -234,3 +246,22 @@ def guide_bookings(request):
         ).order_by('-TourDate', '-TimeSlot'),  }
 
     return render(request, 'guide_bookings.html', context)
+    
+@login_required
+def my_trips(request):
+	# the customer's own bookings, with what they can do next (pay, receipt, review)
+	customer = get_object_or_404(Customer, pk=request.user.pk)
+	today = timezone.localdate()
+	trips = Booking.objects.filter(Customer=customer).select_related('Listing', 'Listing__Guide').order_by('-TourDate', '-BookingID')
+	for booking in trips:
+		reviews = Review.objects.filter(Booking=booking)
+		booking.my_review = None
+		if len(reviews) > 0:
+			booking.my_review = reviews[0]
+		booking.can_review = booking.BookingStatus == 'PAID' and booking.TourDate < today and booking.my_review is None
+	return render(request, 'my_trips.html', {'trips': trips})
+
+@login_required
+def pay(request, booking_id):
+	#DUMMY FUNCTION ---TO BE CHANGED ---
+	return HttpResponse("Payment for Booking " + str(booking_id) + " : Page Coming Soon")

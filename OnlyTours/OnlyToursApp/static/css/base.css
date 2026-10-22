@@ -167,6 +167,11 @@ body {
 /* Page body between the header and footer */
 .site-main {
   flex: 1 0 auto;
+  background: conic-gradient(
+    from 180deg at 50% 50%,
+    rgba(237, 254, 255, 1) 41.8%,
+    rgba(63, 216, 227, 1) 61.5%
+  );
 }
 
 /* Shared footer */
