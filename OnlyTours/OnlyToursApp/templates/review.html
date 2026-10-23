@@ -9,14 +9,14 @@
 {% endblock %}
 
 {% block content %}
-<body>
+
   <div class="review-page site-brand-gradient">
     <div class="review-grid">
       <div class="review-form-wrap">
         <p class="eyebrow">LEAVE A REVIEW</p>
         <h1>How was your tour?</h1>
 
-        <form class="review-form" method="post" action="{% url 'OnlyToursApp:review' %}" novalidate>
+        <form class="review-form" method="post" novalidate>
           {% csrf_token %}
 
           {% if form.non_field_errors %}
@@ -32,10 +32,10 @@
           </div>
 
           <div class="field field-full">
-            <label for="{{ form.booking_id.id_for_label }}">{{ form.booking_id.label }}</label>
-            {{ form.booking_id }}
-            <p class="field-hint">Enter the booking number from your booking confirmation.</p>
-            {% for error in form.booking_id.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+            <span class="field-label">Reviewing</span>
+            <p class="field-hint">
+              Booking #{{ booking.BookingID }} · {{ booking.Listing.TourName }} · {{ booking.TourDate|date:"j F Y" }}
+            </p>
           </div>
 
           <div class="field field-full">
@@ -68,6 +68,5 @@
       </a>
     </div>
   </div>
-</body>
+
 {% endblock %}
-</html>
