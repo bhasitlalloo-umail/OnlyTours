@@ -20,6 +20,9 @@ urlpatterns = [
     path('guide/listings/<int:listing_id>/edit/', views.guide_listing_edit, name='guide_listing_edit'),
     path('review/<int:booking_id>/', views.ReviewView.as_view(), name='review'),
     path('guide/bookings/', views.guide_bookings, name='guide_bookings'),
+    path('guide/reviews/', views.guide_reviews, name='guide_reviews'),
+    path('guide/reviews/<int:review_id>/respond/', views.guide_review_respond, name='guide_review_respond'),
+
     path('trips/', views.my_trips, name='my_trips'),
     path('pay/<int:booking_id>/', views.pay, name='pay'),
     ]
