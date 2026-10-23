@@ -1,0 +1,106 @@
+/* Reviews: My Trips actions, review form intro, review cards (attraction page and guide page). */
+
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.review-card {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.review-head {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem var(--space-sm);
+}
+
+.review-stars {
+  color: #b7791f;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.review-meta {
+  color: var(--text-body);
+  font-size: 0.95rem;
+}
+
+.review-flag {
+  background: #fde8e6;
+  color: #7f1d1d;
+  border-radius: 999px;
+  padding: 0.1rem 0.7rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.review-text {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.review-none {
+  color: var(--text-body);
+  font-style: italic;
+}
+
+.review-reply {
+  margin: 0;
+  padding: 0.6rem 0.9rem;
+  border-left: 4px solid var(--logo);
+  background: #f2fcfd;
+  border-radius: 0 10px 10px 0;
+}
+
+.review-reply-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.review-reply-form label {
+  font-weight: 700;
+}
+
+.review-reply-form textarea {
+  width: 100%;
+  background: var(--input-bg);
+  border: none;
+  border-radius: 14px;
+  padding: 0.75rem 1rem;
+  font: inherit;
+  resize: vertical;
+}
+
+.review-intro {
+  margin: 0 0 var(--space-md);
+  color: var(--text-body);
+  font-weight: 500;
+}
+
+.review-done {
+  margin: 0;
+  padding: 0.6rem 0.9rem;
+  background: #f2fcfd;
+  border-radius: 10px;
+  line-height: 1.5;
+}
+
+.trip-action {
+  color: var(--headings);
+  font-weight: 700;
+  text-decoration: underline;
+}

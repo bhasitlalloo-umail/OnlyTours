@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import HomeView, UserLoginView
+from .views import HomeView
 from . import views
 
 app_name = 'OnlyToursApp'
@@ -9,16 +9,20 @@ urlpatterns = [
     path('attractions/<int:pk>/', views.AttractionDetailView.as_view(), name='attraction_detail'),    
     path('tourguides/', views.TourGuideListView.as_view(), name='tourguides'),
     path('booknow/',views.BookNowView.as_view(), name='booknow'),
-    path('booked/', views.booked, name='booked'),
+    path('booked/<int:booking_id>/', views.booked, name='booked'),
     path('register/', views.register, name='register'),
     path('customerregister/',views.customerregister, name='customerregister'),
     path('guideregister/',views.guideregister, name='guideregister'),
-    path('login/', UserLoginView.as_view(), name='login'),
 
 
     path('guide/listings/', views.guide_listings, name='guide_listings'),
     path('guide/listings/new/', views.guide_listing_create, name='guide_listing_create'),
     path('guide/listings/<int:listing_id>/edit/', views.guide_listing_edit, name='guide_listing_edit'),
-    path('review/', views.ReviewView.as_view(), name='review'),
+    path('review/<int:booking_id>/', views.ReviewView.as_view(), name='review'),
     path('guide/bookings/', views.guide_bookings, name='guide_bookings'),
+    path('guide/reviews/', views.guide_reviews, name='guide_reviews'),
+    path('guide/reviews/<int:review_id>/respond/', views.guide_review_respond, name='guide_review_respond'),
+
+    path('trips/', views.my_trips, name='my_trips'),
+    path('pay/<int:booking_id>/', views.pay, name='pay'),
     ]

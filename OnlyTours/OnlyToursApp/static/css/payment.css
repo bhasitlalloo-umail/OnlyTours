@@ -1,0 +1,87 @@
+.payment-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--space-lg);
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+}
+
+.payment-summary {
+  flex: 1 1 300px;
+  max-width: 440px;
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+}
+
+.payment-summary h2 {
+  margin: 0 0 var(--space-sm);
+}
+
+.summary-list div {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.summary-list dd {
+  margin: 0;
+  font-weight: 700;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+}
+
+.payment-form-wrap {
+  flex: 1 1 420px;
+  max-width: 640px;
+}
+
+.payment-form-wrap h1 {
+  margin: 0 0 var(--space-md);
+}
+
+.payment-form p {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 0 0 var(--space-sm);
+}
+
+.payment-form input {
+  background: var(--input-bg);
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: 0.9rem 1.2rem;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.payment-form .helptext {
+  font-size: 0.85rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.errorlist {
+  color: #c0392b;
+  font-weight: 600;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.form-errors {
+  color: #c0392b;
+  font-weight: 600;
+}
+
+.demo-note {
+  margin-top: var(--space-md);
+  font-size: 0.9rem;
+}

@@ -3,26 +3,33 @@ from django.contrib.auth.views import LoginView
 from .forms import *
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
-from django.views.generic import TemplateView
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.utils import timezone
 from django.views.generic import CreateView, DetailView, FormView
 from django.db.models import Avg, Count
 from .forms import BookingForm, ReviewForm
-from .models import Booking, Listings, Customer, Attractions, TourGuide, Review,TourGuideRegistration
+from .models import Booking, Listings, Customer, Attractions, TourGuide, Review,TourGuideRegistration,Payment
 from django.contrib.auth import login as auth_login
+
+from django.http import HttpResponse
+from . import payments
+from django.utils.decorators import method_decorator
 
 
 # Create your views here.
 class HomeView(TemplateView):
-	template_name = 'home.html'
+    template_name = 'home.html'
 
-class UserLoginView(LoginView):
-	template_name = 'login.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['featured'] = Attractions.objects.filter(IsFeatured=True).order_by('Name')[:3]
+        return context
+
+
 def attractions(request):
 	return render(request,'attractions.html')
 
@@ -74,8 +81,11 @@ class BookNowView(LoginRequiredMixin, CreateView):
     model = Booking
     form_class = BookingForm
     template_name = 'booknow.html'
-    login_url = reverse_lazy('OnlyToursApp:login')
-    success_url = reverse_lazy('OnlyToursApp:booked')
+    login_url = reverse_lazy('login')
+    
+    def get_success_url(self):
+        # after booking, go straight to the payment page for this booking
+        return reverse('OnlyToursApp:pay', kwargs={'booking_id': self.object.pk})
 
     def get_context_data(self, **kwargs):
         # data for the live Trip Summary (name, guide, price of each tour)
@@ -103,8 +113,16 @@ class BookNowView(LoginRequiredMixin, CreateView):
 
 
 
-def booked(request):
-	return render(request,'booked.html')
+def booked(request,booking_id):
+	customer = get_object_or_404(Customer, pk=request.user.pk)
+	booking = get_object_or_404(Booking.objects.select_related('Listing', 'Listing__Guide'), pk=booking_id, Customer=customer)
+	if booking.BookingStatus != 'PAID':
+		return redirect('OnlyToursApp:pay', booking_id=booking.pk)
+	paid_payments = Payment.objects.filter(BookingID=booking, PaymentStatus='PAID').order_by('-TransactionDate')
+	payment = None
+	if len(paid_payments) > 0:
+		payment = paid_payments[0]
+	return render(request, 'booked.html', {'booking': booking, 'payment': payment})
 
 def register(request):
 	return render(request,'register.html')
@@ -213,21 +231,40 @@ def guide_listing_edit(request, listing_id):
     return render( request, 'guide_listing_form.html', {'form': form, 'editing': True, 'listing': listing},
     )
 
+
+@method_decorator(login_required(login_url='login'), name='dispatch')
 class ReviewView(FormView):
     template_name = 'review.html'
     form_class = ReviewForm
     success_url = reverse_lazy('OnlyToursApp:home')
 
+    def dispatch(self, request, *args, **kwargs):
+        # login_required has already run, so request.user is logged in here.
+        customer = get_object_or_404(Customer, pk=request.user.pk)
+        # only the customer who made the booking can review it
+        self.booking = get_object_or_404(
+            Booking.objects.select_related('Listing', 'Customer'),
+            pk=kwargs['booking_id'], Customer=customer)
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['booking'] = self.booking
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['booking'] = self.booking
+        return context
+
     def form_valid(self, form):
-        # same pattern as customerregister: build the object from cleaned_data, then save it
         review = Review(
-            Booking=form.cleaned_data['booking'],
+            Booking=self.booking,
             Rating=form.cleaned_data['Rating'],
             Comment=form.cleaned_data['Comment'],
         )
         review.save()
         return super().form_valid(form)    # redirects to home
-
 
 @login_required
 def guide_bookings(request):
@@ -245,3 +282,75 @@ def guide_bookings(request):
         ).order_by('-TourDate', '-TimeSlot'),  }
 
     return render(request, 'guide_bookings.html', context)
+    
+@login_required
+def guide_reviews(request):
+    # reviews of this guide's own tours, newest first
+    guide = get_object_or_404(TourGuide, pk=request.user.pk)
+    reviews = Review.objects.filter(Booking__Listing__Guide=guide).select_related(
+        'Booking__Listing', 'Booking__Customer').order_by('-DateSubmitted')
+    return render(request, 'guide_reviews.html', {'guide': guide, 'reviews': reviews})
+
+
+@login_required
+def guide_review_respond(request, review_id):
+    guide = get_object_or_404(TourGuide, pk=request.user.pk)
+    # a guide can only answer reviews of their own tours; anyone else's gives "not found"
+    review = get_object_or_404(Review, pk=review_id, Booking__Listing__Guide=guide)
+    if request.method == 'POST':
+        form = GuideResponseForm(request.POST, instance=review)
+        if form.is_valid():
+            form.save()
+    return redirect('OnlyToursApp:guide_reviews')
+
+
+@login_required
+def my_trips(request):
+	# the customer's own bookings, with what they can do next (pay, receipt, review)
+	customer = get_object_or_404(Customer, pk=request.user.pk)
+	today = timezone.localdate()
+	trips = Booking.objects.filter(Customer=customer).select_related('Listing', 'Listing__Guide').order_by('-TourDate', '-BookingID')
+	for booking in trips:
+		reviews = Review.objects.filter(Booking=booking)
+		booking.my_review = None
+		if len(reviews) > 0:
+			booking.my_review = reviews[0]
+		booking.can_review = booking.BookingStatus == 'PAID' and booking.TourDate < today and booking.my_review is None
+	return render(request, 'my_trips.html', {'trips': trips})
+
+@login_required
+def pay(request, booking_id):
+    # only the customer who made the booking can pay for it
+    customer = get_object_or_404(Customer, pk=request.user.pk)
+    booking = get_object_or_404(Booking.objects.select_related('Listing', 'Listing__Guide'), pk=booking_id, Customer=customer)
+
+    if booking.BookingStatus == 'PAID':
+        return redirect('OnlyToursApp:booked', booking_id=booking.pk)
+
+    decline_message = ''
+    if request.method == 'POST':
+        form = PaymentForm(request.POST)
+        if form.is_valid():
+            number = form.cleaned_data['card_number']
+            payment = Payment(
+                BookingID=booking,
+                Amount=booking.TotalPrice,  # always the price saved on the booking, never from the form
+                Currency='MUR',
+                ExchangeRate=1,
+                TransactionDate=timezone.now(),
+                PaymentMethod=f'Card ending {number[-4:]}',
+            )
+            if number in payments.DECLINED_TEST_CARDS:
+                payment.PaymentStatus = 'FAILED'
+                payment.save()
+                decline_message = payments.DECLINED_TEST_CARDS[number]
+            else:
+                payment.PaymentStatus = 'PAID'
+                payment.save()
+                booking.BookingStatus = 'PAID'
+                booking.save()
+                return redirect('OnlyToursApp:booked', booking_id=booking.pk)
+    else:
+        form = PaymentForm()
+
+    return render(request, 'payment.html', {'form': form, 'booking': booking, 'decline_message': decline_message})
