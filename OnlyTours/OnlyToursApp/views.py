@@ -15,7 +15,7 @@ from .forms import BookingForm, ReviewForm
 from .models import Booking, Listings, Customer, Attractions, TourGuide, Review, Payment
 from django.http import HttpResponse
 from . import payments
-
+from django.utils.decorators import method_decorator
 
 
 # Create your views here.
@@ -213,21 +213,40 @@ def guide_listing_edit(request, listing_id):
     return render( request, 'guide_listing_form.html', {'form': form, 'editing': True, 'listing': listing},
     )
 
+
+@method_decorator(login_required(login_url='login'), name='dispatch')
 class ReviewView(FormView):
     template_name = 'review.html'
     form_class = ReviewForm
     success_url = reverse_lazy('OnlyToursApp:home')
 
+    def dispatch(self, request, *args, **kwargs):
+        # login_required has already run, so request.user is logged in here.
+        customer = get_object_or_404(Customer, pk=request.user.pk)
+        # only the customer who made the booking can review it
+        self.booking = get_object_or_404(
+            Booking.objects.select_related('Listing', 'Customer'),
+            pk=kwargs['booking_id'], Customer=customer)
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['booking'] = self.booking
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['booking'] = self.booking
+        return context
+
     def form_valid(self, form):
-        # same pattern as customerregister: build the object from cleaned_data, then save it
         review = Review(
-            Booking=form.cleaned_data['booking'],
+            Booking=self.booking,
             Rating=form.cleaned_data['Rating'],
             Comment=form.cleaned_data['Comment'],
         )
         review.save()
         return super().form_valid(form)    # redirects to home
-
 
 @login_required
 def guide_bookings(request):
