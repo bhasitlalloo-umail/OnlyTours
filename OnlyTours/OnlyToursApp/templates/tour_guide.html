@@ -1,162 +1,68 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block title %}Tour Guides · OnlyTours{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="{% static 'tourism/css/vars_tourguide.css' %}">
-    <link rel="stylesheet" href="{% static 'tourism/css/style_tourguide.css' %}">
-
-    <title>OnlyTourz - Tour Guides</title>
-</head>
-
-<body>
-
-    <div class="tour-guide">
-
-        <div class="desktop">
-
-            <!-- HEADER -->
-            <div class="header-6">
-
-                <img
-                    class="image"
-                    src="{% static 'tourism/images/image0.png' %}"
-                    alt="OnlyTourz"
-                >
-
-                <div class="onlytourz">
-                    <span>
-                        <span class="onlytourz-span">
-                            ONLYTOURZ
-                        </span>
-
-                        <span class="onlytourz-span2"></span>
-                    </span>
-                </div>
-
-                <div class="nav">
-
-                    <div class="home2">
-                        <a href="{% url 'OnlyToursApp:home' %}">
-                            Home
-                        </a>
-                    </div>
-
-                    <div class="book-now2">
-                        <a href="{% url 'OnlyToursApp:booknow' %}">
-                            Book Now
-                        </a>
-                    </div>
-
-                    <div class="attractions">
-                        <a href="{% url 'OnlyToursApp:attractions' %}">
-                            Attractions
-                        </a>
-                    </div>
-
-                    <div class="tour-guide">
-                        <a href="{% url 'OnlyToursApp:tourguides' %}">
-                            Tour Guide
-                        </a>
-                    </div>
-
-                    <div class="log-in">
-                        <a href="{% url 'login' %}">
-                            Log In
-                        </a>
-                    </div>
-
-                </div>
-
-            </div>
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/tourguides.css' %}">
+{% endblock %}
 
 
-            <!-- TOUR GUIDES -->
-            <div class="tour-guides">
+{% block content %}
+<div class="guides-page site-brand-gradient">
+  <div class="guides-inner">
 
-                <div class="header">
-
-                    <div class="our-tour-guides">
-                        Our Tour Guides
-                    </div>
-
-                    <div class="our-tour-guides-are-experienced-individuals-who-have-been-providing-their-touring-services-for-more-than-a-decade-their-priority-is-your-enjoyment-and-safety">
-
-                        Our Tour Guides are experienced individuals, who have been
-                        providing their touring services for more than a decade.
-                        Their priority is your enjoyment and safety!
-
-                    </div>
-
-                </div>
-
-
-                <!-- GALLERY -->
-                <div class="gallery guide-grid">
-
-                    {% for guide in tourguides %}
-                    <div class="guide-card">
-
-                        <div class="author2">
-
-                            <img
-                                class="image3"
-                                src="{% static 'tourism/images/image2.png' %}"
-                                alt="{{ guide.FirstName }} {{ guide.Surname }}"
-                            >
-
-                            <div class="guide-name">
-                                {{ guide.FirstName }} {{ guide.Surname }}
-                            </div>
-
-                        </div>
-
-                        <div class="guide-info">
-
-                            <p>
-                                <strong>About me:</strong>
-                                {{ guide.Biography|default:"Not provided" }}
-                            </p>
-
-                            <p>
-                                <strong>Years of Experience:</strong>
-                                {% if guide.YearsofExperience is not None %}{{ guide.YearsofExperience }} years{% else %}Not provided{% endif %}
-                            </p>
-
-                            <p>
-                                <strong>Languages Spoken:</strong>
-                                {% for lang in guide.languagesspoken_set.all %}{{ lang.Language|default_if_none:"" }}{% if not forloop.last %}, {% endif %}{% empty %}Not provided{% endfor %}
-                            </p>
-
-                            <p>
-                                <strong>Phone Number:</strong>
-                                {{ guide.PhoneNumber|default:"Not provided" }}
-                                <br>
-                                <strong>Email Address:</strong>
-                                {{ guide.Email }}
-                            </p>
-
-                        </div>
-
-                    </div>
-                    {% empty %}
-                    <p class="guide-empty">No tour guides available yet.</p>
-                    {% endfor %}
-
-                </div>
-            </div>
-
-        </div>
-
+    <div class="guides-intro">
+      <h1 class="guides-title">Our Tour Guides</h1>
+      <p class="guides-lead">
+        Our Tour Guides are experienced individuals, who have been
+        providing their touring services for more than a decade.
+        Their priority is your enjoyment and safety!
+      </p>
     </div>
 
-</body>
 
-</html>
+    <div class="guide-grid">
+      {% for guide in tourguides %}
+      <article class="guide-card">
+
+        <div class="guide-head">
+          <img class="guide-photo" src="{% static 'tourism/images/image2.png' %}"
+               alt="{{ guide.first_name }} {{ guide.last_name }}">
+          <h2 class="guide-name">{{ guide.first_name }} {{ guide.last_name }}</h2>
+        </div>
+
+        <div class="guide-info">
+          <p>
+            <strong>About me:</strong>
+            {{ guide.Biography|default:"Not provided" }}
+          </p>
+
+          <p>
+            <strong>Years of Experience:</strong>
+            {% if guide.YearsofExperience is not None %}{{ guide.YearsofExperience }} years{% else %}Not provided{% endif %}
+          </p>
+
+          <p>
+            <strong>Languages Spoken:</strong>
+            {% for lang in guide.languagesspoken_set.all %}{{ lang.Language|default_if_none:"" }}{% if not forloop.last %}, {% endif %}{% empty %}{{ guide.PrimaryLanguage|default:"Not provided" }}{% endfor %}
+          </p>
+
+          <p>
+            <strong>Phone Number:</strong>
+            {{ guide.PhoneNumber|default:"Not provided" }}
+            <br>
+            <strong>Email Address:</strong>
+            {{ guide.email|default:"Not provided" }}
+          </p>
+        </div>
+
+      </article>
+      {% empty %}
+      <p class="guide-empty">No tour guides available yet.</p>
+      {% endfor %}
+   </div>
+
+  </div>
+</div>
+{% endblock %}
