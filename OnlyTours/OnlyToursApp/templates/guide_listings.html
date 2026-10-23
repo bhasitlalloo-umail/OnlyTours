@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Listings · OnlyTours{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/guide_bookings.css' %}">
+  <link rel="stylesheet" href="{% static 'css/guide_listings.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="gb-page site-brand-gradient">
+  <div class="gb-inner">
+
+    <div class="gb-intro gl-intro">
+      <div>
+        <p class="gb-eyebrow">TOUR GUIDE</p>
+        <h1 class="gb-title">My Listings</h1>
+        <p class="gb-lead">The tours you offer. Customers can only book tours that are active.</p>
+      </div>
+      {% if is_approved %}
+        <a class="btn btn-yellow" href="{% url 'OnlyToursApp:guide_listing_create' %}">+ New listing</a>
+      {% endif %}
+    </div>
+
+    {% include 'partials/registration_banner.html' %}
+
+    <div class="gb-grid">
+      {% for listing in listings %}
+      <article class="gb-card">
+        <header class="gb-card-head">
+          <p class="gb-when">
+            <span class="gl-status gl-status-{{ listing.ListingsStatus|lower }}">{{ listing.get_ListingsStatus_display|title }}</span>
+          </p>
+          <h3 class="gb-tour">{{ listing.TourName }}</h3>
+          <p class="gb-meeting">{{ listing.LDescription|truncatechars:140 }}</p>
+        </header>
+
+        <dl class="gb-details">
+          <div><dt>Price per person</dt><dd>Rs {{ listing.Price }}</dd></div>
+          <div><dt>Duration</dt><dd>{{ listing.Duration }} hours</dd></div>
+          <div><dt>Meeting point</dt><dd>{{ listing.MeetingPoint }}</dd></div>
+          <div><dt>Available from</dt><dd>{{ listing.AvailabilityDate|date:"j F Y" }}</dd></div>
+          <div><dt>Attractions</dt><dd>{% for a in listing.Attraction.all %}{{ a.Name }}{% if not forloop.last %}, {% endif %}{% empty %}None chosen{% endfor %}</dd></div>
+        </dl>
+
+        {% if is_approved %}
+        <footer class="gb-card-foot">
+          <span class="gb-ref">Listing #{{ listing.ListingID }}</span>
+          <a class="gl-edit" href="{% url 'OnlyToursApp:guide_listing_edit' listing.ListingID %}">Edit</a>
+        </footer>
+        {% endif %}
+      </article>
+      {% empty %}
+      <p class="gb-empty">
+        {% if is_approved %}You have no listings yet. Click "New listing" to add your first tour.
+        {% else %}Once your registration is approved you can add your tours here.{% endif %}
+      </p>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+{% endblock %}

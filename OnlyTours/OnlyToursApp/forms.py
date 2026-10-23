@@ -5,6 +5,7 @@ from django.core.validators import MinLengthValidator
 from django.contrib.auth.forms import UserCreationForm
 from .models import Booking
 from .models import Review
+from .import payments
 
 class CustomerRegisterForm(forms.ModelForm):
 	class Meta:
@@ -57,7 +58,75 @@ class BookingForm(forms.ModelForm):
         n = self.cleaned_data['NumberOfParticipants']
         if n < 1 or n > 20:
             raise forms.ValidationError('Number of guests must be between 1 and 20.')
-        return n		
+        return n
+
+class PaymentForm(forms.Form):
+    card_name = forms.CharField(label='Name on card', max_length=60)
+    card_number = forms.CharField(label='Card number', max_length=19,
+                                  help_text='16 digits, for example 4242 4242 4242 4242')
+    expiry = forms.CharField(label='Expiry date', max_length=5,
+                             help_text='MM/YY, for example 08/29')
+    cvv = forms.CharField(label='CVV', max_length=3, widget=forms.PasswordInput,
+                          help_text='The 3 digits on the back of the card')
+
+    def clean_card_number(self):
+        number = self.cleaned_data['card_number'].replace(' ', '')
+        if not number.isdigit() or len(number) != 16:
+            raise forms.ValidationError('Enter a 16-digit card number.')
+        if not payments.luhn_valid(number):
+            raise forms.ValidationError('This card number is not valid. Please check it.')
+        return number
+
+    def clean_expiry(self):
+        expiry = self.cleaned_data['expiry']
+        parts = expiry.split('/')
+        if len(parts) != 2 or not parts[0].isdigit() or not parts[1].isdigit() or len(parts[1]) != 2:
+            raise forms.ValidationError('Enter the expiry date as MM/YY.')
+        month = int(parts[0])
+        year = 2000 + int(parts[1])
+        if not 1 <= month <= 12:
+            raise forms.ValidationError('The month must be between 01 and 12.')
+        today = timezone.localdate()
+        if (year, month) < (today.year, today.month):
+            raise forms.ValidationError('This card has expired.')
+        return expiry
+
+    def clean_cvv(self):
+        cvv = self.cleaned_data['cvv']
+        if not cvv.isdigit() or len(cvv) != 3:
+            raise forms.ValidationError('The CVV should be 3 digits.')
+        return cvv
+		
+
+
+
+DIFFICULTY_LEVEL_CHOICES = (("EASY", "Easy"),
+        ("MODERATE", "Moderate"),
+        ("DIFFICULT", "Difficult"),	)
+
+
+
+
+class ListingForm(forms.ModelForm):
+      class Meta:
+        model = Listings
+        fields = ['TourName', 'LDescription', 'Duration', 'MeetingPoint', 'Price',
+                  'AvailabilityDate', 'ListingsStatus', 'Attraction']
+        labels = {
+            'TourName': 'Tour name',
+            'LDescription': 'Description',
+            'Duration': 'Duration (hours)',
+            'MeetingPoint': 'Meeting point',
+            'Price': 'Price per person (Rs)',
+            'AvailabilityDate': 'Available from',
+            'ListingsStatus': 'Status',
+            'Attraction': 'Attractions this tour visits',
+        }
+        widgets = {
+            'AvailabilityDate': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
+            'LDescription': forms.Textarea(attrs={'rows': 4}),
+            'Attraction': forms.CheckboxSelectMultiple,
+        }
    
 
 

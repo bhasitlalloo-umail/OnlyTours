@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Trips · OnlyTours{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/guide_bookings.css' %}">
+  <link rel="stylesheet" href="{% static 'css/reviews.css' %}?v=1">
+{% endblock %}
+
+{% block content %}
+<div class="gb-page site-brand-gradient">
+  <div class="gb-inner">
+
+    <div class="gb-intro">
+      <p class="gb-eyebrow">CUSTOMER</p>
+      <h1 class="gb-title">My Trips</h1>
+      <p class="gb-lead">Your bookings. Pay for a booking, see your receipt, or review a tour after you have taken it.</p>
+    </div>
+
+    <div class="gb-grid">
+      {% for trip in trips %}
+      <article class="gb-card">
+        <header class="gb-card-head">
+          <p class="gb-when">{{ trip.TourDate|date:"l, j F Y" }} &middot; {{ trip.TimeSlot|time:"H:i" }}</p>
+          <h3 class="gb-tour">{{ trip.Listing.TourName }}</h3>
+          <p class="gb-meeting">with {{ trip.Listing.Guide.first_name }} {{ trip.Guide.last_name }}</p>
+        </header>
+
+        <dl class="gb-details">
+          <div><dt>Guests</dt><dd>{{ trip.NumberOfParticipants }}</dd></div>
+          <div><dt>Total</dt><dd>Rs {{ trip.TotalPrice }}</dd></div>
+          <div><dt>Status</dt><dd>{% if trip.BookingStatus == 'PAID' %}Paid{% else %}Not paid yet{% endif %}</dd></div>
+          <div><dt>Special Requests</dt><dd>{{ trip.SpecialRequests }}</dd></div>
+        </dl>
+
+        {% if trip.my_review %}
+        <p class="review-done">You rated this tour <strong>&#9733; {{ trip.my_review.Rating }}/5</strong>.
+          {% if trip.my_review.GuideResponse %}<br><strong>Reply from your guide:</strong> {{ trip.my_review.GuideResponse }}{% endif %}</p>
+        {% endif %}
+
+        <footer class="gb-card-foot">
+          <span class="gb-ref">Booking #{{ trip.BookingID }}</span>
+          {% if trip.BookingStatus != 'PAID' %}
+            <a class="trip-action" href="{% url 'OnlyToursApp:pay' trip.BookingID %}">Pay now</a>
+          {% elif trip.can_review %}
+            <a class="trip-action" href="{% url 'OnlyToursApp:review' trip.BookingID %}">Leave a review</a>
+          {% else %}
+            <a class="trip-action" href="{% url 'OnlyToursApp:booked' trip.BookingID %}">Receipt</a>
+          {% endif %}
+        </footer>
+      </article>
+      {% empty %}
+      <p class="gb-empty">You have no bookings yet. <a href="{% url 'OnlyToursApp:booknow' %}">Book your first tour.</a></p>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+{% endblock %}

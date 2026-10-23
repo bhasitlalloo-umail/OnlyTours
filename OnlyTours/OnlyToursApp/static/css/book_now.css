@@ -16,90 +16,12 @@ body {
   font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
     Helvetica, Arial, sans-serif;
   color: var(--text-dark);
-  background: radial-gradient(
-    120% 100% at 12% 6%,
-    #eafdfe 0%,
-    #a9eef2 30%,
-    #5fd9e5 65%,
-    #45cfe0 100%
+  background: conic-gradient(
+    from 180deg at 50% 50%,
+    rgba(237, 254, 255, 1) 41.8%,
+    rgba(63, 216, 227, 1) 61.5%
   );
   min-height: 100vh;
-}
-
-/* =========================
-   HEADER / NAVIGATION
-   ========================= */
-
-header.topnav {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: linear-gradient(
-    90deg,
-    #cdf6f8 0%,
-    #74e3ea 55%,
-    #48d3e1 100%
-  );
-  padding: 10px 28px;
-  overflow: hidden;
-}
-
-header.topnav::after {
-  content: "";
-  position: absolute;
-  top: -40%;
-  left: 20%;
-  width: 45%;
-  height: 180%;
-  background: linear-gradient(
-    100deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.65) 45%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  transform: rotate(8deg);
-  pointer-events: none;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  position: relative;
-  z-index: 1;
-}
-
-.brand-name {
-  font-family: "Swanky and Moo Moo", cursive;
-  font-size: 1.5rem;
-  color: #14b8b0;
-  letter-spacing: 2px;
-}
-
-.brand-logo {
-  width: 34px;
-  height: 34px;
-  flex-shrink: 0;
-}
-
-nav.links {
-  display: flex;
-  gap: 22px;
-  position: relative;
-  z-index: 1;
-}
-
-nav.links a {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  color: #ffffff;
-  font-size: 0.92rem;
-  font-weight: 700;
-}
-
-nav.links a:hover {
-  opacity: 0.85;
 }
 
 /* =========================

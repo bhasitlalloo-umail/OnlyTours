@@ -4,14 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Attractions · OnlyTours</title>
+  <title>{% block title %}OnlyTours{% endblock %}</title>
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
-  <link rel="stylesheet" href="{% static 'css/attractions.css' %}">
+  {% block extra_css %}{% endblock %}
 </head>
-<body>
-{% include 'partials/navbar.html' %}
-  <div class="attractions-page site-brand-gradient">
-	{% block content %}{% endblock content%}
-  </div>
+<body class="{% block body_class %}{% endblock %}">
+  {% include 'partials/navbar.html' %}
+
+  <main class="site-main">
+    {% block content %}{% endblock %}
+  </main>
+  {% block footer %}{% endblock %}
 </body>
 </html>

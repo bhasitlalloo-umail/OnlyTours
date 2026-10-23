@@ -65,13 +65,13 @@ class Attractions(models.Model):
 	DifficultyLevel = models.CharField(null=True, blank=True, max_length=50, choices=DIFFICULTY_LEVEL_CHOICES, help_text='Select the difficulty level of the attraction')
 	Type = models.CharField(null=False, blank=False, max_length=100, help_text='Enter the type of attraction')
 	DateAdded = models.DateField(null=False, blank=False, help_text='Enter the date the attraction was added')
-	AverageRating = models.IntegerField(
-		validators=[MinValueValidator(1), MaxValueValidator(5)],
-		help_text='Enter a rating from 1 to 5'
-	)
+	Image = models.ImageField(upload_to='attractions/', blank=True, help_text='Upload a photo of the attraction')
 
 	def __str__(self):
 		return self.Name
+
+	def get_absolute_url(self):
+		return reverse('OnlyToursApp:attraction_detail', args=[self.pk])
 
 class Listings(models.Model):
 	LISTING_STATUS_CHOICES = (
@@ -101,7 +101,6 @@ class Booking(models.Model):
 	BookingID = models.AutoField(primary_key=True, help_text='Unique ID for the booking')
 	Customer = models.ForeignKey(Customer, on_delete=models.CASCADE, help_text="Choose a Customer")
 	Listing = models.ForeignKey(Listings, on_delete=models.CASCADE, help_text="Choose a Tour")
-	Guide = models.ForeignKey(TourGuide, on_delete=models.SET_NULL, null=True, blank=True, help_text="Guide assigned to this booking")
 	DateTimeRequested = models.DateTimeField(auto_now_add=True)
 	TourDate = models.DateField()
 	TimeSlot = models.TimeField(help_text='Enter the preferred time')
@@ -115,6 +114,10 @@ class Booking(models.Model):
 	
 
 class Payment(models.Model):
+    PAYMENT_STATUS_CHOICES = (
+        ("PAID", "paid"),
+        ("FAILED", "failed"),
+    )
 
     PaymentID = models.AutoField(primary_key=True)
     BookingID = models.ForeignKey(Booking, on_delete=models.CASCADE)
@@ -122,12 +125,11 @@ class Payment(models.Model):
     Currency = models.CharField(max_length=10)
     ExchangeRate = models.DecimalField(max_digits=10, decimal_places=4)
     TransactionDate = models.DateTimeField()
-    PaymentStatus = models.CharField(max_length=20)
+    PaymentStatus = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES)
     PaymentMethod = models.CharField(max_length=30)
 
     def __str__(self):
         return str(self.PaymentID)
-	
 
 
 class Review(models.Model):
