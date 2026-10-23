@@ -13,7 +13,8 @@ from django.utils import timezone
 from django.views.generic import CreateView, DetailView, FormView
 from django.db.models import Avg, Count
 from .forms import BookingForm, ReviewForm
-from .models import Booking, Listings, Customer, Attractions, TourGuide, Review
+from .models import Booking, Listings, Customer, Attractions, TourGuide, Review,TourGuideRegistration
+from django.contrib.auth import login as auth_login
 
 
 # Create your views here.
@@ -127,7 +128,6 @@ def customerregister(request):
 		form = CustomerRegisterForm()
 
 	return render(request,'customerregister.html',{'form':form})
-
 def guideregister(request):
 	if request.method == 'POST':
 		form = GuideRegisterForm(request.POST)
@@ -142,31 +142,42 @@ def guideregister(request):
 			Biography=form.cleaned_data['Biography'])
 			guide.set_password(form.cleaned_data['password'])
 			guide.save()
-		
-			return redirect('OnlyToursApp:home')
 			
-	else:	
+			registration = TourGuideRegistration(
+				Guide=guide, DocumentType=form.cleaned_data['DocumentType'],
+				SubmissionDate=timezone.now(), RegistrationStatus='PENDING')
+			registration.save()
+			auth_login(request, guide)
+			return redirect('OnlyToursApp:guide_bookings')
+
+	else:
 		form = GuideRegisterForm()
 	return render(request,'tourguideregister.html',{'form':form})
 
+
 def login(request):
 	return render(request,'login.html')
-
 
 
 @login_required
 def guide_listings(request):
     guide = get_object_or_404(TourGuide, pk=request.user.pk)
     listings = Listings.objects.filter(
-        Guide=guide,
+    Guide=guide,
     ).prefetch_related('Attraction').order_by(
-        '-DateCreated', '-ListingID',
+    '-DateCreated', '-ListingID',
     )
-    return render(
-        request,
+
+    registrations = TourGuideRegistration.objects.filter(Guide=guide).order_by('-SubmissionDate')
+    registration = None
+   
+    is_approved = TourGuideRegistration.objects.filter( Guide=guide, RegistrationStatus='APPROVED').count() > 0
+        
+    return render( request,
         'guide_listings.html',
-        {'guide': guide, 'listings': listings},
-    )
+        {'guide': guide, 'listings': listings,
+         'is_approved': is_approved},
+        )
 
 
 @login_required

@@ -17,12 +17,33 @@
 
       <form class="customerreg-form" method="post" novalidate>
         {% csrf_token %}
-        {% include 'partials/form_fields.html' with form=form %}
+      
+        {% if form.non_field_errors %}
+          <div class="field field-full form-errors" role="alert">
+            {% for error in form.non_field_errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% for field in form %}
+          <div class="field{% if field.errors %} has-error{% endif %}">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}
+              <small class="field-help">{{ field.help_text }}</small>
+            {% endif %}
+            {% for error in field.errors %}
+              <small class="field-error">{{ error }}</small>
+            {% endfor %}
+          </div>
+        {% endfor %}
+
         <div class="field field-full">
           <button type="submit" class="btn-accent">{% if editing %}Save changes{% else %}Create listing{% endif %}</button>
         </div>
         <p class="form-switch"><a href="{% url 'OnlyToursApp:guide_listings' %}">Back to My Listings</a></p>
-      </form>
+      </form> 
     </div>
   </div>
 </div>
