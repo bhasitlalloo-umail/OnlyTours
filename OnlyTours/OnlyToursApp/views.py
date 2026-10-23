@@ -253,6 +253,27 @@ def guide_bookings(request):
     return render(request, 'guide_bookings.html', context)
     
 @login_required
+def guide_reviews(request):
+    # reviews of this guide's own tours, newest first
+    guide = get_object_or_404(TourGuide, pk=request.user.pk)
+    reviews = Review.objects.filter(Booking__Listing__Guide=guide).select_related(
+        'Booking__Listing', 'Booking__Customer').order_by('-DateSubmitted')
+    return render(request, 'guide_reviews.html', {'guide': guide, 'reviews': reviews})
+
+
+@login_required
+def guide_review_respond(request, review_id):
+    guide = get_object_or_404(TourGuide, pk=request.user.pk)
+    # a guide can only answer reviews of their own tours; anyone else's gives "not found"
+    review = get_object_or_404(Review, pk=review_id, Booking__Listing__Guide=guide)
+    if request.method == 'POST':
+        form = GuideResponseForm(request.POST, instance=review)
+        if form.is_valid():
+            form.save()
+    return redirect('OnlyToursApp:guide_reviews')
+
+
+@login_required
 def my_trips(request):
 	# the customer's own bookings, with what they can do next (pay, receipt, review)
 	customer = get_object_or_404(Customer, pk=request.user.pk)

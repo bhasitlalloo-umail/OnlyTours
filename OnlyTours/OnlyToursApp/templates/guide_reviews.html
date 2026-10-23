@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Reviews &middot; OnlyTours{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/guide_bookings.css' %}">
+  <link rel="stylesheet" href="{% static 'css/reviews.css' %}?v=1">
+{% endblock %}
+
+{% block content %}
+<div class="gb-page site-brand-gradient">
+  <div class="gb-inner">
+
+    <div class="gb-intro">
+      <p class="gb-eyebrow">TOUR GUIDE</p>
+      <h1 class="gb-title">My Reviews</h1>
+      <p class="gb-lead">What customers said about your tours. You can answer each review.</p>
+    </div>
+
+    <div class="review-list">
+      {% for review in reviews %}
+      <article class="review-card">
+        <p class="review-head">
+          <span class="review-stars">&#9733; {{ review.Rating }}/5</span>
+          <span class="review-meta">
+            {{ review.Booking.Customer.first_name }} {{ review.Booking.Customer.last_name }}
+            &middot; {{ review.DateSubmitted|date:"j F Y" }}
+            &middot; {{ review.Booking.Listing.TourName }}
+          </span>
+          {% if review.IsFlagged %}
+          <span class="review-flag">Flagged for review by the company</span>
+          {% endif %}
+        </p>
+
+        {% if review.Comment %}
+        <p class="review-text">{{ review.Comment }}</p>
+        {% else %}
+        <p class="review-text review-none">No comment written.</p>
+        {% endif %}
+
+        <form class="review-reply-form" method="post"
+              action="{% url 'OnlyToursApp:guide_review_respond' review.ReviewID %}">
+          {% csrf_token %}
+          <label for="reply-{{ review.ReviewID }}">
+            {% if review.GuideResponse %}Your reply{% else %}Reply to this review{% endif %}
+          </label>
+          <textarea id="reply-{{ review.ReviewID }}" name="GuideResponse"
+            rows="3" maxlength="1000" required
+          >{{ review.GuideResponse|default_if_none:"" }}</textarea>
+          <button type="submit" class="btn btn-yellow">
+            {% if review.GuideResponse %}Update reply{% else %}Send reply{% endif %}
+          </button>
+        </form>
+      </article>
+      {% empty %}
+      <p class="gb-empty">No reviews yet. They appear here after your customers review a tour.</p>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+{% endblock %}
