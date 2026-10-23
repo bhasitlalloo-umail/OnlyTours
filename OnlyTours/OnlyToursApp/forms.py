@@ -188,3 +188,10 @@ class ReviewForm(forms.ModelForm):
                 raise forms.ValidationError('This booking has already been reviewed.')
             cleaned['booking'] = booking
         return cleaned
+
+class GuideResponseForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['GuideResponse']
+        widgets = {'GuideResponse': forms.Textarea( attrs={'rows': 3, 'maxlength': 1000, 'required': 'required'})}
+
