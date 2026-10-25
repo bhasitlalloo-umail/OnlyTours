@@ -180,8 +180,9 @@ class ReviewForm(forms.ModelForm):
                 )
             if Review.objects.filter(Booking=self.booking).exists():
                 raise forms.ValidationError('This booking has already been reviewed.')
-        return cleaned
-            cleaned['booking'] = booking
+            return cleaned
+        
+        cleaned['booking'] = Booking
         return cleaned
 
 class GuideResponseForm(forms.ModelForm):
