@@ -160,7 +160,7 @@ class BookingAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Customer', {
-            'fields': ('Customer',"Listing", "Guide",),
+            'fields': ('Customer',"Listing",),
         }),
         ('Booking dates', {
             'fields': ('TourDate','TimeSlot',),
@@ -193,7 +193,6 @@ class BookingAdmin(admin.ModelAdmin):
 
 
 
-
 @admin.register(Attractions)
 class AttractionsAdmin(admin.ModelAdmin):
     list_display = (
@@ -221,7 +220,7 @@ class AttractionsAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Basic information', {
-            'fields': ('Name', 'Description', 'Type', 'Region')
+            'fields': ('Name', 'Description', 'Type', 'Region', 'Image')
         }),
         ('Classification', {
             'fields': ('DifficultyLevel', 'IsFeatured', 'Distance'),
@@ -250,6 +249,7 @@ class AttractionsAdmin(admin.ModelAdmin):
     def unfeature_attractions(self, request, queryset):
         updated = queryset.update(IsFeatured=False)
         self.message_user(request, f"{updated} attraction(s) unfeatured.")
+
 
 
 

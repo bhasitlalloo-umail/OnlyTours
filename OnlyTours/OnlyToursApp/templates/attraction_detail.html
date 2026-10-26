@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ attraction.Name }} · OnlyTours{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/attractions.css' %}?v=3"><link rel="stylesheet" href="{% static 'css/reviews.css' %}?v=1">
+{% endblock %}
+
+{% block content %}
+<div class="attractions-page site-brand-gradient">
+  <div class="attractions-inner">
+
+    <p class="attraction-back"><a href="{% url 'OnlyToursApp:attractions' %}">&laquo; All attractions</a></p>
+
+    <article class="attraction-detail">
+      <div class="attraction-detail-top">
+
+        <div class="attraction-detail-text">
+          {% if attraction.IsFeatured %}<span class="attraction-badge">Featured</span>{% endif %}
+          <h1 class="attractions-title">{{ attraction.Name }}</h1>
+
+          <p class="pill-row">
+            <span class="pill">{{ attraction.Region }}</span>
+            <span class="pill">{{ attraction.Type }}</span>
+            {% if attraction.DifficultyLevel %}<span class="pill pill-{{ attraction.DifficultyLevel|lower }}">{{ attraction.get_DifficultyLevel_display }}</span>{% endif %}
+          </p>
+
+          {% include 'partials/rating.html' with attraction=attraction %}
+
+          <h2 class="attraction-section">About this attraction</h2>
+          <div class="attraction-detail-copy">{{ attraction.Description|linebreaks }}</div>
+
+          <div class="attraction-actions">
+            <a class="btn btn-yellow" href="#tours">See tours</a>
+            <a class="btn btn-outline-dark"
+               href="https://www.openstreetmap.org/?mlat={{ attraction.Latitude|stringformat:'f' }}&amp;mlon={{ attraction.Longitude|stringformat:'f' }}#map=14/{{ attraction.Latitude|stringformat:'f' }}/{{ attraction.Longitude|stringformat:'f' }}"
+               target="_blank" rel="noopener">View on map</a>
+          </div>
+        </div>
+
+        <div class="attraction-detail-photo">
+          {% if attraction.Image %}<img src="{{ attraction.Image.url }}" alt="{{ attraction.Name }}">{% else %}<span class="attraction-photo-none">&#127796;</span>{% endif %}
+        </div>
+
+      </div>
+
+      <h2 class="attraction-section">Good to know</h2>
+      <dl class="attraction-facts">
+        <div><dt>Region</dt><dd>{{ attraction.Region }}</dd></div>
+        <div><dt>Type</dt><dd>{{ attraction.Type }}</dd></div>
+        <div><dt>Difficulty</dt><dd>{{ attraction.get_DifficultyLevel_display|default:"Not specified" }}</dd></div>
+        {% if attraction.Distance %}<div><dt>Distance</dt><dd>{{ attraction.Distance }} km</dd></div>{% endif %}
+      </dl>
+    </article>
+
+    <h2 class="attraction-subheading" id="reviews">What visitors say</h2>
+    <div class="review-list">
+      {% for review in reviews %}
+      <article class="review-card">
+        <p class="review-head"><span class="review-stars">&#9733; {{ review.Rating }}/5</span> <span class="review-meta">{{ review.Booking.Customer.first_name|default:"A traveller" }} &middot; {{ review.DateSubmitted|date:"j F Y" }} &middot; {{ review.Booking.Listing.TourName }}</span></p>
+        {% if review.Comment %}<p class="review-text">{{ review.Comment }}</p>{% endif %}
+        {% if review.GuideResponse %}<p class="review-reply"><strong>Reply from {{ review.Booking.Guide.first_name }}:</strong> {{ review.GuideResponse }}</p>{% endif %}
+      </article>
+      {% empty %}
+      <p class="attraction-empty">No reviews yet. Be the first after your tour.</p>
+      {% endfor %}
+    </div>
+
+    <h2 class="attraction-subheading" id="tours">Tours that visit {{ attraction.Name }}</h2>
+    <div class="attraction-grid">
+      {% for tour in tours %}
+      <article class="attraction-card">
+        <header>
+          <h3 class="attraction-card-title">{{ tour.TourName }}</h3>
+          <p class="attraction-tags">with {{ tour.Guide.first_name }} {{ tour.Guide.last_name }} &middot; {{ tour.Duration }} hours</p>
+        </header>
+        <p class="attraction-copy">{{ tour.LDescription|truncatechars:140 }}</p>
+        <footer class="attraction-card-foot">
+          <strong>Rs {{ tour.Price }} per person</strong>
+          <a class="attraction-more" href="{% url 'OnlyToursApp:booknow' %}">Book now</a>
+        </footer>
+      </article>
+      {% empty %}
+      <p class="attraction-empty">No tours visit this attraction yet. Check back soon.</p>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,21 +1,16 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Review a Booking · OnlyTours</title>
+
+{% block title %}Review a Booking · OnlyTours{% endblock %}
+
+{% block extra_css %}
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
   <link rel="stylesheet" href="{% static 'css/review.css' %}">
-</head>
+{% endblock %}
+
+{% block content %}
 <body>
   <div class="review-page site-brand-gradient">
-
-    <a class="site-logo review-logo" href="{% url 'OnlyToursApp:home' %}">
-      <img src="{% static 'images/customerReg/image0.png' %}" alt="OnlyTours logo" />
-      <span class="site-logo-text"><span class="script">Onlytourz</span></span>
-    </a>
-
     <div class="review-grid">
       <div class="review-form-wrap">
         <p class="eyebrow">LEAVE A REVIEW</p>
@@ -74,4 +69,5 @@
     </div>
   </div>
 </body>
+{% endblock %}
 </html>

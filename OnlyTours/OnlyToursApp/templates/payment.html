@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Payment · OnlyTours{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/customerReg.css' %}">
+  <link rel="stylesheet" href="{% static 'css/payment.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="customerreg-page site-brand-gradient">
+  <div class="payment-grid">
+
+    <section class="payment-summary">
+      <p class="eyebrow">STEP 2 OF 2</p>
+      <h2>Your booking</h2>
+
+      <dl class="summary-list">
+        <div><dt>Tour</dt><dd>{{ booking.Listing.TourName }}</dd></div>
+        <div><dt>Guide</dt><dd>{{ booking.Listing.Guide.first_name }} {{ booking.Listing.Guide.last_name }}</dd></div>
+        <div><dt>Date</dt><dd>{{ booking.TourDate|date:"j F Y" }}</dd></div>
+        <div><dt>Time</dt><dd>{{ booking.TimeSlot|time:"H:i" }}</dd></div>
+        <div><dt>Guests</dt><dd>{{ booking.NumberOfParticipants }}</dd></div>
+        <div><dt>Price per person</dt><dd>Rs {{ booking.Listing.Price }}</dd></div>
+      </dl>
+
+      <p class="summary-total"><span>Total to pay</span> <strong>Rs {{ booking.TotalPrice }}</strong></p>
+    </section>
+
+    <section class="payment-form-wrap">
+      <p class="eyebrow">SECURE CHECKOUT</p>
+      <h1>Pay by card</h1>
+
+      {% if decline_message %}
+      <p class="form-errors" role="alert">{{ decline_message }} Please try a different card.</p>
+      {% endif %}
+
+      <form class="payment-form" method="post" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-accent">Pay Rs {{ booking.TotalPrice }}</button>
+      </form>
+
+      <p class="demo-note">
+        <strong>Demo mode:</strong> no real money is taken and your card details are not saved
+        (only the last 4 digits are kept). Use <code>4242 4242 4242 4242</code>
+        to pay successfully, or <code>4000 0000 0000 0002</code> to see a declined payment.
+        Any future expiry date and any 3-digit CVV will do.
+      </p>
+    </section>
+
+  </div>
+</div>
+{% endblock %}
