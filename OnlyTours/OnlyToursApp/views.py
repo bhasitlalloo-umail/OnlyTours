@@ -12,10 +12,12 @@ from django.utils import timezone
 from django.views.generic import CreateView, DetailView, FormView
 from django.db.models import Avg, Count
 from .forms import BookingForm, ReviewForm
-from .models import Booking, Listings, Customer, Attractions, TourGuide, Review, Payment
+from .models import Booking, Listings, Customer, Attractions, TourGuide, Review,TourGuideRegistration,Payment
+from django.contrib.auth import login as auth_login
+
 from django.http import HttpResponse
 from . import payments
-
+from django.utils.decorators import method_decorator
 
 
 # Create your views here.
@@ -144,7 +146,6 @@ def customerregister(request):
 		form = CustomerRegisterForm()
 
 	return render(request,'customerregister.html',{'form':form})
-
 def guideregister(request):
 	if request.method == 'POST':
 		form = GuideRegisterForm(request.POST)
@@ -159,31 +160,42 @@ def guideregister(request):
 			Biography=form.cleaned_data['Biography'])
 			guide.set_password(form.cleaned_data['password'])
 			guide.save()
-		
-			return redirect('OnlyToursApp:home')
 			
-	else:	
+			registration = TourGuideRegistration(
+				Guide=guide, DocumentType=form.cleaned_data['DocumentType'],
+				SubmissionDate=timezone.now(), RegistrationStatus='PENDING')
+			registration.save()
+			auth_login(request, guide)
+			return redirect('OnlyToursApp:guide_bookings')
+
+	else:
 		form = GuideRegisterForm()
 	return render(request,'tourguideregister.html',{'form':form})
 
+
 def login(request):
 	return render(request,'login.html')
-
 
 
 @login_required
 def guide_listings(request):
     guide = get_object_or_404(TourGuide, pk=request.user.pk)
     listings = Listings.objects.filter(
-        Guide=guide,
+    Guide=guide,
     ).prefetch_related('Attraction').order_by(
-        '-DateCreated', '-ListingID',
+    '-DateCreated', '-ListingID',
     )
-    return render(
-        request,
+
+    registrations = TourGuideRegistration.objects.filter(Guide=guide).order_by('-SubmissionDate')
+    registration = None
+   
+    is_approved = TourGuideRegistration.objects.filter( Guide=guide, RegistrationStatus='APPROVED').count() > 0
+        
+    return render( request,
         'guide_listings.html',
-        {'guide': guide, 'listings': listings},
-    )
+        {'guide': guide, 'listings': listings,
+         'is_approved': is_approved},
+        )
 
 
 @login_required
@@ -219,21 +231,40 @@ def guide_listing_edit(request, listing_id):
     return render( request, 'guide_listing_form.html', {'form': form, 'editing': True, 'listing': listing},
     )
 
+
+@method_decorator(login_required(login_url='login'), name='dispatch')
 class ReviewView(FormView):
     template_name = 'review.html'
     form_class = ReviewForm
     success_url = reverse_lazy('OnlyToursApp:home')
 
+    def dispatch(self, request, *args, **kwargs):
+        # login_required has already run, so request.user is logged in here.
+        customer = get_object_or_404(Customer, pk=request.user.pk)
+        # only the customer who made the booking can review it
+        self.booking = get_object_or_404(
+            Booking.objects.select_related('Listing', 'Customer'),
+            pk=kwargs['booking_id'], Customer=customer)
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['booking'] = self.booking
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['booking'] = self.booking
+        return context
+
     def form_valid(self, form):
-        # same pattern as customerregister: build the object from cleaned_data, then save it
         review = Review(
-            Booking=form.cleaned_data['booking'],
+            Booking=self.booking,
             Rating=form.cleaned_data['Rating'],
             Comment=form.cleaned_data['Comment'],
         )
         review.save()
         return super().form_valid(form)    # redirects to home
-
 
 @login_required
 def guide_bookings(request):
@@ -252,6 +283,27 @@ def guide_bookings(request):
 
     return render(request, 'guide_bookings.html', context)
     
+@login_required
+def guide_reviews(request):
+    # reviews of this guide's own tours, newest first
+    guide = get_object_or_404(TourGuide, pk=request.user.pk)
+    reviews = Review.objects.filter(Booking__Listing__Guide=guide).select_related(
+        'Booking__Listing', 'Booking__Customer').order_by('-DateSubmitted')
+    return render(request, 'guide_reviews.html', {'guide': guide, 'reviews': reviews})
+
+
+@login_required
+def guide_review_respond(request, review_id):
+    guide = get_object_or_404(TourGuide, pk=request.user.pk)
+    # a guide can only answer reviews of their own tours; anyone else's gives "not found"
+    review = get_object_or_404(Review, pk=review_id, Booking__Listing__Guide=guide)
+    if request.method == 'POST':
+        form = GuideResponseForm(request.POST, instance=review)
+        if form.is_valid():
+            form.save()
+    return redirect('OnlyToursApp:guide_reviews')
+
+
 @login_required
 def my_trips(request):
 	# the customer's own bookings, with what they can do next (pay, receipt, review)
