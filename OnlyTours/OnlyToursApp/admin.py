@@ -61,7 +61,7 @@ class CustomerAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Personal information', {
-            'fields': ('first_name', 'last_name', 'email', 'PhoneNumber')
+            'fields': ('username', 'first_name', 'last_name', 'email', 'PhoneNumber')
         }),
         ('Location & language', {
             'fields': ('CountryOfOrigin', 'PrimaryLanguage')
@@ -104,7 +104,7 @@ class TourGuideAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Personal information', {
-            'fields': ('first_name', 'last_name', 'email', 'PhoneNumber')
+            'fields': ('username', 'first_name', 'last_name', 'email', 'PhoneNumber')
         }),
         ('Guide profile', {
             'fields': ('YearsofExperience', 'PrimaryLanguage', 'Biography'),
