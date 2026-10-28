@@ -1,36 +1,33 @@
-{% extends "base.html" %}
-{% block title %}Login {% endblock title%}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Log In · OnlyTours{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/customerReg.css' %}?v=2">
+{% endblock %}
 
 {% block content %}
+<div class="customerreg-page site-brand-gradient">
+  <div class="customerreg-grid">
+    <div class="customerreg-form-wrap">
+      <p class="eyebrow">WELCOME BACK</p>
+      <h1>Log in to your account</h1>
 
-  {% if form.errors %}
-    <p>Your username and password didn't match. Please try again.</p>
-  {% endif %}
+      <form class="customerreg-form" method="post">
+        {% csrf_token %}
+        {% include 'partials/form_fields.html' with form=form %}
+        {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+        <div class="field field-full">
+          <button type="submit" class="btn-accent">Log In</button>
+        </div>
+        <p class="form-switch">New here? <a href="{% url 'OnlyToursApp:register' %}">Create an account</a></p>
+      </form>
+    </div>
 
-  {% if next %}
-    {% if user.is_authenticated %}
-      <p>Your account doesn't have access to this page. To proceed,
-      please login with an account that has access.</p>
-    {% else %}
-      <p>Please login to see this page.</p>
-    {% endif %}
-  {% endif %}
-
-  <form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    <table>
-      <tr>
-        <td>{{ form.username.label_tag }}</td>
-        <td>{{ form.username }}</td>
-      </tr>
-      <tr>
-        <td>{{ form.password.label_tag }}</td>
-        <td>{{ form.password }}</td>
-      </tr>
-    </table>
-    <input type="submit" value="login">
-    <input type="hidden" name="next" value="{{ next }}">
-  </form>
-
-
+    <a class="customerreg-hero-image" href="{% url 'OnlyToursApp:home' %}" aria-label="OnlyTours — back to home">
+      <img src="{% static 'images/customerReg/_5277724560626194-20.png' %}" alt="Scenic views of Mauritius" />
+    </a>
+  </div>
+</div>
 {% endblock %}
