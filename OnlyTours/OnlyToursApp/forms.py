@@ -180,16 +180,11 @@ class ReviewForm(forms.ModelForm):
                 )
             if Review.objects.filter(Booking=self.booking).exists():
                 raise forms.ValidationError('This booking has already been reviewed.')
-<<<<<<< HEAD
-<<<<<<< HEAD
-        return cleaned
-=======
-            cleaned['booking'] = booking
-=======
+
             return cleaned
-        
+            
         cleaned['booking'] = Booking
->>>>>>> ec57aa9545a07f0574699594bb54ef77a621b9d5
+
         return cleaned
 
 class GuideResponseForm(forms.ModelForm):
@@ -198,7 +193,3 @@ class GuideResponseForm(forms.ModelForm):
         fields = ['GuideResponse']
         widgets = {'GuideResponse': forms.Textarea( attrs={'rows': 3, 'maxlength': 1000, 'required': 'required'})}
 
-<<<<<<< HEAD
->>>>>>> 7ae0542c24b24208f05ba4ce4d57242347bdffa6
-=======
->>>>>>> ec57aa9545a07f0574699594bb54ef77a621b9d5
