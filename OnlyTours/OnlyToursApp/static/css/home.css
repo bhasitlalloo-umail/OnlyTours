@@ -1,0 +1,160 @@
+/* ---------- Hero ---------- */
+.hero-home {
+  position: relative;
+  min-height: clamp(420px, 70vh, 760px);
+  display: flex;
+  align-items: flex-end;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0.55) 100%),
+    url("../tourism/images/mauritius-aesthetic0.png") center / cover no-repeat;
+  color: #ffffff;
+}
+
+.hero-home-inner {
+  width: 100%;
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg) var(--space-lg);
+}
+
+.hero-home-title {
+  margin: 0 0 var(--space-xs);
+  color: var(--accent);
+  font-weight: 800;
+  font-size: clamp(2.25rem, 7vw, 5rem);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+}
+
+.hero-home-lead {
+  margin: 0 0 var(--space-md);
+  max-width: 48ch;
+  font-weight: 500;
+  font-size: clamp(1.05rem, 2.2vw, 1.75rem);
+  line-height: 1.4;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}
+
+.hero-home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+/* ---------- Sections ---------- */
+.home-section {
+  padding: var(--space-xl) var(--space-lg);
+}
+
+.home-inner {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+}
+
+/* ---------- Feature tiles ---------- */
+.feature-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: var(--space-md);
+}
+
+.feature-tile {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-xs);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+}
+
+.feature-tile:hover,
+.feature-tile:focus-visible {
+  transform: translateY(-4px);
+}
+
+.feature-tile-icon {
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  line-height: 1;
+}
+
+.feature-tile h2 {
+  margin: 0;
+  color: var(--headings);
+  font-weight: 700;
+  font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+}
+
+.feature-tile p {
+  margin: 0;
+  color: var(--text-body);
+  font-weight: 500;
+}
+
+/* ---------- Featured attractions ---------- */
+.home-heading {
+  margin: 0 0 var(--space-md);
+  color: var(--headings);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  letter-spacing: -0.02em;
+}
+
+.attraction-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: var(--space-md);
+}
+
+.attraction-card {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease;
+}
+
+.attraction-card:hover,
+.attraction-card:focus-visible {
+  transform: translateY(-4px);
+}
+
+.attraction-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.attraction-card-body {
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.attraction-card-body h3 {
+  margin: 0;
+  color: var(--headings);
+  font-weight: 700;
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+}
+
+.attraction-card-body p {
+  margin: 0;
+  color: var(--text-body);
+  line-height: 1.5;
+}
+
+.attraction-card-meta {
+  font-weight: 700;
+  color: #000;
+}
+
