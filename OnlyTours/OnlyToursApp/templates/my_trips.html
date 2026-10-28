@@ -30,7 +30,7 @@
         <dl class="gb-details">
           <div><dt>Guests</dt><dd>{{ trip.NumberOfParticipants }}</dd></div>
           <div><dt>Total</dt><dd>Rs {{ trip.TotalPrice }}</dd></div>
-          <div><dt>Status</dt><dd>{% if trip.BookingStatus == 'PAID' %}Paid{% else %}Not paid yet{% endif %}</dd></div>
+         <div><dt>Status</dt><dd>{{ trip.get_BookingStatus_display|capfirst }}</dd></div>
           <div><dt>Special Requests</dt><dd>{{ trip.SpecialRequests }}</dd></div>
         </dl>
 
@@ -41,8 +41,12 @@
 
         <footer class="gb-card-foot">
           <span class="gb-ref">Booking #{{ trip.BookingID }}</span>
-          {% if trip.BookingStatus != 'PAID' %}
+          {% if trip.BookingStatus == 'ACCEPTED' or trip.BookingStatus == 'UNPAID' %}
             <a class="trip-action" href="{% url 'OnlyToursApp:pay' trip.BookingID %}">Pay now</a>
+          {% elif trip.BookingStatus == 'PENDING' %}
+            <span class="gb-ref">Waiting for the guide</span>
+          {% elif trip.BookingStatus == 'DECLINED' or trip.BookingStatus == 'CANCELLED' %}
+            <span class="gb-ref">No longer available</span>
           {% elif trip.can_review %}
             <a class="trip-action" href="{% url 'OnlyToursApp:review' trip.BookingID %}">Leave a review</a>
           {% else %}

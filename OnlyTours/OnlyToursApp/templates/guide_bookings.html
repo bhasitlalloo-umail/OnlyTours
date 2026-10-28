@@ -5,6 +5,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/guide_bookings.css' %}">
+<link rel="stylesheet" href="{% static 'css/reviews.css' %}?v=1">
 {% endblock %}
 
 {% block content %}
@@ -15,8 +16,37 @@
       <h1 class="gb-title">My Bookings</h1>
       <p class="gb-lead">
         Welcome, {{ guide.first_name|default:guide.username }}.
-        These are the paid bookings for your tours.
+       These are the booking requests and bookings for your tours.
       </p>
+    </div>
+
+    <h2 class="gb-heading">Booking requests ({{ pending|length }})</h2>
+    <div class="gb-grid">
+      {% for booking in pending %}
+      <article class="gb-card">
+        <p class="gb-when">{{ booking.TourDate|date:"j F Y" }} · {{ booking.TimeSlot|time:"g:i A" }}</p>
+        <h3 class="gb-tour">{{ booking.Listing.TourName }}</h3>
+        <p class="gb-meeting">Meeting point: {{ booking.Listing.MeetingPoint }}</p>
+        <dl class="gb-details">
+          <div><dt>Customer</dt><dd>{{ booking.Customer.first_name }} {{ booking.Customer.last_name }}</dd></div>
+          <div><dt>Guests</dt><dd>{{ booking.NumberOfParticipants }}</dd></div>
+          <div><dt>Total</dt><dd>Rs {{ booking.TotalPrice }}</dd></div>
+          <div><dt>Special Requests</dt><dd>{{ booking.SpecialRequests|default:"None" }}</dd></div>
+        </dl>
+        <footer class="gb-card-foot">
+          <form method="post" action="{% url 'OnlyToursApp:guide_booking_accept' booking.BookingID %}">
+            {% csrf_token %}
+            <button type="submit" class="trip-action">Accept</button>
+          </form>
+          <form method="post" action="{% url 'OnlyToursApp:guide_booking_decline' booking.BookingID %}">
+            {% csrf_token %}
+            <button type="submit" class="trip-action">Decline</button>
+          </form>
+        </footer>
+      </article>
+      {% empty %}
+      <p class="gb-empty">No booking requests waiting.</p>
+      {% endfor %}
     </div>
 
     <h2 class="gb-heading">Upcoming ({{ upcoming|length }})</h2>
@@ -30,10 +60,17 @@
           <div><dt>Customer</dt><dd>{{ booking.Customer.first_name }} {{ booking.Customer.last_name }}</dd></div>
           <div><dt>Guests</dt><dd>{{ booking.NumberOfParticipants }}</dd></div>
           <div><dt>Total</dt><dd>Rs {{ booking.TotalPrice }}</dd></div>
+          <div><dt>Status</dt><dd>{{ booking.get_BookingStatus_display|capfirst }}</dd></div>
         </dl>
+        <footer class="gb-card-foot">
+          <form method="post" action="{% url 'OnlyToursApp:guide_booking_cancel' booking.BookingID %}">
+            {% csrf_token %}
+            <button type="submit" class="trip-action">Cancel booking</button>
+          </form>
+        </footer>
       </article>
       {% empty %}
-      <p class="gb-empty">No upcoming paid bookings yet.</p>
+      <p class="gb-empty">No upcoming accepted bookings.</p>
       {% endfor %}
     </div>
 
@@ -49,6 +86,24 @@
           <div><dt>Customer</dt><dd>{{ booking.Customer.first_name }} {{ booking.Customer.last_name }}</dd></div>
           <div><dt>Guests</dt><dd>{{ booking.NumberOfParticipants }}</dd></div>
           <div><dt>Total</dt><dd>Rs {{ booking.TotalPrice }}</dd></div>
+        </dl>
+      </article>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if closed %}
+    <h2 class="gb-heading">Declined and cancelled ({{ closed|length }})</h2>
+    <div class="gb-grid gb-past">
+      {% for booking in closed %}
+      <article class="gb-card">
+        <p class="gb-when">{{ booking.TourDate|date:"j F Y" }} · {{ booking.TimeSlot|time:"g:i A" }}</p>
+        <h3 class="gb-tour">{{ booking.Listing.TourName }}</h3>
+        <p class="gb-meeting">Meeting point: {{ booking.Listing.MeetingPoint }}</p>
+        <dl class="gb-details">
+          <div><dt>Customer</dt><dd>{{ booking.Customer.first_name }} {{ booking.Customer.last_name }}</dd></div>
+          <div><dt>Guests</dt><dd>{{ booking.NumberOfParticipants }}</dd></div>
+          <div><dt>Status</dt><dd>{{ booking.get_BookingStatus_display|capfirst }}</dd></div>
         </dl>
       </article>
       {% endfor %}

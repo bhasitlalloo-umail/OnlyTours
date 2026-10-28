@@ -104,7 +104,7 @@ class TourGuideAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Personal information', {
-            'fields': ('username', 'first_name', 'last_name', 'email', 'PhoneNumber')
+            'fields': ('username','password', 'first_name', 'last_name', 'email', 'PhoneNumber')
         }),
         ('Guide profile', {
             'fields': ('YearsofExperience', 'PrimaryLanguage', 'Biography'),
