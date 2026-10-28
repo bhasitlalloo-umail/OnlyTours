@@ -95,6 +95,10 @@ class Listings(models.Model):
 
 class Booking(models.Model):
 	BOOKING_STATUS_CHOICES = (
+        ("PENDING" , "pending"),
+        ("ACCEPTED" , "accepted"),
+        ("DECLINED" , "declined"),
+        ("CANCELLED" , "cancelled"),
         ("PAID" , "paid"),
         ("UNPAID" , "unpaid"),
     )

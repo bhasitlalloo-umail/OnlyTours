@@ -15,7 +15,7 @@ from .forms import BookingForm, ReviewForm
 from .models import Booking, Listings, Customer, Attractions, TourGuide, Review,TourGuideRegistration,Payment
 from django.contrib.auth import login as auth_login
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from . import payments
 from django.utils.decorators import method_decorator
 
@@ -84,8 +84,9 @@ class BookNowView(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
     
     def get_success_url(self):
-        # after booking, go straight to the payment page for this booking
-        return reverse('OnlyToursApp:pay', kwargs={'booking_id': self.object.pk})
+        # the guide has to accept first, so the customer waits on their trips page
+        return reverse('OnlyToursApp:my_trips')
+
 
     def get_context_data(self, **kwargs):
         # data for the live Trip Summary (name, guide, price of each tour)
@@ -107,7 +108,7 @@ class BookNowView(LoginRequiredMixin, CreateView):
         booking.Customer = get_object_or_404(Customer, pk=self.request.user.pk)
         booking.DateTimeRequested = timezone.now()
         booking.TotalPrice = booking.Listing.Price * booking.NumberOfParticipants
-        booking.BookingStatus = 'UNPAID'
+        booking.BookingStatus = 'PENDING'
        
         return super().form_valid(form)
 
@@ -270,19 +271,55 @@ class ReviewView(FormView):
 def guide_bookings(request):
     guide = get_object_or_404(TourGuide, pk=request.user.pk)
 
-    paid_bookings = Booking.objects.filter(
-        Listing__Guide=guide,
-        BookingStatus='PAID',
-    ).select_related('Customer', 'Listing')
-
     today = timezone.localdate()
 
-    context = { 'guide': guide, 'upcoming': paid_bookings.filter(  TourDate__gte=today
-       ).order_by('TourDate', 'TimeSlot'),'past': paid_bookings.filter( TourDate__lt=today
-        ).order_by('-TourDate', '-TimeSlot'),  }
+    # all the booking requests for this guide's tours
+    bookings = Booking.objects.filter(Listing__Guide=guide).select_related('Customer', 'Listing')
+
+    # requests waiting for the guide to accept or decline
+    pending = bookings.filter(BookingStatus='PENDING').order_by('DateTimeRequested')
+    # accepted or paid tours still to come, the guide can cancel these
+    upcoming = bookings.filter(BookingStatus__in=['ACCEPTED', 'PAID'], TourDate__gte=today).order_by('TourDate', 'TimeSlot')
+    past = bookings.filter(BookingStatus__in=['ACCEPTED', 'PAID'], TourDate__lt=today).order_by('-TourDate', '-TimeSlot')
+    # requests that were declined or cancelled
+    closed = bookings.filter(BookingStatus__in=['DECLINED', 'CANCELLED']).order_by('-TourDate', '-TimeSlot')
+
+    context = {'guide': guide, 'pending': pending, 'upcoming': upcoming, 'past': past, 'closed': closed}
 
     return render(request, 'guide_bookings.html', context)
-    
+
+
+@login_required
+def guide_booking_accept(request, booking_id):
+    guide = get_object_or_404(TourGuide, pk=request.user.pk)
+    # a guide can only answer requests for their own tours; anyone else's gives "not found"
+    booking = get_object_or_404(Booking, pk=booking_id, Listing__Guide=guide)
+    if request.method == 'POST' and booking.BookingStatus == 'PENDING':
+        booking.BookingStatus = 'ACCEPTED'
+        booking.save()
+    return HttpResponseRedirect(reverse('OnlyToursApp:guide_bookings'))
+
+
+@login_required
+def guide_booking_decline(request, booking_id):
+    guide = get_object_or_404(TourGuide, pk=request.user.pk)
+    booking = get_object_or_404(Booking, pk=booking_id, Listing__Guide=guide)
+    if request.method == 'POST' and booking.BookingStatus == 'PENDING':
+        booking.BookingStatus = 'DECLINED'
+        booking.save()
+    return HttpResponseRedirect(reverse('OnlyToursApp:guide_bookings'))
+
+
+@login_required
+def guide_booking_cancel(request, booking_id):
+    guide = get_object_or_404(TourGuide, pk=request.user.pk)
+    booking = get_object_or_404(Booking, pk=booking_id, Listing__Guide=guide)
+    # only accepted (or already paid) bookings can be cancelled
+    if request.method == 'POST' and booking.BookingStatus in ['ACCEPTED', 'PAID']:
+        booking.BookingStatus = 'CANCELLED'
+        booking.save()
+    return HttpResponseRedirect(reverse('OnlyToursApp:guide_bookings'))
+
 @login_required
 def guide_reviews(request):
     # reviews of this guide's own tours, newest first
@@ -324,9 +361,8 @@ def pay(request, booking_id):
     customer = get_object_or_404(Customer, pk=request.user.pk)
     booking = get_object_or_404(Booking.objects.select_related('Listing', 'Listing__Guide'), pk=booking_id, Customer=customer)
 
-    if booking.BookingStatus == 'PAID':
-        return redirect('OnlyToursApp:booked', booking_id=booking.pk)
-
+    if booking.BookingStatus != 'ACCEPTED' and booking.BookingStatus != 'UNPAID':
+        return redirect('OnlyToursApp:my_trips')
     decline_message = ''
     if request.method == 'POST':
         form = PaymentForm(request.POST)
