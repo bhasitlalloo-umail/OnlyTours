@@ -20,12 +20,10 @@
       <div class="customerreg-form-wrap">
         <p class="eyebrow">CREATE AN ACCOUNT</p>
         <h1>Welcome new customer!</h1>
-	<div class="ui error message" style="color:red">
-		{{ form.errors}}
-	</div>
-        <form class="customerreg-form" method="post">
-          {% csrf_token %}
-	  {{ form.as_table }}
+	<form class="customerreg-form" method="post">
+    {% csrf_token %}
+
+    {% include 'partials/form_fields.html' with form=form %}
 	<!-----
           <div class="field field-full">
             <label for="email">Email Address</label>
