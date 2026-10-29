@@ -25,7 +25,7 @@ class GuideRegisterForm(UserCreationForm):
     # not a TourGuide field: the view saves it on TourGuideRegistration
     DocumentType = forms.ChoiceField(
         label='Verification document',
-        choices=[('', 'Select a document type')] + DOCUMENT_TYPE_CHOICES,
+        choices=[('', 'Select a doc type')] + DOCUMENT_TYPE_CHOICES,
     )
 
     class Meta(UserCreationForm.Meta):
