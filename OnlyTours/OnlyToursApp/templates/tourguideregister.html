@@ -8,8 +8,8 @@
   <link rel="stylesheet" href="{% static 'css/tourguideregister.css' %}?v=2">
   <link rel="stylesheet" href="{% static 'css/customerReg.css' %}?v=2">
   <style>
-    .field-error { display: none; color: #c00; font-size: 0.8rem; margin-top: 4px; }
-    .field-error.show { display: block; }
+    .js-error { display: none; color: #c00; font-size: 0.8rem; margin-top: 4px; }
+    .js-error.show { display: block; }
     input.invalid { border-color: #c00 !important; }
   </style>
 {% endblock %}
@@ -20,12 +20,6 @@
     <form class="signup-col" id="signupForm" method="post" novalidate>
       <div class="eyebrow">CREATE AN ACCOUNT</div>
       <h1>WELCOME NEW GUIDE!</h1>
-
-      {% if form.non_field_errors %}
-      <div class="ui error message" style="color:red">
-        {{ form.non_field_errors }}
-      </div>
-      {% endif %}
 
       {% csrf_token %}
 
@@ -122,7 +116,7 @@
     function setupValidationMessage(field, validateFn){
       if (!field) return () => true;
       const errEl = document.createElement('div');
-      errEl.className = 'field-error';
+      errEl.className = 'js-error';
       errEl.id = field.id + 'Error';
       field.insertAdjacentElement('afterend', errEl);
       const check = () => {

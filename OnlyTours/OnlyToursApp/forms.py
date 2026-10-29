@@ -6,6 +6,14 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Booking
 from .models import Review
 from .import payments
+import re
+from django.contrib.auth.models import User
+
+DOCUMENT_TYPE_CHOICES = [
+    ('NATIONAL_ID', 'National ID card'),
+    ('PASSPORT', 'Passport'),
+    ('GUIDE_LICENCE', 'Tour guide licence'),
+]
 
 class CustomerRegisterForm(forms.ModelForm):
 	class Meta:
@@ -13,12 +21,80 @@ class CustomerRegisterForm(forms.ModelForm):
 		fields = ['username','password','first_name','last_name','email','PhoneNumber','CountryOfOrigin','PrimaryLanguage']
 		widgets = {'password':forms.PasswordInput}
 
-class GuideRegisterForm(forms.ModelForm):
-	class Meta:
-		model = TourGuide
-		fields = ['username','password','first_name','last_name','email','PhoneNumber','YearsofExperience','PrimaryLanguage','Biography']
-		widgets = {'password':forms.PasswordInput}	
+class GuideRegisterForm(UserCreationForm):
+    # not a TourGuide field: the view saves it on TourGuideRegistration
+    DocumentType = forms.ChoiceField(
+        label='Verification document',
+        choices=[('', 'Select a document type')] + DOCUMENT_TYPE_CHOICES,
+    )
 
+    class Meta(UserCreationForm.Meta):
+        model = TourGuide
+        fields = ['username', 'first_name', 'last_name', 'email', 'PhoneNumber',
+                  'YearsofExperience', 'PrimaryLanguage', 'Biography']
+        widgets = {'Biography': forms.Textarea(attrs={'rows': 4, 'maxlength': 500})}
+
+    field_order = ['username', 'password1', 'password2', 'first_name', 'last_name', 'email',
+                   'PhoneNumber', 'PrimaryLanguage', 'YearsofExperience', 'Biography', 'DocumentType']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # the model allows blank for these; the registration form must not
+        for name in ['first_name', 'last_name', 'email', 'PhoneNumber',
+                     'YearsofExperience', 'PrimaryLanguage', 'Biography']:
+            self.fields[name].required = True
+
+    def _clean_name(self, field, label):
+        value = self.cleaned_data[field].strip()
+        if not re.fullmatch(r"[A-Za-z\s'-]{2,30}", value):
+            raise forms.ValidationError(
+                f'{label} must contain letters only (2-30 characters, no numbers or special characters).')
+        return value
+
+    def clean_first_name(self):
+        return self._clean_name('first_name', 'First name')
+
+    def clean_last_name(self):
+        return self._clean_name('last_name', 'Last name')
+
+    def clean_email(self):
+        email = self.cleaned_data['email'].strip().lower()
+        if User.objects.filter(email__iexact=email).exists():
+            raise forms.ValidationError('An account with this email already exists.')
+        return email
+
+    def clean_PhoneNumber(self):
+        phone = self.cleaned_data['PhoneNumber'].strip()
+        if not re.fullmatch(r'\+?[0-9\s\-]{7,15}', phone):
+            raise forms.ValidationError('Enter a valid phone number (7-15 digits, may include + and spaces).')
+        return phone
+
+    def clean_PrimaryLanguage(self):
+        language = self.cleaned_data['PrimaryLanguage'].strip()
+        if not re.fullmatch(r"[A-Za-z\s'-]{2,30}", language):
+            raise forms.ValidationError('Enter a language name using letters only.')
+        return language
+
+    def clean_YearsofExperience(self):
+        years = self.cleaned_data['YearsofExperience']
+        if years < 0 or years > 60:
+            raise forms.ValidationError('Years of experience must be between 0 and 60.')
+        return years
+
+    def clean_Biography(self):
+        bio = self.cleaned_data['Biography'].strip()
+        if len(bio) < 20:
+            raise forms.ValidationError('Please write at least 20 characters about yourself.')
+        return bio
+
+    def clean_password1(self):
+        # on top of AUTH_PASSWORD_VALIDATORS in settings.py
+        password = self.cleaned_data.get('password1')
+        if password and (not re.search('[A-Za-z]', password) or not re.search('[0-9]', password)):
+            raise forms.ValidationError('Password must contain both letters and numbers.')
+        return password
+
+    
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
