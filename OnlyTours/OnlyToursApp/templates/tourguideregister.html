@@ -1,106 +1,61 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OnlyTourz | Guide Sign Up</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Swanky+and+Moo+Moo&family=Poppins:wght@400;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{% static 'css/tourguideregister.css' %}?v=2">
-</head>
-<body>
 
-  <header class="topnav">
+{% block title %}OnlyTourz | Guide Sign Up{% endblock %}
 
-        <div class="brand">
+{% block extra_css %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Swanky+and+Moo+Moo&family=Poppins:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/tourguideregister.css' %}?v=2">
+  <link rel="stylesheet" href="{% static 'css/customerReg.css' %}?v=2">
+  <style>
+    .field-error { display: none; color: #c00; font-size: 0.8rem; margin-top: 4px; }
+    .field-error.show { display: block; }
+    input.invalid { border-color: #c00 !important; }
+  </style>
+{% endblock %}
 
-            <img
-                class="brand-logo"
-                src="{% static 'images/BookNowLogo.jpeg' %}"
-                alt="OnlyTourz Logo"
-            >
-
-            <span class="brand-name">
-                <u>ONLYTOURZ</u>
-            </span>
-
-        </div>
-
-        <nav class="links">
-            <a href="{% url 'OnlyToursApp:home' %}">Home</a>
-            <a href="{% url 'OnlyToursApp:booknow' %}">Book Now</a>
-            <a href="{% url 'OnlyToursApp:attractions' %}">Attractions</a>
-            <a href="{% url 'OnlyToursApp:tourguides' %}">Tour Guide</a>
-            <a href="{% url 'login' %}">Log In</a>
-        </nav>
-
-    </header>
-
+{% block content %}
   <div class="signup-layout">
 
-    <form class="signup-col" id="signupForm" method="post">
+    <form class="signup-col" id="signupForm" method="post" novalidate>
       <div class="eyebrow">CREATE AN ACCOUNT</div>
       <h1>WELCOME NEW GUIDE!</h1>
-	<div class="ui error message" style="color:red">
-		{{ form.errors}}
-	</div>
-	{% csrf_token %}
-	{{ form.as_table }}
-	<!-----
-      <div class="field-grid">
-        <div class="field">
-          <label for="firstName">First Name</label>
-          <input type="text" id="firstName" required minlength="2" maxlength="30" autocomplete="given-name">
-          <div class="field-error" id="firstNameError"></div>
-        </div>
-        <div class="field">
-          <label for="lastName">Last Name</label>
-          <input type="text" id="lastName" required minlength="2" maxlength="30" autocomplete="family-name">
-          <div class="field-error" id="lastNameError"></div>
-        </div>
 
-        <div class="field full">
-          <label for="email">Email Address</label>
-          <input type="email" id="email" placeholder="e.g. rishabh123@gmail.com" required maxlength="100" autocomplete="email">
-          <div class="field-error" id="emailError"></div>
-        </div>
-
-        <div class="field full">
-          <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" placeholder="e.g. 5XXX XXXX" required minlength="7" maxlength="16" autocomplete="tel">
-          <div class="field-error" id="phoneError"></div>
-        </div>
-
-        <div class="field full">
-          <label for="password">Password</label>
-          <input type="password" id="password" required minlength="8" maxlength="64" autocomplete="new-password">
-          <div class="field-error" id="passwordError"></div>
-        </div>
-
-        <div class="field full">
-          <label for="confirmPassword">Confirm Password</label>
-          <input type="password" id="confirmPassword" required maxlength="64" autocomplete="new-password">
-          <div class="field-error" id="confirmPasswordError"></div>
-        </div>
+      {% if form.non_field_errors %}
+      <div class="ui error message" style="color:red">
+        {{ form.non_field_errors }}
       </div>
-	!----->
+      {% endif %}
+
+      {% csrf_token %}
+
+      <div class="customerreg-form">
+        {% include 'partials/form_fields.html' with form=form %}
+      </div>
+
       <button type="submit" class="submit-btn">Create Account</button>
     </form>
 
     <div class="photo-col">
       <img src="{% static 'images/TGSidePhoto.jpg' %}" alt="Collage of Mauritius beaches, Le Morne and lagoons">
     </div>
-	
+
   </div>
 
   <script>
-    const firstNameInput = document.getElementById('firstName');
-    const lastNameInput = document.getElementById('lastName');
-    const emailInput = document.getElementById('email');
-    const phoneInput = document.getElementById('phone');
-    const passwordInput = document.getElementById('password');
-    const confirmPasswordInput = document.getElementById('confirmPassword');
+    // Django generates the inputs, so they are found by name/type instead of
+    // the old hard-coded ids. Any field missing from the form is skipped.
+    function findField(selector){
+      return document.querySelector('#signupForm ' + selector);
+    }
+
+    const firstNameInput = findField('[name="first_name"]');
+    const lastNameInput = findField('[name="last_name"]');
+    const emailInput = findField('[name="email"], input[type="email"]');
+    const phoneInput = findField('[name="phone"], [name="PhoneNumber"], [name="phone_number"], input[type="tel"]');
+    const passwordInput = findField('[name="password"], [name="password1"]');
+    const confirmPasswordInput = findField('[name="password2"], [name="confirm_password"], [name="confirmPassword"]');
 
     // Providers accepted for the email field — extend this list if you want to
     // allow more (or switch to a plain format check to accept any domain).
@@ -162,10 +117,15 @@
       errEl.classList.remove('show');
     }
 
-    // Wires a field up to its validate function + inline error element.
+    // Wires a field up to its validate function + inline error element
+    // (created under the input, since Django renders the fields).
     // Returns a check() you can call any time (e.g. on submit) that returns true/false.
     function setupValidationMessage(field, validateFn){
-      const errEl = document.getElementById(field.id + 'Error');
+      if (!field) return () => true;
+      const errEl = document.createElement('div');
+      errEl.className = 'field-error';
+      errEl.id = field.id + 'Error';
+      field.insertAdjacentElement('afterend', errEl);
       const check = () => {
         const msg = validateFn(field.value);
         if (msg) {
@@ -191,15 +151,16 @@
     ];
 
     // If the password changes after the confirmation was typed, re-check the match.
-    passwordInput.addEventListener('input', () => {
-      if (confirmPasswordInput.value !== '') validators[5]();
-    });
+    if (passwordInput && confirmPasswordInput) {
+      passwordInput.addEventListener('input', () => {
+        if (confirmPasswordInput.value !== '') validators[5]();
+      });
+    }
 
     // Runs every field's validator so ALL problems are flagged at once (not just
     // the first one), then focuses/scrolls to the first invalid field, if any.
+    // If everything is valid the form submits normally to Django.
     function validateAndSubmit(event){
-      event.preventDefault();
-
       let firstInvalidField = null;
       const requiredFields = [
         firstNameInput,
@@ -217,15 +178,14 @@
       }
 
       if (firstInvalidField) {
+        event.preventDefault();
         firstInvalidField.focus();
         firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return false;
       }
-
-      window.location.href = 'booked/';
       return true;
     }
-  </script>
 
-</body>
-</html>
+    document.getElementById('signupForm').addEventListener('submit', validateAndSubmit);
+  </script>
+{% endblock %}
