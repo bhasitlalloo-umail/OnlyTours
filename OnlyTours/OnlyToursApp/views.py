@@ -14,7 +14,7 @@ from django.db.models import Avg, Count
 from .forms import BookingForm, ReviewForm
 from .models import Booking, Listings, Customer, Attractions, TourGuide, Review,TourGuideRegistration,Payment
 from django.contrib.auth import login as auth_login
-
+from django.db import transaction
 from django.http import HttpResponse, HttpResponseRedirect
 from . import payments
 from django.utils.decorators import method_decorator
@@ -147,31 +147,23 @@ def customerregister(request):
 		form = CustomerRegisterForm()
 
 	return render(request,'customerregister.html',{'form':form})
-def guideregister(request):
-	if request.method == 'POST':
-		form = GuideRegisterForm(request.POST)
-		if form.is_valid():
-			guide = TourGuide(username=form.cleaned_data['username'],
-			first_name=form.cleaned_data['first_name'],
-			last_name=form.cleaned_data['last_name'],
-			email=form.cleaned_data['email'],
-			PhoneNumber=form.cleaned_data['PhoneNumber'],
-			YearsofExperience=form.cleaned_data['YearsofExperience'],
-			PrimaryLanguage=form.cleaned_data['PrimaryLanguage'],
-			Biography=form.cleaned_data['Biography'])
-			guide.set_password(form.cleaned_data['password'])
-			guide.save()
-			
-			registration = TourGuideRegistration(
-				Guide=guide, DocumentType=form.cleaned_data['DocumentType'],
-				SubmissionDate=timezone.now(), RegistrationStatus='PENDING')
-			registration.save()
-			auth_login(request, guide)
-			return redirect('OnlyToursApp:guide_bookings')
 
-	else:
-		form = GuideRegisterForm()
-	return render(request,'tourguideregister.html',{'form':form})
+class GuideRegisterView(CreateView):
+    form_class = GuideRegisterForm
+    template_name = 'tourguideregister.html'
+    success_url = reverse_lazy('OnlyToursApp:guide_bookings')
+
+    @transaction.atomic
+    def form_valid(self, form):
+        # CreateView saves the TourGuide; UserCreationForm hashes the password
+        response = super().form_valid(form)
+        TourGuideRegistration.objects.create(
+            Guide=self.object,
+            DocumentType=form.cleaned_data['DocumentType'],
+            SubmissionDate=timezone.now(),
+            RegistrationStatus='PENDING')
+        auth_login(self.request, self.object)
+        return response
 
 
 def login(request):
