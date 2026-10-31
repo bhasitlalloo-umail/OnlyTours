@@ -26,7 +26,5 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('',include('OnlyToursApp.urls',namespace='OnlyToursApp')),
 ]
-urlpatterns += [
-    path('adminapp/', include('AdminApp.urls', namespace='AdminApp')),
-]
+
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
