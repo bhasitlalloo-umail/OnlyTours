@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.db.models import Count
 from django.utils.html import format_html
+from django.contrib.auth.admin import UserAdmin
 #register your models here
 
 from .models import (
@@ -27,6 +28,16 @@ class CustomerTravelPreferencesInline(admin.TabularInline):
     verbose_name_plural = "Travel preferences"
     show_change_link = True         
 
+class TourGuideRegistrationInline(admin.TabularInline):
+    """Shows a Tour Guide's registration history on the Tour Guide page."""
+    model = TourGuideRegistration
+    extra = 1
+    max_num = 5
+    fields = ('DocumentType', 'SubmissionDate', 'RegistrationStatus', 'RejectionReason')
+    readonly_fields = ('SubmissionDate',)  
+    verbose_name = "Registration document"
+    verbose_name_plural = "Registration documents"
+    show_change_link = True    
 
 class LanguagesSpokenInline(admin.TabularInline):
     """Shows a Tour Guide's languages on the Tour Guide page."""
@@ -39,9 +50,8 @@ class LanguagesSpokenInline(admin.TabularInline):
     show_change_link = True
 
 
-
 @admin.register(Customer)
-class CustomerAdmin(admin.ModelAdmin):
+class CustomerAdmin(UserAdmin):
     list_display = (
         'first_name',
         'last_name',
@@ -59,6 +69,7 @@ class CustomerAdmin(admin.ModelAdmin):
     date_hierarchy = 'date_joined'
     empty_value_display = '—'
 
+    
     fieldsets = (
         ('Personal information', {
             'fields': ('username', 'first_name', 'last_name', 'email', 'PhoneNumber')
@@ -69,7 +80,25 @@ class CustomerAdmin(admin.ModelAdmin):
         ('Registration', {
             'fields': ('date_joined',),
         }),
+        ('Password', {
+            'fields': ('password',),
+            'description': 'Use the "change password" link above the form to set a password. '
+                           'Passwords are stored hashed and cannot be edited here directly.',
+        }),
     )
+
+   
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'first_name', 'last_name', 'email',
+                       'PhoneNumber', 'CountryOfOrigin', 'PrimaryLanguage',
+                       'password1', 'password2'),
+        }),
+    )
+
+    
+    readonly_fields = ('date_joined', 'password', 'last_login')
 
     inlines = [CustomerTravelPreferencesInline]
 
@@ -80,10 +109,8 @@ class CustomerAdmin(admin.ModelAdmin):
     def booking_count(self, obj):
         return obj.booking_count
 
-
-
 @admin.register(TourGuide)
-class TourGuideAdmin(admin.ModelAdmin):
+class TourGuideAdmin(UserAdmin):
     list_display = (
         'first_name',
         'last_name',
@@ -91,7 +118,7 @@ class TourGuideAdmin(admin.ModelAdmin):
         'YearsofExperience',
         'PrimaryLanguage',
         'date_joined',
-        'language_list',             
+        'language_list',
     )
     list_display_links = ('first_name', 'last_name')
     list_filter = ('PrimaryLanguage',)
@@ -99,12 +126,12 @@ class TourGuideAdmin(admin.ModelAdmin):
     ordering = ('last_name', 'first_name')
     list_per_page = 20
     date_hierarchy = 'date_joined'
-    list_editable = ('YearsofExperience',)  
+    list_editable = ('YearsofExperience',)
     empty_value_display = '—'
 
     fieldsets = (
         ('Personal information', {
-            'fields': ('username','password', 'first_name', 'last_name', 'email', 'PhoneNumber')
+            'fields': ('username', 'first_name', 'last_name', 'email', 'PhoneNumber')
         }),
         ('Guide profile', {
             'fields': ('YearsofExperience', 'PrimaryLanguage', 'Biography'),
@@ -113,9 +140,25 @@ class TourGuideAdmin(admin.ModelAdmin):
         ('Registration', {
             'fields': ('date_joined',),
         }),
+        ('Password', {
+            'fields': ('password',),
+            'description': 'Use the "change password" link above the form to set a password. '
+                           'Passwords are stored hashed and cannot be edited here directly.',
+        }),
     )
 
-    inlines = [LanguagesSpokenInline]
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'first_name', 'last_name', 'email',
+                       'PhoneNumber', 'YearsofExperience', 'PrimaryLanguage',
+                       'Biography', 'password1', 'password2'),
+        }),
+    )
+
+    readonly_fields = ('date_joined', 'password', 'last_login')
+
+    inlines = [LanguagesSpokenInline, TourGuideRegistrationInline]
 
     actions = ['set_experience_to_zero']
 
@@ -131,7 +174,6 @@ class TourGuideAdmin(admin.ModelAdmin):
     def set_experience_to_zero(self, request, queryset):
         updated = queryset.update(YearsofExperience=0)
         self.message_user(request, f"{updated} guide(s) updated.")
-
 
 
 @admin.register(Booking)
@@ -290,7 +332,7 @@ class TourGuideRegistrationAdmin(admin.ModelAdmin):
     search_fields = (
         'Guide__first_name',
         'Guide__last_name',
-        'Guide__Email',
+        'Guide__email',
         'DocumentType',
     )
     ordering = ('-SubmissionDate',)
@@ -359,11 +401,12 @@ class ListingsAdmin(admin.ModelAdmin):
         }),
         ('Tour information', {
             'fields': ('TourName', 'LDescription', 'Duration', 'MeetingPoint', 'Price'),
-        }),
+              }),
         ('Availability & status', {
             'fields': ('AvailabilityDate', 'ListingsStatus',),
         }),
-    )
+        ('Attractions',{
+         'fields': ('Attraction',),}),)
 
     radio_fields = {'ListingsStatus': admin.HORIZONTAL}
 
@@ -497,3 +540,9 @@ class ReviewAdmin(admin.ModelAdmin):
         updated = queryset.update(IsFlagged=False)
         self.message_user(request, f"{updated} review(s) unflagged.")
 
+
+Attractions._meta.verbose_name_plural = "Attractions"
+CustomerTravelPreferences._meta.verbose_name_plural = "Customer Travel Preferences"
+Listings._meta.verbose_name_plural = "Listings"
+TourGuide._meta.verbose_name_plural = "Tour Guides"
+Customer._meta.verbose_name_plural = "Customers"

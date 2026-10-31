@@ -187,8 +187,7 @@ def guide_listings(request):
     '-DateCreated', '-ListingID',
     )
 
-    registrations = TourGuideRegistration.objects.filter(Guide=guide).order_by('-SubmissionDate')
-    registration = None
+   
    
     is_approved = TourGuideRegistration.objects.filter( Guide=guide, RegistrationStatus='APPROVED').count() > 0
         
@@ -273,15 +272,15 @@ def guide_bookings(request):
 
     today = timezone.localdate()
 
-    # all the booking requests for this guide's tours
+  
     bookings = Booking.objects.filter(Listing__Guide=guide).select_related('Customer', 'Listing')
 
-    # requests waiting for the guide to accept or decline
+    
     pending = bookings.filter(BookingStatus='PENDING').order_by('DateTimeRequested')
-    # accepted or paid tours still to come, the guide can cancel these
+  
     upcoming = bookings.filter(BookingStatus__in=['ACCEPTED', 'PAID'], TourDate__gte=today).order_by('TourDate', 'TimeSlot')
     past = bookings.filter(BookingStatus__in=['ACCEPTED', 'PAID'], TourDate__lt=today).order_by('-TourDate', '-TimeSlot')
-    # requests that were declined or cancelled
+
     closed = bookings.filter(BookingStatus__in=['DECLINED', 'CANCELLED']).order_by('-TourDate', '-TimeSlot')
 
     context = {'guide': guide, 'pending': pending, 'upcoming': upcoming, 'past': past, 'closed': closed}
@@ -292,7 +291,7 @@ def guide_bookings(request):
 @login_required
 def guide_booking_accept(request, booking_id):
     guide = get_object_or_404(TourGuide, pk=request.user.pk)
-    # a guide can only answer requests for their own tours; anyone else's gives "not found"
+    
     booking = get_object_or_404(Booking, pk=booking_id, Listing__Guide=guide)
     if request.method == 'POST' and booking.BookingStatus == 'PENDING':
         booking.BookingStatus = 'ACCEPTED'
@@ -314,7 +313,7 @@ def guide_booking_decline(request, booking_id):
 def guide_booking_cancel(request, booking_id):
     guide = get_object_or_404(TourGuide, pk=request.user.pk)
     booking = get_object_or_404(Booking, pk=booking_id, Listing__Guide=guide)
-    # only accepted (or already paid) bookings can be cancelled
+    
     if request.method == 'POST' and booking.BookingStatus in ['ACCEPTED', 'PAID']:
         booking.BookingStatus = 'CANCELLED'
         booking.save()
